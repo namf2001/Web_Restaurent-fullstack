@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap");
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: "Open Sans", sans-serif;
+	background: #252836;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	.sidebar.active {
+		@apply rounded-lg text-white;
+	}
+
+	.sidebar.active ~ span {
+		@apply absolute h-full bg-base/dark-bg-1-18 rounded-s-xl top-0 -z-10;
+		width: calc(100% + 18px);
+	}
+
+	.sidebar.active ~ span > :first-child {
+		@apply absolute -top-4 -right-2.5 border-16 border-solid transform rotate-[-45deg];
+		border-color: #252836 transparent transparent transparent;
+	}
+
+	.sidebar.active ~ span > :first-child::after {
+		content: "";
+		@apply absolute w-11 h-11 rounded-full bg-base/dark-bg-2-14;
+		top: -54px;
+		left: -22px;
+	}
+
+	.sidebar.active ~ span > :last-child {
+		@apply absolute -bottom-4 -right-2.5 border-16 border-solid transform rotate-[-45deg];
+		border-color: transparent transparent transparent #252836;
+	}
+
+	.sidebar.active ~ span > :last-child::after {
+		content: "";
+		@apply absolute w-11 h-11 rounded-full bg-base/dark-bg-2-14;
+		top: -22px;
+		left: -54px;
+	}
+
+	.sidebar.active > span {
+		@apply bg-primary-color-67 rounded-md;
+	}
+
+	.product-hover:hover .product-img-2 {
+		@apply scale-125 z-10 transition-transform;
+		animation: scaleAnimation .1s ease-in;
+	}
+}
+
+@keyframes scaleAnimation {
+	0% {
+		transform: scale(1);
+	}
+	100% {
+		transform: scale(1.25);
+	}
+}
