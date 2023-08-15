@@ -3,7 +3,8 @@
 import { useState } from "react";
 import ModalAuth from "../components/modal/ModalAuth";
 
-const Customer = () => {
+
+const Login = () => {
     const [modalOpen, setModalOpen] = useState(false);
     return (
         <>
@@ -28,4 +29,4 @@ const Customer = () => {
     );
 };
 
-export default Customer;
+export default Login;

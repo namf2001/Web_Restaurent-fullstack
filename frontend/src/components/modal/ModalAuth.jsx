@@ -1,8 +1,8 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import PropTypes from "prop-types";
-import LogIn from "./LogIn";
-import Register from "./Register";
+import LogIn from "../LogIn";
+import Register from "../Register";
 
 const ModalAuth = ({ modalOpen, setModalOpen }) => {
     const [isLogin, setIsLogin] = useState(true);

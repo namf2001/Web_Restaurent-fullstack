@@ -1,13 +1,13 @@
-import { Navbar, Sidebar, Pay } from "../components";
+import { Navbar, Sidebar } from "../components";
 import { Outlet, useNavigate } from "react-router-dom";
-import { MENU_ITEMS } from "../assets/data";
+import { ADMIN_MENU } from "../assets/data";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import authUtils from "../utils/authUtlis";
 import { setUser } from "../redux/features/userSlice";
 import Loading from "../components/Loading";
 
-const LayoutBasic = () => {
+const LayoutAdmin = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
@@ -15,17 +15,12 @@ const LayoutBasic = () => {
     useEffect(() => {
         const checkAuth = async () => {
             const user = await authUtils.isAuthenticated();
-            console.log(user);
             if (user && user.role === "admin") {
                 dispatch(setUser(user));
                 setLoading(false);
-                navigate("/admin");
-            } else if (user) {
-                dispatch(setUser(user));
-                setLoading(false);
-                navigate("/user");
             } else {
                 setLoading(false);
+                navigate("/");
             }
         };
         checkAuth();
@@ -34,20 +29,19 @@ const LayoutBasic = () => {
     if (loading) {
         return <Loading />;
     }
+
     return (
         <div>
             <div className="relative dark:bg-main-dark-bg bg-base/dark-bg-1-18">
-                <Sidebar links={MENU_ITEMS} />
+                <Sidebar links={ADMIN_MENU} />
                 <div className="ml-[100px] fixed dark:bg-main-dark-bg w-[calc(100vw-100px)] text-white flex min-h-[100vh] justify-between">
                     <div className="flex-1">
                         <Navbar />
                         <Outlet />
                     </div>
-                    <Pay />
                 </div>
             </div>
         </div>
     );
 };
-
-export default LayoutBasic;
+export default LayoutAdmin;

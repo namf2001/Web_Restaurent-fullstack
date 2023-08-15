@@ -39,7 +39,7 @@ const LogIn = ({ handleSwitch }) => {
             const res = await authApi.login({ email, password });
             setLoading(false);
             localStorage.setItem("token", res.token);
-            navigate("/");
+            navigate("/user");
         } catch (err) {
             const errors = err.data.errors;
             errors.forEach((e) => {

@@ -32,6 +32,7 @@ export default {
             },
             borderColor: {
                 color: "#EA736D",
+                dark: "#2D303E",
             },
             width: {
                 100: "100px",

@@ -4,9 +4,10 @@ const Button = ({
 	// btnLink = 'test',
 	outline = false,
 	handler = null,
+	btnType = "button",
 }) => {
 	return (
-		<button
+		<button type={btnType}
 			className={`p-4 inline-flex items-center justify-center rounded-lg w-full text-white text-sm hover:shadow-3xl transition-all ${
 				outline ? "border-2 border-color" : "bg-primary-color"
 			}`} onClick={handler}>
