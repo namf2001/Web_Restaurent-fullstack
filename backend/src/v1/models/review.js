@@ -1,19 +1,42 @@
 const mongoose = require("mongoose");
-const { schemaOptions } = require("./modelOptions");
+const Schema = mongoose.Schema;
 
-const reviewSchema = new mongoose.Schema(
-    {
-        rating: { type: Number, required: true, min: 1, max: 5 },
-        comment: { type: String, required: true },
-        user: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
+const orderSchema = new Schema({
+    orderId: {
+        type: String,
+        required: true,
+    },
+
+    items: [
+        {
+            type: Array,
             required: true,
         },
+    ],
+
+    address: {
+        type: String,
+        required: true,
     },
-    schemaOptions
-);
 
-const Review = mongoose.model("Review", reviewSchema);
+    phone: {
+        type: String,
+        required: true,
+    },
 
-module.exports = Review;
+    totalAmount: {
+        type: Number,
+        required: true,
+    },
+
+    orderDate: {
+        type: Date,
+    },
+
+    paidThrough: {
+        //card
+        type: String,
+    },
+});
+
+module.exports = mongoose.model("Order", orderSchema);

@@ -2,7 +2,7 @@ const FoodItem = require("../models/foodItem");
 
 const getAllFoodItems = async (req, res) => {
     try {
-        const foodItems = await FoodItem.find();
+        const foodItems = await FoodItem.find().sort({ createdAt: -1 });
         res.status(200).json(foodItems);
     } catch (err) {
         console.error(err);
@@ -31,7 +31,7 @@ const getFoodItemById = async (req, res) => {
                 ],
             });
         }
-        res.status(200).json({ foodItem });
+        res.status(200).json(foodItem);
     } catch (err) {
         console.error(err);
         res.status(500).json({
@@ -73,10 +73,9 @@ const createFoodItem = async (req, res) => {
 const updateFoodItem = async (req, res) => {
     const { id } = req.params;
     try {
-        const foodItem = await FoodItem.findByIdAndUpdate(
-            id,
-            { $set: req.body }
-        );
+        const foodItem = await FoodItem.findByIdAndUpdate(id, {
+            $set: req.body,
+        });
         if (!foodItem) {
             return res.status(404).json({
                 errors: [

@@ -6,7 +6,7 @@ const Modal = ({ modalOpen, setModalOpen, children }) => {
     const cancelButtonRef = useRef(null);
 
     return (
-        <Transition.Root show={modalOpen} as={Fragment}>
+        <Transition.Root show={modalOpen || false} as={Fragment}>
             <Dialog
                 as="div"
                 className="relative z-10"

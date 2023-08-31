@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 
 const Home = () => {
     const foodItems = useSelector((state) => state.foodItem.value);
+    // console.log(foodItems)
     const ref = useRef(null);
     const typeProducts = foodItems
         .map((foodItem) => foodItem.category)
@@ -79,10 +80,10 @@ const Home = () => {
                     />
                 </div>
             </div>
-            <div className="h-[calc(100vh-240px)]">
+            <div className="h-[calc(100vh-240px)] overflow-hidden hover:overflow-y-scroll scrollbar-thin scrollbar-thumb-primary-color scrollbar-thumb-rounded-full">
                 <div
                     ref={ref}
-                    className="flex flex-wrap justify-start items-start gap-6 overflow-y-scroll scrollbar-thin scrollbar-thumb-primary-color scrollbar-thumb-rounded-full z-0"
+                    className="flex flex-wrap justify-start items-start gap-6  z-0"
                     data-aos="fade-up"
                     data-aos-duration="500"
                     data-aos-once="true">
@@ -93,7 +94,7 @@ const Home = () => {
                         ) {
                             return (
                                 <Product
-                                    key={foodItem.ObjectId}
+                                    key={foodItem._id}
                                     {...foodItem}
                                 />
                             );

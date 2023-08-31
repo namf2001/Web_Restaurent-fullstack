@@ -10,6 +10,13 @@ const userSchema = new mongoose.Schema(
         address: { type: String },
         phone: { type: String },
         role: { type: String, enum: ["admin", "user"], default: "user" },
+        avatar: { type: String },
+        orders: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Order",
+            },
+        ],
     },
     schemaOptions
 );

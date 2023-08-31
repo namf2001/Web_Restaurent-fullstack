@@ -11,12 +11,25 @@ const foodItemSchema = new mongoose.Schema(
             required: true,
             min: 0,
         },
-        category: { type: String, required: true },
+        category: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Category",
+            required: true,
+        },
         image: { type: String },
+        background: {
+            type: String,
+            default: "https://source.unsplash.com/random/800x600",
+        },
         quantity: { type: Number, required: true },
         isAvailable: { type: Boolean, default: true },
         discount: { type: Number, default: 0 },
         rating: { type: Number, default: 0 },
+        highlights: [
+            {
+                type: String,
+            },
+        ],
         reviews: [
             {
                 type: mongoose.Schema.Types.ObjectId,

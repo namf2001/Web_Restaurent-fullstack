@@ -1,8 +1,17 @@
 import { TbDiscount2 } from "react-icons/tb";
 import { FiSettings as Setting } from "react-icons/fi";
-import { BiUser as Customer, BiFoodMenu,  BiBookmarkMinus as Order, BiHomeAlt2, BiAt  } from "react-icons/bi";
+import {
+    BiUser as Customer,
+    BiFoodMenu,
+    BiBookmarkMinus as Order,
+    BiHomeAlt2,
+    BiAt,
+} from "react-icons/bi";
 import { RiNotification4Line as Notification } from "react-icons/ri";
-import { MdOutlineSpaceDashboard as Dashboard, MdOutlineSecurity } from "react-icons/md";
+import {
+    MdOutlineSpaceDashboard as Dashboard,
+    MdOutlineSecurity,
+} from "react-icons/md";
 import Cheesecake from "../images/Cheesecake.png";
 import CaesarSalad from "../images/Product2.png";
 
@@ -123,7 +132,7 @@ export const SettingOption = [
         component: "AboutUs",
         icon: <BiAt />,
     },
-]; 
+];
 
 export const ADMIN_MENU = [
     {
@@ -146,6 +155,17 @@ export const ADMIN_MENU = [
         path: "/admin/setting",
         icon: <Setting />,
     },
+];
+
+export const highlights = [
+    "Unique flavor",
+    "Fresh and quality ingredients",
+    "Evokes region or culture",
+    "Distinctive cooking method",
+    "Attractive colors and presentation",
+    "Unique ingredient combinations",
+    "Local market ingredients",
+    "Traditional or creative preparation",
 ];
 
 export const cart = [

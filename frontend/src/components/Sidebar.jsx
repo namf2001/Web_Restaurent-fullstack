@@ -9,8 +9,7 @@ import PropTypes from "prop-types";
 const Sidebar = ({links}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const user = useSelector((state) => state.user);
-    
+    const user = useSelector((state) => state.user.value);    
     const sidebarVariants = {
         hidden: { opacity: 0, x: 30 },
         visible: { opacity: 1, x: 0 },
@@ -19,7 +18,7 @@ const Sidebar = ({links}) => {
     const handleLogOut = () => {
         localStorage.removeItem("token");
         dispatch(setUser({}));
-        navigate("/user")
+        navigate("/")
     };
 
     return (
@@ -64,7 +63,7 @@ const Sidebar = ({links}) => {
                         })}
                         {user.username ? (
                             <motion.li
-                                className="text-primary-color relative mt-auto"
+                                className="text-primary-color relative mt-auto cursor-pointer"
                                 variants={sidebarVariants}
                                 initial="hidden"
                                 animate="visible"

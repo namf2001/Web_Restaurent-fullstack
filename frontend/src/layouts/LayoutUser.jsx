@@ -15,7 +15,7 @@ const LayoutUser = () => {
     useEffect(() => {
         const checkAuth = async () => {
             const user = await authUtils.isAuthenticated();
-            console.log(user);
+            // console.log(user);
             if (!user) {
                 navigate("/");
             } else if (user.role === "admin") {

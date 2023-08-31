@@ -21,6 +21,7 @@ const Pay = () => {
     const total = cart.reduce((accumulator, product) => {
         return accumulator + product.price * product.quantity;
     }, 0);
+    
     return (
         <>
             <Transition.Root show={openCart} as={Fragment}>

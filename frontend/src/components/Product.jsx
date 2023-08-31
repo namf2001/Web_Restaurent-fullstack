@@ -31,7 +31,7 @@ const Product = (props) => {
                     />
                 </div>
                 <div className="flex flex-col justify-center items-center gap-2">
-                    <h3 className="text-sm font-semibold">{props.name}</h3>
+                    <h3 className="text-sm font-semibold text-center">{props.name}</h3>
                     <p className="text-sm font-light">$ {props.price}</p>
                     <p className="text-sm font-extralight text-light">
                         {props.quantity} Bowls available

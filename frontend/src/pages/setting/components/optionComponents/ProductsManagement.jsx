@@ -26,13 +26,20 @@ const ProductsManagement = ({ setModalOpen }) => {
 
     const onUpdateFoodItem = (foodItem) => {
         const newData = [...data];
-        console.log(newData);
         const index = newData.findIndex((item) => item._id === foodItem._id);
         newData[index] = foodItem;
         setData(newData);
         dispatch(setFoodItem(newData));
     };
 
+    const deleteFoodItem = (foodItem) => {
+        const newData = [...data];
+        const dataDelete = newData.filter((item) =>{
+            return item._id !== foodItem
+        });
+        setData(dataDelete);
+        dispatch(setFoodItem(dataDelete));
+    };
     return (
         <>
             <div className="bg-base/dark-bg-2-14 grow shrink flex flex-col  mb-6 pt-6 gap-3 rounded-lg h-[calc(100vh-134px)] relative">
@@ -176,6 +183,7 @@ const ProductsManagement = ({ setModalOpen }) => {
                         setModalOpen={setModalUpdateOpen}
                         foodItem={selectedFoodItem} // Truyền dữ liệu foodItem
                         onUpdate={onUpdateFoodItem}
+                        onDelete={deleteFoodItem}
                     />
                 )}
             </Modal>

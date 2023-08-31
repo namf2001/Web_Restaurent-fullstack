@@ -16,6 +16,10 @@ const foodItemApi = {
     update: (id, data) => {
         const url = `/food-items/${id}`;
         return axiosClient.put(url, data);
+    },
+    delete: (id) => {
+        const url = `/food-items/${id}`;
+        return axiosClient.delete(url);
     }
 }
 

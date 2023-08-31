@@ -1,5 +1,6 @@
 const router = require("express").Router();
-const { register, login } = require("../controllers/user");
+const { register, login, getUser, updateUser } = require("../controllers/user");
+const { getOrdersByUserId } = require("../controllers/order");
 const { body } = require("express-validator");
 const { validate } = require("../middleware/validation");
 const { verifyToken } = require("../middleware/tokenHandler");
@@ -40,6 +41,24 @@ router.post(
     validate,
     login
 );
+
+router.get("/user", verifyToken, getUser);
+
+router.put(
+    "/user/:id",
+    verifyToken,
+    // if have new name, check if it is longer than 6 characters
+    body("username")
+        .optional()
+        .isLength({ min: 6 })
+        .withMessage("Username must be at least 6 characters long"),
+    // if have new email, check if it is valid
+    validate,
+    updateUser
+);
+
+router.get("/user/:id/orders", verifyToken, getOrdersByUserId);
+
 
 router.post("/verify-token", verifyToken, (req, res) => {
     res.status(200).json(req.user);

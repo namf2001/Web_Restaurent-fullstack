@@ -1,11 +1,12 @@
 import { HiPhotograph } from "react-icons/hi";
 import foodItemApi from "../../api/foodItemApi";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { setFoodItem } from "../../redux/features/foodItemSlice";
 import { Button } from "../index";
+import { resizeAndCompressImage, convertFileToBase64 } from "../../utils/image";
 
 const categories = [
     { id: 1, name: "Hot Dishes" },
@@ -22,7 +23,6 @@ const FormSetting = ({ setModalOpen }) => {
 
     const [image, setImage] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
-    const [imageUrl, setImageUrl] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -69,17 +69,6 @@ const FormSetting = ({ setModalOpen }) => {
             }
         }
     };
-
-    useEffect(() => {
-        if (selectedImage) {
-            const url = URL.createObjectURL(selectedImage);
-            setImageUrl(url);
-            return () => {
-                URL.revokeObjectURL(url);
-            };
-        }
-    }, [selectedImage]);
-
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="mx-auto w-full max-w-sm lg:w-96">
@@ -210,7 +199,7 @@ const FormSetting = ({ setModalOpen }) => {
                                 <div className="text-center">
                                     {selectedImage ? (
                                         <img
-                                            src={imageUrl}
+                                            src={image}
                                             alt="Selected"
                                             className="mx-auto h-32 w-32 object-cover rounded-md"
                                         />
@@ -256,60 +245,3 @@ FormSetting.propTypes = {
 
 export default FormSetting;
 // convert file to base64
-function convertFileToBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.onload = () => {
-            resolve(reader.result);
-        };
-
-        reader.onerror = (error) => {
-            reject(error);
-        };
-
-        reader.readAsDataURL(file);
-    });
-}
-// resize and compress image before uploading
-function resizeAndCompressImage(file, maxWidth, maxHeight) {
-    return new Promise((resolve, reject) => {
-        const img = new Image();
-
-        img.onload = () => {
-            const canvas = document.createElement("canvas");
-            let width = img.width;
-            let height = img.height;
-
-            if (width > maxWidth) {
-                height *= maxWidth / width;
-                width = maxWidth;
-            }
-
-            if (height > maxHeight) {
-                width *= maxHeight / height;
-                height = maxHeight;
-            }
-
-            canvas.width = width;
-            canvas.height = height;
-
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0, width, height);
-
-            canvas.toBlob(
-                (blob) => {
-                    resolve(blob);
-                },
-                "image/jpeg",
-                0.5
-            ); // Adjust the compression quality as needed (0.8 means 80% quality)
-        };
-
-        img.onerror = (error) => {
-            reject(error);
-        };
-
-        img.src = URL.createObjectURL(file);
-    });
-}
