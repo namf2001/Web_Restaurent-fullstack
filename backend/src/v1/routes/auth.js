@@ -57,7 +57,7 @@ router.put(
     updateUser
 );
 
-router.get("/user/:id/orders", verifyToken, getOrdersByUserId);
+// router.get("/user/:id/orders", verifyToken, getOrdersByUserId);
 
 
 router.post("/verify-token", verifyToken, (req, res) => {

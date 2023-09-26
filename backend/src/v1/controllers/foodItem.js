@@ -1,3 +1,5 @@
+/** @format */
+
 const FoodItem = require("../models/foodItem");
 
 const getAllFoodItems = async (req, res) => {
@@ -7,12 +9,8 @@ const getAllFoodItems = async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).json({
-            errors: [
-                {
-                    param: "server",
-                    msg: err.message || "Something went wrong!",
-                },
-            ],
+            success: false,
+            message: "Internal server error",
         });
     }
 };
@@ -23,30 +21,23 @@ const getFoodItemById = async (req, res) => {
         const foodItem = await FoodItem.findById(id);
         if (!foodItem) {
             return res.status(404).json({
-                errors: [
-                    {
-                        param: "id",
-                        msg: "Food item not found!",
-                    },
-                ],
+                success: false,
+                message: "Food item not found",
             });
         }
         res.status(200).json(foodItem);
     } catch (err) {
         console.error(err);
         res.status(500).json({
-            errors: [
-                {
-                    param: "server",
-                    msg: err.message || "Something went wrong!",
-                },
-            ],
+            success: false,
+            message: "Internal server error",
         });
     }
 };
 
 const createFoodItem = async (req, res) => {
     const { name, description, price, category, image, quantity } = req.body;
+    console.log(req.body);
     try {
         const foodItem = await FoodItem.create({
             name,
@@ -60,12 +51,8 @@ const createFoodItem = async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).json({
-            errors: [
-                {
-                    param: "server",
-                    msg: err.message || "Something went wrong!",
-                },
-            ],
+            success: false,
+            message: "Internal server error",
         });
     }
 };
@@ -78,24 +65,16 @@ const updateFoodItem = async (req, res) => {
         });
         if (!foodItem) {
             return res.status(404).json({
-                errors: [
-                    {
-                        param: "id",
-                        msg: "Food item not found!",
-                    },
-                ],
+                success: false,
+                message: "Food item not found!",
             });
         }
         res.status(200).json({ foodItem });
     } catch (err) {
         console.error(err);
         res.status(500).json({
-            errors: [
-                {
-                    param: "server",
-                    msg: err.message || "Something went wrong!",
-                },
-            ],
+            success: false,
+            message: "Internal server error",
         });
     }
 };
@@ -106,24 +85,20 @@ const deleteFoodItem = async (req, res) => {
         const foodItem = await FoodItem.findByIdAndDelete(id);
         if (!foodItem) {
             return res.status(404).json({
-                errors: [
-                    {
-                        param: "id",
-                        msg: "Food item not found!",
-                    },
-                ],
+                success: false,
+                message: "Food item not found!",
             });
         }
-        res.status(200).json({ foodItem });
+        res.status(200).json({
+            success: true,
+            message: "Food item deleted successfully!",
+            data: foodItem,
+        });
     } catch (err) {
         console.error(err);
         res.status(500).json({
-            errors: [
-                {
-                    param: "server",
-                    msg: err.message || "Something went wrong!",
-                },
-            ],
+            success: false,
+            message: "Internal server error",
         });
     }
 };

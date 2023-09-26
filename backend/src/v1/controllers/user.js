@@ -1,3 +1,4 @@
+/** @format */
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -23,16 +24,17 @@ const register = async (req, res) => {
             { expiresIn: "24h" }
         );
 
-        res.status(201).json({ user, token });
+        return res.status(200).json({
+            user,
+            token,
+            success: true,
+            message: "User created successfully",
+        });
     } catch (err) {
         console.error(err);
-        res.status(500).json({
-            errors: [
-                {
-                    param: "server",
-                    msg: err.message || "Something went wrong!",
-                },
-            ],
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error",
         });
     }
 };
@@ -44,13 +46,9 @@ const login = async (req, res) => {
             "password email"
         );
         if (!user) {
-            return res.status(401).json({
-                errors: [
-                    {
-                        param: "email",
-                        msg: "Invalid email or password",
-                    },
-                ],
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
             });
         }
 
@@ -58,12 +56,8 @@ const login = async (req, res) => {
 
         if (!isMatch) {
             return res.status(401).json({
-                errors: [
-                    {
-                        param: "password",
-                        msg: "Wrong credentials!",
-                    },
-                ],
+                success: false,
+                message: "Incorrect password",
             });
         }
 
@@ -108,10 +102,9 @@ const updateUser = async (req, res) => {
     }
 };
 
-
 module.exports = {
     register,
     login,
     getUser,
-    updateUser
+    updateUser,
 };

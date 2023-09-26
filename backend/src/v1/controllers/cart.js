@@ -1,151 +1,196 @@
+/** @format */
+
 const Cart = require("../models/cart");
-const FoodItem = require("../models/foodItem");
+const Food = require("../models/foodItem");
 
-const addToCart = async (req, res) => {
+const addToCart = async (req, res, next) => {
     try {
-        const { foodItemId, quantity } = req.body;
-        const userId = req.user._id;
+        const userId = req.user;
+        const foodToAddToCart = req.params.id.toString();
+        let qty = req.params.qty;
 
-        const foundUserCart = await Cart.findOne({ userId }).populate(
-            "items.foodItemId"
-        );
+        const foundFood = await Food.findById(foodToAddToCart);
 
-        const cartItem = foundUserCart.items.find(
-            (item) => item.foodItemId._id.toString() === foodItemId
-        );
+        if (!foundFood) {
+            return res.status(404).json("Food not found");
+        }
 
-        if (cartItem) {
-            cartItem.quantity += quantity;
+        const findUsersCart = await Cart.find({ userId: userId._id });
+
+        const existingCartItem = findUsersCart.find((eachItemInUserCart) => {
+            return (
+                eachItemInUserCart.foodId.toString() ===
+                foundFood._id.toString()
+            );
+        });
+
+        if (existingCartItem) {
+            // If the product already exists in the cart, update its quantity.
+            existingCartItem.quantity += parseInt(qty);
+            await existingCartItem.save();
+            const findCartItems = await Cart.find({
+                userId: userId._id,
+            }).populate({
+                path: "foodId",
+                select: "name image price",
+            });
+
+            return res.status(200).json({
+                success: true,
+                message: `${foundFood.name} quantity was updated to ${existingCartItem.quantity}`,
+                data: findCartItems,
+            });
         } else {
-            const foodItem = await FoodItem.findById(foodItemId);
-            if (!foodItem) {
-                return res.status(404).json({
-                    success: false,
-                    message: "Food item not found",
+            // If the product is not in the cart, add it as a new item.
+            if (
+                (foundFood._id.toString() === foodToAddToCart && qty <= 0) ||
+                null ||
+                undefined
+            ) {
+                qty = 1;
+            }
+            if (foundFood._id.toString() === foodToAddToCart && qty >= 1) {
+                await Cart.create({
+                    userId: userId._id,
+                    foodId: foundFood._id,
+                    quantity: qty,
+                });
+
+                const findCartItems = await Cart.find({
+                    userId: userId._id,
+                }).populate({
+                    path: "foodId",
+                    select: "name image price",
+                });
+
+                return res.status(201).json({
+                    success: true,
+                    message: `${foundFood.name} was added to cart`,
+                    data: findCartItems,
                 });
             }
-            foundUserCart.items.push({
-                foodItemId,
-                quantity,
-            });
         }
 
-        await foundUserCart.save();
-
-        return res.status(200).json({
-            success: true,
-            message: "Added to cart",
-        });
+        return res
+            .status(501)
+            .json(
+                `This isn't implemented as you have ${foundFood.name} in your cart before`
+            );
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({
-            success: false,
-            message: "Internal server error",
-        });
+        next(error);
     }
 };
 
-const getCart = async (req, res) => {
-    const userId = req.user._id;
-
+const allCartItem = async (req, res, next) => {
     try {
-        const foundUserCart = await Cart.findOne({ userId }).populate(
-            "items.foodItemId"
-        );
-
-        if (!foundUserCart) {
-            return res.status(404).json({
-                success: false,
-                message: "Cart not found",
-            });
+        const userId = req.user;
+        const findUsersCart = await Cart.find({
+            userId: userId._id,
+            status: "pending",
         }
+        ).populate({
+            path: "foodId",
+            select: "name image price",
+        });
 
-        return res.status(200).json({
-            success: true,
-            cart: foundUserCart,
-        });
+        return res.status(200).json(findUsersCart);
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({
-            success: false,
-            message: "Internal server error",
-        });
+        next(error);
     }
 };
 
-const updateCart = async (req, res) => {
-    const { foodItemId, quantity } = req.body;
-    const userId = req.user._id;
-
+const editCart = async (req, res, next) => {
     try {
-        const foundUserCart = await Cart.findOne({ userId }).populate(
-            "items.foodItemId"
-        );
+        const userId = req.user;
+        const foodItemToUpdate = req.params.id;
+        let newQty = req.params.qty;
 
-        const cartItem = foundUserCart.items.find(
-            (item) => item.foodItemId._id.toString() === foodItemId
-        );
+        const findCart = await Cart.findById(foodItemToUpdate);
 
-        if (!cartItem) {
-            return res.status(404).json({
-                success: false,
-                message: "Item not found",
-            });
+        if (
+            findCart.userId.toString() == userId._id.toString() &&
+            findCart.quantity.toString() !== newQty.toString()
+        ) {
+            if (newQty <= 0 || null || undefined) {
+                return res
+                    .status(501)
+                    .json("Item can not be less then ONE, so not implemented");
+            }
+            if (newQty >= 1) {
+                await findCart.updateOne({
+                    quantity: newQty,
+                });
+                return res
+                    .status(201)
+                    .json(`${findCart.foodId} qty was updated to ${newQty}`);
+            }
         }
-
-        cartItem.quantity = quantity;
-
-        await foundUserCart.save();
-
-        return res.status(200).json({
-            success: true,
-            message: "Cart updated",
-        });
+        return res.status(200).json("in it really state nothing happened");
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({
-            success: false,
-            message: "Internal server error",
-        });
+        next(error);
     }
 };
 
-const deleteFromCart = async (req, res) => {
-    const { foodItemId } = req.body;
-    const userId = req.user._id;
-
+const editMessage = async (req, res, next) => {
     try {
-        const findUserCart = await Cart.findOne({ userId }).populate(
-            "items.foodItemId"
-        );
+        const userId = req.user;
+        const foodItemToUpdate = req.params.id;
 
-        const cartItem = findUserCart.items.find(
-            (item) => item.foodItemId._id.toString() === foodItemId
-        );
+        const findItem = await Cart.findById(foodItemToUpdate);
 
-        if (cartItem) {
-            const index = findUserCart.items.indexOf(cartItem);
-            findUserCart.items.splice(index, 1);
+        if (
+            findItem.userId.toString() == userId._id.toString() &&
+            findItem.message.toString() !== req.body.message.toString()
+        ) {
+            await findItem.updateOne({
+                message: req.body.message,
+            });
+            return res.status(201).json({
+                success: true,
+                message: `${findItem.foodId} message was updated to ${req.body.message}`,
+            });
+        }
+    } catch (error) {
+        next(error);
+    }
+};
+
+const removeFromCart = async (req, res, next) => {
+    try {
+        const userId = req.user;
+        const foodItemToRemove = req.params.id;
+        const findUsersCart = await Cart.find({ userId: userId._id });
+
+        const checkCart = findUsersCart.filter((eachItemInUserCart) => {
+            return (
+                eachItemInUserCart._id.toString() ===
+                foodItemToRemove.toString()
+            );
+        });
+
+        if (
+            checkCart.length !== 0 &&
+            checkCart !== undefined &&
+            checkCart !== null
+        ) {
+            await Cart.deleteOne({ _id: checkCart[0]._id.toString() });
+            return res.status(201).json({
+                success: true,
+                message: `đã xóa sản phẩm khỏi giỏ hàng`,
+                data: checkCart,
+            });
         }
 
-        await findUserCart.save();
-
-        return res.status(200).json({
-            success: true,
-            message: "Item deleted",
-        });
+        return res.status(200).json("looks like the item was not found");
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({
-            success: false,
-            message: "Internal server error",
-        });
+        next(error);
     }
 };
 
 module.exports = {
     addToCart,
-    getCart,
-    updateCart,
-    deleteFromCart,
+    allCartItem,
+    editCart,
+    editMessage,
+    removeFromCart,
 };

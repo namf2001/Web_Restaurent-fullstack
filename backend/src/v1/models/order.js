@@ -10,13 +10,12 @@ const orderSchema = new mongoose.Schema(
         },
         items: [
             {
-                _id: {
+                item_id: {
                     type: mongoose.Schema.Types.ObjectId,
-                    ref: "FoodItem", 
+                    ref: "Cart",
                     required: true,
-                },
-                quantity: { type: Number, default: 1 },
-            },
+                }
+            }
         ],
         total: { type: Number, required: true },
         status: {
@@ -24,6 +23,8 @@ const orderSchema = new mongoose.Schema(
             enum: ["pending", "confirmed", "delivered"],
             default: "pending",
         },
+        address: { type: String, required: true },
+        note: { type: String, default: "" },
     },
     schemaOptions
 );

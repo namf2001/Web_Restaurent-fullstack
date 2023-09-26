@@ -1,3 +1,7 @@
+/** @format */
+
+import { CartProvider } from "../context/cartContext";
+import ConfirmationOrder from "../components/ConfirmationOrder/ConfirmationOrder";
 import { Navbar, Sidebar, Pay } from "../components";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -6,6 +10,8 @@ import authUtils from "../utils/authUtlis";
 import { setUser } from "../redux/features/userSlice";
 import Loading from "../components/Loading";
 import { USER_MENU } from "../assets/data";
+import CartApi from "../api/cartApi";
+import { setCart } from "../redux/features/cartSlice";
 
 const LayoutUser = () => {
     const navigate = useNavigate();
@@ -30,6 +36,20 @@ const LayoutUser = () => {
         checkAuth();
     }, [dispatch, navigate]);
 
+
+    useEffect(() => {
+        async function fetchCart() {
+            try {
+                const data = await CartApi.getCart();
+                console.log(data)
+                dispatch(setCart(data));
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchCart();
+    }, [dispatch]);
+
     return loading ? (
         <Loading />
     ) : (
@@ -41,7 +61,10 @@ const LayoutUser = () => {
                         <Navbar />
                         <Outlet />
                     </div>
-                    <Pay />
+                    <CartProvider>
+                        <Pay />
+                        <ConfirmationOrder />
+                    </CartProvider>
                 </div>
             </div>
         </div>

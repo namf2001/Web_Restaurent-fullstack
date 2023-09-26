@@ -1,3 +1,5 @@
+/** @format */
+
 import { TbDiscount2 } from "react-icons/tb";
 import { FiSettings as Setting } from "react-icons/fi";
 import {
@@ -6,6 +8,7 @@ import {
     BiBookmarkMinus as Order,
     BiHomeAlt2,
     BiAt,
+    BiBookmarkMinus,
 } from "react-icons/bi";
 import { RiNotification4Line as Notification } from "react-icons/ri";
 import {
@@ -14,7 +17,9 @@ import {
 } from "react-icons/md";
 import Cheesecake from "../images/Cheesecake.png";
 import CaesarSalad from "../images/Product2.png";
-
+import { CgCreditCard } from "react-icons/cg";
+import { TbBrandPaypal } from "react-icons/tb";
+import { BiWalletAlt } from "react-icons/bi";
 export const links = [
     {
         id: 1,
@@ -121,6 +126,12 @@ export const SettingOption = [
         icon: <BiFoodMenu />,
     },
     {
+        name: "Categories Management",
+        description: "Manage your categories",
+        component: "CategoriesManagement",
+        icon: <BiBookmarkMinus />,
+    },
+    {
         name: "Security",
         description: "Configure Password, PIN, etc",
         component: "Security",
@@ -214,4 +225,22 @@ export const cart = [
             "Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.",
     },
     // More products...
+];
+
+export const paymentMethods = [
+    {
+        id: 1,
+        name: "Credit Card",
+        icon: <CgCreditCard />,
+    },
+    {
+        id: 2,
+        name: "Paypal",
+        icon: <TbBrandPaypal />,
+    },
+    {
+        id: 3,
+        name: "Wallet",
+        icon: <BiWalletAlt />,
+    },
 ];

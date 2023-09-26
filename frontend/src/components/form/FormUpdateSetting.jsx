@@ -1,3 +1,5 @@
+/** @format */
+
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import foodItemApi from "../../api/foodItemApi";
@@ -10,21 +12,12 @@ import { toast } from "react-toastify";
 import { RiImageEditFill } from "react-icons/ri";
 import { resizeAndCompressImage, convertFileToBase64 } from "../../utils/image";
 import { highlights } from "../../assets/data";
+import { useSelector } from "react-redux";
 
 let timer;
 const timeout = 500;
 let base64String = "";
 let base64StringBackground = "";
-
-const categories = [
-    { id: 1, name: "Hot Dishes" },
-    { id: 2, name: "Soup" },
-    { id: 3, name: "Grill" },
-    { id: 4, name: "Appetizer" },
-    { id: 5, name: "Dessert" },
-    { id: 6, name: "Cold Dishes" },
-];
-
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
@@ -41,6 +34,7 @@ const FormUpdateSetting = ({ foodItem, setModalOpen, onUpdate, onDelete }) => {
     const [foodDiscount, setFoodDiscount] = useState(0);
     const [foodBackground, setFoodBackground] = useState([]);
     const [selectedHighlights, setSelectedHighlights] = useState([]);
+    const categories = useSelector((state) => state.category.value);
     // select image
     useEffect(() => {
         setFoodSelected(foodItem);
@@ -58,60 +52,66 @@ const FormUpdateSetting = ({ foodItem, setModalOpen, onUpdate, onDelete }) => {
     }, [foodItem]);
 
     const handleUpdate = async (e) => {
-        const { name, value } = e.target;
+        const { name, value, } = e.target;
         clearTimeout(timer);
-        if (name === "name") {
-            setFoodName(value);
-        } else if (name === "description") {
-            setFoodDescription(value);
-        } else if (name === "price") {
-            setFoodPrice(value);
-        } else if (name === "quantity") {
-            setFoodQuantity(value);
-        } else if (name === "category") {
-            setFoodCategory(value);
-        } else if (name === "discount") {
-            setFoodDiscount(value);
-        } else if (name === "image") {
-            if (base64String === "") {
-                setFoodImage(foodSelected.image);
-            } else {
-                setFoodImage(base64String);
-            }
-        } else if (name === "background") {
-            if (base64StringBackground === "") {
-                setFoodBackground(foodSelected.background);
-            } else {
-                setFoodBackground(base64StringBackground);
+        // Định nghĩa một hàm ánh xạ giá trị vào thuộc tính
+        function mapValueToProperty(name, value) {
+            switch (name) {
+                case "image":
+                    return base64String || foodSelected.image;
+                case "background":
+                    return base64StringBackground || foodSelected.background;
+                default:
+                    return value;
             }
         }
-
+        // Cập nhật state dựa trên tên thuộc tính
+        switch (name) {
+            case "name":
+                setFoodName(value);
+                break;
+            case "description":
+                setFoodDescription(value);
+                break;
+            case "price":
+                setFoodPrice(value);
+                break;
+            case "quantity":
+                setFoodQuantity(value);
+                break;
+            case "discount":
+                setFoodDiscount(value);
+                break;
+            case "category":
+                setFoodCategory(value);
+                break;
+            case "image":
+                setFoodImage(mapValueToProperty(name, value));
+                break;
+            case "background":
+                setFoodBackground(mapValueToProperty(name, value));
+                break;
+            default:
+                break;
+        }
         const updateFood = {
             ...foodSelected,
-            [name]:
-                name === "image"
-                    ? base64String
-                    : name === "background"
-                    ? base64StringBackground
-                    : value,
+            [name]: mapValueToProperty(name, value),
         };
 
         onUpdate(updateFood);
 
         timer = setTimeout(async () => {
+            const updateData = {
+                image: base64String,
+                background: base64StringBackground,
+                highlights: selectedHighlights,
+                // Thêm các thuộc tính khác nếu cần
+            };
+            // Xác định giá trị cần cập nhật dựa trên tên thuộc tính
+            const updateValue = name in updateData ? updateData[name] : value;
             try {
-                if (name === "image") {
-                    console.log("1");
-                    await foodItemApi.update(foodId, { [name]: base64String });
-                } else if (name === "background") {
-                    await foodItemApi.update(foodId, {
-                        [name]: base64StringBackground,
-                    });
-                } else if (name === "highlights") {
-                    await foodItemApi.update(foodId, {
-                        [name]: selectedHighlights,
-                    });
-                } else await foodItemApi.update(foodId, { [name]: value });
+                await foodItemApi.update(foodId, { [name]: updateValue });
             } catch (error) {
                 console.log(error);
             }
@@ -121,9 +121,27 @@ const FormUpdateSetting = ({ foodItem, setModalOpen, onUpdate, onDelete }) => {
     const handleDelete = async () => {
         try {
             await foodItemApi.delete(foodId);
-            toast.success("Delete success");
+            toast.success("🦄 Delete success!", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
         } catch (error) {
-            console.log(error);
+            toast.error("🦄 Delete fail!", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
         }
         onDelete(foodId);
         setModalOpen(false);
@@ -325,7 +343,7 @@ const FormUpdateSetting = ({ foodItem, setModalOpen, onUpdate, onDelete }) => {
                                         {categories.map((category) => (
                                             <option
                                                 key={category.id}
-                                                value={category.name}>
+                                                value={category.id}>
                                                 {category.name}
                                             </option>
                                         ))}

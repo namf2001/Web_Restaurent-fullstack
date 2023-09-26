@@ -18,6 +18,8 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import foodItemApi from "./api/foodItemApi";
 import { setFoodItem } from "./redux/features/foodItemSlice";
+import { setCategory } from "./redux/features/categorySlice";
+import CategoryApi from "./api/categoryApi";
 
 function App() {
     const dispatch = useDispatch();
@@ -31,6 +33,15 @@ function App() {
                 console.log(error);
             }
         };
+        const getCategory = async () => {
+            try {
+                const res = await CategoryApi.getAll();
+                dispatch(setCategory(res));
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        getCategory();
         getFoodItems();
     }, [dispatch]);
 
@@ -74,7 +85,18 @@ function App() {
                     </Route>
                 </Routes>
             </BrowserRouter>
-            <ToastContainer />
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+            />
         </>
     );
 }

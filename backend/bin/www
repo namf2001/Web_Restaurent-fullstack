@@ -24,7 +24,6 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
-
 /**
  * Connect to MongoDB.
  */
@@ -44,7 +43,14 @@ mongoose
 	.catch((err) => {
 		console.log(err);
     process.exit(1);
-	});
+  });
+  
+
+/**
+ * Stripe API
+ */
+
+// const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 /**
  * Normalize a port into a number, string, or false.

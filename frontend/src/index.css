@@ -1,3 +1,5 @@
+/** @format */
+
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap");
 
 body {
@@ -50,10 +52,79 @@ body {
     }
 
     .product-hover:hover .product-img-2 {
-        @apply scale-125 z-10 transition-transform;
-        animation: scaleAnimation 0.1s ease-in;
+        @apply z-10 transition-all scale-110 duration-500 ease-in-out;
     }
 
+    .product-hover:hover .product-img-1 {
+        @apply transition-all scale-110 duration-500 ease-in-out;
+    }
+    /* checkbox */
+    .checkbox-input {
+        clip: rect(0 0 0 0);
+        -webkit-clip-path: inset(100%);
+        clip-path: inset(100%);
+        height: 1px;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+        width: 1px;
+    }
+    .checkbox-input:checked + .checkbox-tile {
+        @apply border-color text-primary-color shadow-xl
+    }
+    .checkbox-input:checked + .checkbox-tile:before {
+        @apply bg-primary-color border-color opacity-100 scale-100
+    }
+    .checkbox-input:checked + .checkbox-tile .checkbox-icon,
+    .checkbox-input:checked + .checkbox-tile .checkbox-label {
+        @apply text-primary-color
+    }
+    .checkbox-input:focus + .checkbox-tile {
+        @apply border-color text-primary-color shadow-xl
+    }
+    .checkbox-input:focus + .checkbox-tile:before {
+        @apply opacity-100 scale-100
+    }
+
+    .checkbox-tile {
+        @apply flex flex-col items-center justify-center w-28 rounded-md border-2 border-dark shadow-sm transition duration-150 ease-in-out cursor-pointer relative
+    }
+    .checkbox-tile:before {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 1.25rem;
+        height: 1.25rem;
+        border: 2px solid #707070;
+        background-color: #252836;
+        border-radius: 50%;
+        top: 0.25rem;
+        left: 0.25rem;
+        opacity: 0;
+        transform: scale(0);
+        transition: 0.25s ease;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' fill='%23FFFFFF' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='none'%3E%3C/rect%3E%3Cpolyline points='216 72.005 104 184 48 128.005' fill='none' stroke='%23FFFFFF' stroke-linecap='round' stroke-linejoin='round' stroke-width='32'%3E%3C/polyline%3E%3C/svg%3E");
+        background-size: 12px;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+    }
+    .checkbox-tile:hover {
+        @apply border-color text-primary-color shadow-xl
+    }
+    .checkbox-tile:hover:before {
+        @apply opacity-100 scale-100
+    }
+
+    .checkbox-icon {
+        @apply text-gray-400 transition duration-300 ease-linear
+    }
+    .checkbox-icon svg {
+        @apply w-6 h-6
+    }
+
+    .checkbox-label {
+        @apply text-gray-400 text-center transition duration-300 ease-linear
+    }
     /* Hide the default number input spinner */
     ::-webkit-inner-spin-button,
     ::-webkit-outer-spin-button {
@@ -65,13 +136,6 @@ body {
     [type="number"] {
         -moz-appearance: textfield; /* Firefox */
     }
-
-    /* [type="number"]::-webkit-inner-spin-button,
-    [type="number"]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        appearance: none;
-        margin: 0;
-    } */
 
     [type="number"]::-webkit-inner-spin-button:before,
     [type="number"]::-webkit-outer-spin-button:before {
@@ -88,11 +152,17 @@ body {
     }
 }
 
-@keyframes scaleAnimation {
-    0% {
-        transform: scale(1);
-    }
-    100% {
-        transform: scale(1.25);
-    }
+@mixin object($width, $height, $bg) {
+    width: $width;
+    height: $height;
+    background: $bg;
+}
+
+@mixin transPos($top, $right, $bottom, $left, $transX, $transY) {
+    position: absolute;
+    top: $top;
+    left: $left;
+    right: $right;
+    bottom: $bottom;
+    transform: translate($transX, $transY);
 }

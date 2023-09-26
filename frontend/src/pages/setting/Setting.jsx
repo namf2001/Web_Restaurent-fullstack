@@ -1,6 +1,6 @@
-import { useState } from "react";
-import Modal from "../../components/modal/Modal";
-import {FormSetting} from "../../components/form";
+/** @format */
+
+import { useState } from "react"; 
 import SettingOption from "./components/SettingOption";
 import { SettingOption as options } from "../../assets/data/index";
 import {
@@ -9,10 +9,10 @@ import {
     Order,
     Notifications,
     Security,
+    CategoriesManagement,
 } from "./components/optionComponents";
 
 const Setting = () => {
-    const [modalOpen, setModalOpen] = useState(false);
     const [optionComponent, setOptionComponent] = useState(
         options[0].component
     );
@@ -26,13 +26,15 @@ const Setting = () => {
     if (optionComponent === "AboutUs") {
         componentToRender = <AboutUs />;
     } else if (optionComponent === "ProductsManagement") {
-        componentToRender = <ProductsManagement setModalOpen={setModalOpen} />;
+        componentToRender = <ProductsManagement />;
     } else if (optionComponent === "Order") {
         componentToRender = <Order />;
     } else if (optionComponent === "Notifications") {
         componentToRender = <Notifications />;
     } else if (optionComponent === "Security") {
         componentToRender = <Security />;
+    } else if (optionComponent === "CategoriesManagement") {
+        componentToRender = <CategoriesManagement />;
     }
 
     return (
@@ -45,9 +47,6 @@ const Setting = () => {
 
                 {componentToRender}
             </div>
-            <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}>
-                <FormSetting setModalOpen={setModalOpen} />
-            </Modal>
         </>
     );
 };

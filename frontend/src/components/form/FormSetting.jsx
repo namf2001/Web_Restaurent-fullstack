@@ -1,3 +1,5 @@
+/** @format */
+
 import { HiPhotograph } from "react-icons/hi";
 import foodItemApi from "../../api/foodItemApi";
 import { useState } from "react";
@@ -8,18 +10,10 @@ import { setFoodItem } from "../../redux/features/foodItemSlice";
 import { Button } from "../index";
 import { resizeAndCompressImage, convertFileToBase64 } from "../../utils/image";
 
-const categories = [
-    { id: 1, name: "Hot Dishes" },
-    { id: 2, name: "Soup" },
-    { id: 3, name: "Grill" },
-    { id: 4, name: "Appetizer" },
-    { id: 5, name: "Dessert" },
-    { id: 6, name: "Cold Dishes" },
-];
-
 const FormSetting = ({ setModalOpen }) => {
     const dispatch = useDispatch();
     const foodItems = useSelector((state) => state.foodItem.value);
+    const categories = useSelector((state) => state.category.value);
 
     const [image, setImage] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
@@ -43,10 +37,27 @@ const FormSetting = ({ setModalOpen }) => {
             });
             dispatch(setFoodItem([res, ...foodItems]));
             console.log(res);
-            toast.success("Create Susses");
+            toast.success("🦄 Wow so easy!", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
         } catch (error) {
-            toast.error("Something Wrong");
-            console.log(error);
+            toast.error("🦄 Something wrong!", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
         }
         setModalOpen(false);
     };
@@ -70,7 +81,7 @@ const FormSetting = ({ setModalOpen }) => {
         }
     };
     return (
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-base/dark-bg-1-18">
             <div className="mx-auto w-full max-w-sm lg:w-96">
                 <div>
                     <h2 className="text-3xl font-extrabold text-white uppercase">
@@ -114,7 +125,7 @@ const FormSetting = ({ setModalOpen }) => {
                                     {categories.map((category) => (
                                         <option
                                             key={category.id}
-                                            value={category.name}>
+                                            value={category.id}>
                                             {category.name}
                                         </option>
                                     ))}

@@ -1,5 +1,9 @@
-/* eslint-disable react/prop-types */
+/**
+ * @format
+ */
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { motion } from "framer-motion";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Button from "./Button";
@@ -13,14 +17,24 @@ const Product = (props) => {
         AOS.init({ once: true });
     }, []);
 
+    const item = {
+        hidden: { y: 20, opacity: 0 },
+        visible: {
+            y: 0,
+            opacity: 1,
+        },
+        
+    };
     return (
         <>
-            <div className="flex flex-col justify-between items-center bg-base/dark-bg-2-14 rounded-2xl w-[192px] h-[273px] mt-[34px] lg:mt-[55px] p-4 lg:w-[230px] lg:h-[327px] z-10 relative product-hover hover:scale-95 transition-transform">
+            <motion.li
+                className="flex flex-col justify-between items-center bg-base/dark-bg-2-14 rounded-2xl w-[192px] h-[273px] mt-[34px] lg:mt-[55px] p-4 lg:w-[230px] lg:h-[327px] z-10 relative product-hover hover:scale-95 hover:bg-base/dark-line duration-500"
+                variants={item}>
                 <div className="mt-[-34px] lg:mt-[-50px] relative overflow-visible">
                     {/* Sản phẩm */}
                     <img
-                        src={props.image}
                         alt={props.name}
+                        src={props.image}
                         className="product-img-1 left-50% w-[132px] h-[132px] lg:w-[160px] lg:h-[160px] object-cover sticky z-50 rounded-full"
                     />
                     {/* Toping */}
@@ -31,7 +45,9 @@ const Product = (props) => {
                     />
                 </div>
                 <div className="flex flex-col justify-center items-center gap-2">
-                    <h3 className="text-sm font-semibold text-center">{props.name}</h3>
+                    <h3 className="text-sm font-semibold text-center">
+                        {props.name}
+                    </h3>
                     <p className="text-sm font-light">$ {props.price}</p>
                     <p className="text-sm font-extralight text-light">
                         {props.quantity} Bowls available
@@ -45,7 +61,7 @@ const Product = (props) => {
                         }}
                     />
                 </div>
-            </div>
+            </motion.li>
             <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}>
                 <FormProduct
                     setModalOpen={() => {
@@ -56,6 +72,13 @@ const Product = (props) => {
             </Modal>
         </>
     );
+};
+
+Product.propTypes = {
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    quantity: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
 };
 
 export default Product;

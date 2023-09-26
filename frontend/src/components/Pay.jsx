@@ -1,257 +1,161 @@
-import { useState, Fragment } from "react";
+/** @format */
+
+import { useContext, useMemo } from "react";
+import CartContext from "../context/cartContext"; 
 import { RiShoppingCart2Line as Cart } from "react-icons/ri";
-import { Dialog, Transition } from "@headlessui/react";
-import { MdClose } from "react-icons/md";
+import { Transition } from "@headlessui/react";
 import ProductItem from "./ProductItem";
 import Button from "./Button";
-import { cart } from "../assets/data";
+import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
 
 const Pay = () => {
-    const [openCart, setOpenCart] = useState(false);
-    const [openPayment, setOpenPayment] = useState(false);
+    const { openPayment, togglePayment, toggleCart } = useContext(CartContext);
+    const cart = useSelector((state) => state.cart.value);
+    const calculateTotalCost = useMemo(() => {
+        return cart.reduce((totalCost, item) => {
+            return totalCost + item.foodId.price * item.quantity;
+        }, 0);
+    }, [cart]);
 
-    const toggleCart = () => {
-        setOpenCart(!openCart);
+    const container = {
+        hidden: { opacity: 0 },
+        show: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1,
+            },
+        },
     };
 
-    const togglePayment = () => {
-        setOpenPayment(!openPayment);
+    const item = {
+        hidden: { opacity: 0, y: 20 },
+        show: { opacity: 1, y: 0 },
     };
 
-    const total = cart.reduce((accumulator, product) => {
-        return accumulator + product.price * product.quantity;
-    }, 0);
-    
     return (
         <>
-            <Transition.Root show={openCart} as={Fragment}>
-                <Dialog
-                    as="div"
-                    className="relative z-10"
-                    onClose={setOpenCart}>
-                    <Transition.Child
-                        as={Fragment}
-                        enter="ease-in-out duration-500"
-                        enterFrom="opacity-0"
-                        enterTo="opacity-100"
-                        leave="ease-in-out duration-500"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0">
-                        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-                    </Transition.Child>
-                    <div className="fixed inset-0 overflow-hidden">
-                        <div className="absolute inset-0 overflow-hidden">
-                            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
-                                <Transition.Child
-                                    as={Fragment}
-                                    enter="transform transition ease-in-out duration-500 sm:duration-700"
-                                    enterFrom="translate-x-full"
-                                    enterTo="translate-x-0"
-                                    leave="transform transition ease-in-out duration-500 sm:duration-700"
-                                    leaveFrom="translate-x-0"
-                                    leaveTo="translate-x-full">
-                                    <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                                        <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
-                                            <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
-                                                <div className="flex items-start justify-between">
-                                                    <Dialog.Title className="text-lg font-medium text-gray-900">
-                                                        Shopping cart
-                                                    </Dialog.Title>
-                                                    <div className="ml-3 flex h-7 items-center">
-                                                        <button
-                                                            type="button"
-                                                            className="-m-2 p-2 text-gray-400 hover:text-gray-500"
-                                                            onClick={
-                                                                toggleCart
-                                                            }>
-                                                            <span className="sr-only">
-                                                                Close panel
-                                                            </span>
-                                                            <MdClose
-                                                                className="h-6 w-6"
-                                                                aria-hidden="true"
-                                                            />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div className="mt-8">
-                                                    <div className="flow-root">
-                                                        <ul
-                                                            role="list"
-                                                            className="-my-6 divide-y divide-gray-200">
-                                                            {cart.map(
-                                                                (product) => (
-                                                                    <li
-                                                                        key={
-                                                                            product.id
-                                                                        }
-                                                                        className="flex py-6">
-                                                                        <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                                                            <img
-                                                                                src={
-                                                                                    product.imageSrc
-                                                                                }
-                                                                                alt={
-                                                                                    product.imageAlt
-                                                                                }
-                                                                                className="h-full w-full object-cover object-center"
-                                                                            />
-                                                                        </div>
-
-                                                                        <div className="ml-4 flex flex-1 flex-col">
-                                                                            <div>
-                                                                                <div className="flex justify-between text-base font-medium text-gray-900">
-                                                                                    <h3>
-                                                                                        <a
-                                                                                            href={
-                                                                                                product.href
-                                                                                            }>
-                                                                                            {
-                                                                                                product.name
-                                                                                            }
-                                                                                        </a>
-                                                                                    </h3>
-                                                                                    <p className="ml-4">
-                                                                                        {
-                                                                                            product.price
-                                                                                        }
-                                                                                    </p>
-                                                                                </div>
-                                                                                <p className="mt-1 text-sm text-gray-500">
-                                                                                    {
-                                                                                        product.color
-                                                                                    }
-                                                                                </p>
-                                                                            </div>
-                                                                            <div className="flex flex-1 items-end justify-between text-sm">
-                                                                                <p className="text-gray-500">
-                                                                                    Qty{" "}
-                                                                                    {
-                                                                                        product.quantity
-                                                                                    }
-                                                                                </p>
-
-                                                                                <div className="flex">
-                                                                                    <button
-                                                                                        type="button"
-                                                                                        className="font-medium text-indigo-600 hover:text-indigo-500">
-                                                                                        Remove
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </li>
-                                                                )
-                                                            )}
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                                                <div className="flex justify-between text-base font-medium text-gray-900">
-                                                    <p>Subtotal</p>
-                                                    <p>$262.00</p>
-                                                </div>
-                                                <p className="mt-0.5 text-sm text-gray-500">
-                                                    Shipping and taxes
-                                                    calculated at checkout.
-                                                </p>
-                                                <div className="mt-6">
-                                                    <a
-                                                        href="#"
-                                                        className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
-                                                        Checkout
-                                                    </a>
-                                                </div>
-                                                <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-                                                    <p>
-                                                        or
-                                                        <button
-                                                            type="button"
-                                                            className="font-medium text-indigo-600 hover:text-indigo-500"
-                                                            onClick={
-                                                                toggleCart
-                                                            }>
-                                                            Continue Shopping
-                                                            <span aria-hidden="true">
-                                                                {" "}
-                                                                &rarr;
-                                                            </span>
-                                                        </button>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Dialog.Panel>
-                                </Transition.Child>
-                            </div>
-                        </div>
-                    </div>
-                </Dialog>
-            </Transition.Root>
             <div
                 className={`${
-                    !openPayment ? "w-[80px]" : "w-[33vw]"
+                    !openPayment ? "w-20" : "min-w-[408px]"
                 } bg-base/dark-bg-2-14 py-6 px-4 transition-all duration-500`}>
-                <div className={`${openPayment ? "hidden" : ""}`}>
+                <div className={`${openPayment ? "hidden" : ""} w-12`}>
                     <Button btnText={<Cart />} handler={togglePayment} />
                 </div>
-                <Transition show={openPayment}>
-                    <div
-                        className={`w-full bg-base/dark-bg-2-14 px-4 flex flex-col justify-between h-screen ${
-                            openPayment ? "" : "hidden"
-                        }`}>
-                        <div className="flex flex-col gap-6 overflow-y-auto scrollbar-none">
-                            <h2 className="text-xl font-semibol">
-                                Orders #34562
-                            </h2>
-                            <span className="bg-primary-color rounded-md p-2 text-white max-w-min">
-                                Delivery
-                            </span>
-                            <div className="flex justify-between w-full gap-6 font-semibold">
-                                <div className="flex justify-between w-full">
-                                    <span>Item</span>
-                                    <span>Qty</span>
-                                </div>
-                                <span>Price</span>
+                <Transition
+                    show={openPayment}
+                    enter="transition-opacity duration-300"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="transition-opacity duration-300"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0">
+                    {/* neu khong có sản phẩm nào trong cart thì hiện bạn chưa có sản phẩm nào */}
+                    <Transition
+                        show={cart.length === 0}
+                        enter="transition-opacity duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="transition-opacity duration-300"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0">
+                        <div className="flex flex-col justify-center items-center h-screen">
+                            <div className="text-4xl mb-4">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-16 w-16 text-gray-400"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 1a7 7 0 100 14 7 7 0 000-14zm0 4a1 1 0 00-1 1v3a1 1 0 002 0V8a1 1 0 00-1-1zm0 6a1 1 0 100 2 1 1 0 000-2z"
+                                        clipRule="evenodd"
+                                    />
+                                </svg>
                             </div>
-                            <hr className="w-full h-[1px] bg-base/dark-line-1 border-0" />
-                            <div className="flow-root">
-                                <ul role="list" className="flex flex-col gap-6">
-                                    {cart.map((product) => {
-                                        return (
-                                            <li key={product.id}>
-                                                <ProductItem {...product} />
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="flex flex-col gap-6 bg-base/dark-bg-2-14 mb-12">
-                            <hr className="w-full h-[1px] bg-base/dark-line-1 border-0" />
-                            <div className="flex justify-between text-base font-medium ">
-                                <p>Discount</p>
-                                <p>0%</p>
-                            </div>
-                            <div className="flex justify-between text-base font-medium ">
-                                <p>Subtotal</p>
-                                <p>$ {total}</p>
-                            </div>
-                            <div className="flex gap-3 w-full">
+                            <p className="text-xl font-semibold mb-4">
+                                Your cart is currently empty
+                            </p>
+                            <div className="w-40">
                                 <Button
                                     btnText="Go Back"
                                     outline={true}
                                     handler={togglePayment}
                                 />
-                                <Button
-                                    btnText="Pay Now"
-                                    handler={toggleCart}
-                                />
                             </div>
                         </div>
-                    </div>
+                    </Transition>
+                    <Transition
+                        show={openPayment}
+                        enter="transition-opacity duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="transition-opacity duration-300"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0">
+                        <div
+                            className={`w-full bg-base/dark-bg-2-14 px-4 flex flex-col justify-between h-screen ${
+                                openPayment ? "" : "hidden"
+                            }`}>
+                            <div className="flex flex-col gap-6 overflow-y-auto scrollbar-none">
+                                <h2 className="text-xl font-semibold">
+                                    Orders #34562
+                                </h2>
+                                <span className="bg-primary-color rounded-md p-2 text-white max-w-min">
+                                    Delivery
+                                </span>
+                                <div className="flex justify-between w-full gap-6 font-semibold">
+                                    <div className="flex justify-between w-full">
+                                        <span>Item</span>
+                                        <span>Qty</span>
+                                    </div>
+                                    <span>Price</span>
+                                </div>
+                                <hr className="w-full h-[1px] bg-base/dark-line-1 border-0" />
+                                <div className="flow-root">
+                                    <motion.ul
+                                        variants={container}
+                                        initial="hidden"
+                                        animate="show"
+                                        role="list"
+                                        className="flex flex-col gap-6">
+                                        {cart.map((product) => {
+                                            return (
+                                                <motion.li
+                                                    variants={item}
+                                                    role="listitem"
+                                                    key={product._id}>
+                                                    <ProductItem {...product} />
+                                                </motion.li>
+                                            );
+                                        })}
+                                    </motion.ul>
+                                </div>
+                            </div>
+                            <div className="flex flex-col gap-6 bg-base/dark-bg-2-14 mb-12">
+                                <hr className="w-full h-[1px] bg-base/dark-line-1 border-0" />
+                                <div className="flex justify-between text-base font-medium ">
+                                    <p>Discount</p>
+                                    <p>0%</p>
+                                </div>
+                                <div className="flex justify-between text-base font-medium ">
+                                    <p>Subtotal</p>
+                                    <p>$ {calculateTotalCost}</p>
+                                </div>
+                                <div className="flex gap-3 w-full">
+                                    <Button
+                                        btnText="Go Back"
+                                        outline={true}
+                                        handler={togglePayment}
+                                    />
+                                    <Button
+                                        btnText="Pay Now"
+                                        handler={toggleCart}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Transition>
                 </Transition>
             </div>
         </>

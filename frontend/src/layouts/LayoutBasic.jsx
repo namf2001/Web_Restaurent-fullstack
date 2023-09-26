@@ -1,4 +1,4 @@
-import { Navbar, Sidebar, Pay } from "../components";
+import { Navbar, Sidebar } from "../components";
 import { Outlet, useNavigate } from "react-router-dom";
 import { MENU_ITEMS } from "../assets/data";
 import { useDispatch } from "react-redux";
@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import authUtils from "../utils/authUtlis";
 import { setUser } from "../redux/features/userSlice";
 import Loading from "../components/Loading";
+
 
 const LayoutBasic = () => {
     const navigate = useNavigate();
@@ -15,7 +16,6 @@ const LayoutBasic = () => {
     useEffect(() => {
         const checkAuth = async () => {
             const user = await authUtils.isAuthenticated();
-            console.log(user);
             if (user && user.role === "admin") {
                 dispatch(setUser(user));
                 setLoading(false);
@@ -43,7 +43,6 @@ const LayoutBasic = () => {
                         <Navbar />
                         <Outlet />
                     </div>
-                    <Pay />
                 </div>
             </div>
         </div>
