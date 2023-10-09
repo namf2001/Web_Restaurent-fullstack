@@ -13,9 +13,13 @@ const orderApi = {
         const url = "/order";
         return axiosClient.post(url, data);
     },
-    update: (param,data) => {
+    remove: (param) => {
         const url = `/order/${param}`;
-        return axiosClient.put(url, data);
+        return axiosClient.delete(url);
+    },
+    getLatest: () => {
+        const url = `/order/latest`;
+        return axiosClient.get(url);
     },
 };
 

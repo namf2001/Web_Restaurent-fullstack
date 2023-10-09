@@ -15,7 +15,10 @@ const addToCart = async (req, res, next) => {
             return res.status(404).json("Food not found");
         }
 
-        const findUsersCart = await Cart.find({ userId: userId._id });
+        const findUsersCart = await Cart.find({
+            userId: userId._id,
+            status: "pending",
+        });
 
         const existingCartItem = findUsersCart.find((eachItemInUserCart) => {
             return (
@@ -30,6 +33,7 @@ const addToCart = async (req, res, next) => {
             await existingCartItem.save();
             const findCartItems = await Cart.find({
                 userId: userId._id,
+                status: "pending",
             }).populate({
                 path: "foodId",
                 select: "name image price",
@@ -58,6 +62,7 @@ const addToCart = async (req, res, next) => {
 
                 const findCartItems = await Cart.find({
                     userId: userId._id,
+                    status: "pending",
                 }).populate({
                     path: "foodId",
                     select: "name image price",
@@ -87,8 +92,7 @@ const allCartItem = async (req, res, next) => {
         const findUsersCart = await Cart.find({
             userId: userId._id,
             status: "pending",
-        }
-        ).populate({
+        }).populate({
             path: "foodId",
             select: "name image price",
         });
@@ -187,10 +191,264 @@ const removeFromCart = async (req, res, next) => {
     }
 };
 
+// Lấy danh sách các món ăn được mua nhiều nhất trong hôm nay
+const getMostOrderedFoodsToday = async (req, res) => {
+    try {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const result = await Cart.aggregate([
+            {
+                $match: {
+                    userId: req.user._id,
+                    createdAt: { $gte: today },
+                    status: { $in: ["confirmed", "delivered"] },
+                },
+            },
+            {
+                $group: {
+                    _id: "$foodId",
+                    totalOrdered: { $sum: "$quantity" },
+                },
+            },
+            {
+                $lookup: {
+                    from: "fooditems", // Tên collection của món ăn
+                    localField: "_id",
+                    foreignField: "_id",
+                    as: "foodItem",
+                },
+            },
+            {
+                $sort: { totalOrdered: -1 },
+            },
+            {
+                $limit: 10, // Lấy 10 món ăn được mua nhiều nhất
+            },
+        ]);
+
+        res.status(200).json(result);
+    } catch (error) {
+        console.error("Error getting most ordered foods today:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+// Lấy danh sách các món ăn được mua nhiều nhất trong tuần nay
+const getMostOrderedFoodsThisWeek = async (req, res) => {
+    try {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const startOfWeek = new Date(today);
+        startOfWeek.setDate(today.getDate() - today.getDay()); // Lấy ngày đầu tuần (Chủ Nhật là ngày 0)
+
+        const result = await Cart.aggregate([
+            {
+                $match: {
+                    userId: req.user._id,
+                    createdAt: { $gte: startOfWeek },
+                    status: { $in: ["confirmed", "delivered"] },
+                },
+            },
+            {
+                $group: {
+                    _id: "$foodId",
+                    totalOrdered: { $sum: "$quantity" },
+                },
+            },
+            {
+                $lookup: {
+                    from: "fooditems", // Tên collection của món ăn
+                    localField: "_id",
+                    foreignField: "_id",
+                    as: "foodItem",
+                },
+            },
+            {
+                $sort: { totalOrdered: -1 },
+            },
+            {
+                $limit: 10, // Lấy 10 món ăn được mua nhiều nhất
+            },
+        ]);
+
+        res.status(200).json(result);
+    } catch (error) {
+        console.error("Error getting most ordered foods this week:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+// Lấy danh sách các món ăn được mua nhiều nhất all the time
+const getMostOrderedFoodsAllTime = async (req, res) => {
+    try {
+        const result = await Cart.aggregate([
+            {
+                $match: {
+                    userId: req.user._id,
+                    status: { $in: ["confirmed", "delivered"] },
+                },
+            },
+            {
+                $group: {
+                    _id: "$foodId",
+                    totalOrdered: { $sum: "$quantity" },
+                },
+            },
+            {
+                $lookup: {
+                    from: "fooditems", // Tên collection của món ăn
+                    localField: "_id",
+                    foreignField: "_id",
+                    as: "foodItem",
+                },
+            },
+            {
+                $sort: { totalOrdered: -1 },
+            },
+            {
+                $limit: 10, // Lấy 10 món ăn được mua nhiều nhất
+            },
+        ]);
+
+        res.status(200).json(result);
+    } catch (error) {
+        console.error("Error getting most ordered foods all time:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+const getMostOrderedFoodsTodayAdmin = async (req, res) => {
+    try {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const result = await Cart.aggregate([
+            {
+                $match: {
+                    createdAt: { $gte: today },
+                    status: { $in: ["confirmed", "delivered"] },
+                },
+            },
+            {
+                $group: {
+                    _id: "$foodId",
+                    totalOrdered: { $sum: "$quantity" },
+                },
+            },
+            {
+                $lookup: {
+                    from: "fooditems", // Tên collection của món ăn
+                    localField: "_id",
+                    foreignField: "_id",
+                    as: "foodItem",
+                },
+            },
+            {
+                $sort: { totalOrdered: -1 },
+            },
+            {
+                $limit: 10, // Lấy 10 món ăn được mua nhiều nhất
+            },
+        ]);
+
+        res.status(200).json(result);
+    } catch (error) {
+        console.error("Error getting most ordered foods today:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+const getMostOrderedFoodsThisWeekAdmin = async (req, res) => {
+    try {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const startOfWeek = new Date(today);
+        startOfWeek.setDate(today.getDate() - today.getDay()); // Lấy ngày đầu tuần (Chủ Nhật là ngày 0)
+
+        const result = await Cart.aggregate([
+            {
+                $match: {
+                    createdAt: { $gte: startOfWeek },
+                    status: { $in: ["confirmed", "delivered"] },
+                },
+            },
+            {
+                $group: {
+                    _id: "$foodId",
+                    totalOrdered: { $sum: "$quantity" },
+                },
+            },
+            {
+                $lookup: {
+                    from: "fooditems", // Tên collection của món ăn
+                    localField: "_id",
+                    foreignField: "_id",
+                    as: "foodItem",
+                },
+            },
+            {
+                $sort: { totalOrdered: -1 },
+            },
+            {
+                $limit: 10, // Lấy 10 món ăn được mua nhiều nhất
+            },
+        ]);
+
+        res.status(200).json(result);
+    } catch (error) {
+        console.error("Error getting most ordered foods this week:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+const getMostOrderedFoodsAllTimeAdmin = async (req, res) => {
+    try {
+        const result = await Cart.aggregate([
+            {
+                $match: {
+                    status: { $in: ["confirmed", "delivered"] },
+                },
+            },
+            {
+                $group: {
+                    _id: "$foodId",
+                    totalOrdered: { $sum: "$quantity" },
+                },
+            },
+            {
+                $lookup: {
+                    from: "fooditems", // Tên collection của món ăn
+                    localField: "_id",
+                    foreignField: "_id",
+                    as: "foodItem",
+                },
+            },
+            {
+                $sort: { totalOrdered: -1 },
+            },
+            {
+                $limit: 10, // Lấy 10 món ăn được mua nhiều nhất
+            },
+        ]);
+
+        res.status(200).json(result);
+    } catch (error) {
+        console.error("Error getting most ordered foods all time:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
 module.exports = {
     addToCart,
     allCartItem,
     editCart,
     editMessage,
     removeFromCart,
+    getMostOrderedFoodsToday,
+    getMostOrderedFoodsThisWeek,
+    getMostOrderedFoodsAllTime,
+    getMostOrderedFoodsTodayAdmin,
+    getMostOrderedFoodsThisWeekAdmin,
+    getMostOrderedFoodsAllTimeAdmin,
 };

@@ -8,6 +8,9 @@ import ProductItem from "./ProductItem";
 import Button from "./Button";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import lottie from "lottie-web";
+import { defineElement } from "lord-icon-element"; // define "lord-icon" custom element with default properties
+defineElement(lottie.loadAnimation);
 
 const Pay = () => {
     const { openPayment, togglePayment, toggleCart } = useContext(CartContext);
@@ -61,17 +64,11 @@ const Pay = () => {
                         leaveTo="opacity-0">
                         <div className="flex flex-col justify-center items-center h-screen">
                             <div className="text-4xl mb-4">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-16 w-16 text-gray-400"
-                                    viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 1a7 7 0 100 14 7 7 0 000-14zm0 4a1 1 0 00-1 1v3a1 1 0 002 0V8a1 1 0 00-1-1zm0 6a1 1 0 100 2 1 1 0 000-2z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
+                                <lord-icon
+                                    src="https://cdn.lordicon.com/dnmvmpfk.json"
+                                    trigger="loop"
+                                    colors="primary:#ffffff,secondary:#ffffff"
+                                />
                             </div>
                             <p className="text-xl font-semibold mb-4">
                                 Your cart is currently empty

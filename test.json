@@ -1,0 +1,37 @@
+{
+  id: 'cus_Om231n5vH3ZcDn',
+  object: 'customer',
+  address: null,
+  balance: 0,
+  created: 1696660050,
+  currency: null,
+  default_source: null,
+  delinquent: false,
+  description: null,
+  discount: null,
+  email: 'namnguyen7230@gmail.com',
+  invoice_prefix: '0CB49DC8',
+  invoice_settings: {
+    custom_fields: null,
+    default_payment_method: null,
+    footer: null,
+    rendering_options: null
+  },
+  livemode: false,
+  metadata: {
+    address: '428B Đường Tỉnh, Xã Tri Thủy, Hanoi',
+    carts: '[
+      "651c3989d1d5e29c17c305fc",
+      "651d36cd9994f6009c2c3410"
+    ]',
+    note: 'giao vao buoi toi',
+    userId: '651919fefa29666104062b25'
+  },
+  name: null,
+  next_invoice_sequence: 1,
+  phone: '+84926879351',
+  preferred_locales: [],
+  shipping: null,
+  tax_exempt: 'none',
+  test_clock: null
+}

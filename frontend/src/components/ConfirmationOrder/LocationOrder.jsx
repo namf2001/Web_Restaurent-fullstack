@@ -8,14 +8,24 @@ import { motion } from "framer-motion";
 import getAddressDetails from "../../utils/locationUtils";
 import lottie from "lottie-web";
 import { defineElement } from "lord-icon-element"; // define "lord-icon" custom element with default properties
+import { useDispatch, useSelector } from "react-redux";
+import orderApi from "../../api/orderApi";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { setCart } from "../../redux/features/cartSlice";
+import PaymentApi from "../../api/paymentApi";
 defineElement(lottie.loadAnimation);
 
 const LocationOrder = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const cart = useSelector((state) => state.cart.value);
     const { openLocation, toggleLocation } = useContext(CartContext);
     const [latitude, setLatitude] = useState(null);
     const [longitude, setLongitude] = useState(null);
     const [locationData, setLocationData] = useState(null);
     const [error, setError] = useState(null);
+    const [note, setNote] = useState("");
 
     const getLocation = () => {
         if ("geolocation" in navigator) {
@@ -50,6 +60,54 @@ const LocationOrder = () => {
                 });
         }
     }, [latitude, longitude]);
+
+    const handleCreateOrder = async () => {
+        try {
+            const total = cart.reduce((total, item) => {
+                return total + item.quantity * item.foodId.price;
+            }, 0);
+            const order = {
+                address: locationData,
+                items: cart.map((item) => item._id), // Sử dụng _id của mỗi mục Cart
+                total: total,
+                node: note,
+            };
+            const response = await orderApi.add(order);
+            if (response.success) {
+                toast.success("Đặt hàng thành công");
+                dispatch(setCart([]));
+                navigate("/user/order");
+            } else {
+                toast.error("ban chua câp nhat thong tin của mình");
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("ban chua câp nhat thong tin của mình");
+        }
+    };
+
+    const handleCheckout = async () => {
+        const total = cart.reduce((total, item) => {
+            return total + item.quantity * item.foodId.price;
+        }, 0);
+        const order = {
+            address: locationData,
+            items: cart.map((item) => item._id), // Sử dụng _id của mỗi mục Cart
+            total: total,
+            note: note,
+        };
+
+        await PaymentApi.createCheckoutSession(order)
+            .then((result) => {
+                console.log(result)
+                if (result.url) {
+                    window.location.href = result.url;
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
     return (
         <Transition
@@ -87,9 +145,10 @@ const LocationOrder = () => {
                                     onClick={getLocation}
                                     className="border-dark hover:border-color transition-all duration-300 border-2 self-stretch flex flex-col mb-5 gap-px h-[68px] shrink-0 items-center justify-center  rounded-lg">
                                     <lord-icon
-                                        src="https://cdn.lordicon.com/fbdgkenc.json"
-                                        trigger="hover"
-                                        colors="primary:#ffffff"></lord-icon>
+                                        src="https://cdn.lordicon.com/zzcjjxew.json"
+                                        trigger="loop"
+                                        colors="primary:#ffffff,secondary:#ffffff"
+                                        state="loop-spin"></lord-icon>
                                     <div className="text-center text-sm font-medium text-white">
                                         Sử dụng GPS
                                     </div>
@@ -131,7 +190,9 @@ const LocationOrder = () => {
                                 </div>
                                 <input
                                     type="text"
-                                    placeholder="Enter your note"
+                                    value={note}
+                                    onChange={(e) => setNote(e.target.value)}
+                                    placeholder="Nhập ghi chú của bạn"
                                     className="bg-base/dark-line block rounded-md mb-2 pl-3 h-12 w-full text-light ring-1 ring-inset ring-gray-700 placeholder:text-light focus:ring-2 focus:ring-inset focus:ring-offset-gray-950 focus:outline-none text-sm leading-6"
                                 />
                             </div>
@@ -153,7 +214,7 @@ const LocationOrder = () => {
                     <Button
                         btnText=" Thanh Toán"
                         handler={() => {
-                            toggleLocation();
+                            handleCheckout();
                         }}
                     />
                 </motion.div>

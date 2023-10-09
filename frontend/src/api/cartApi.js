@@ -23,6 +23,18 @@ const CartApi = {
         const url = `/cart/${id}`;
         return axiosClient.delete(url);
     },
+    getMostOrderedFoodsToday: () => {
+        const url = `/cart/most-ordered-today`;
+        return axiosClient.get(url);
+    },
+    getMostOrderedFoodsThisWeek: () => {
+        const url = `/cart/most-ordered-this-week`;
+        return axiosClient.get(url);
+    },
+    getMostOrderedFoodsAllTime: () => {
+        const url = `/cart/most-ordered-all-time`;
+        return axiosClient.get(url);
+    },
 };
 
 export default CartApi;

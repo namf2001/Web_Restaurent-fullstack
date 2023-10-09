@@ -1,3 +1,5 @@
+/** @format */
+
 // models/foodItem.js
 const mongoose = require("mongoose");
 const { schemaOptions } = require("./modelOptions");
@@ -37,7 +39,15 @@ const foodItemSchema = new mongoose.Schema(
             },
         ],
     },
-    schemaOptions
+    {
+        toJSON: {
+            virtuals: true,
+        },
+        toObject: {
+            virtuals: true,
+        },
+        timestamps: true,
+    }
 );
 
 const FoodItem = mongoose.model("FoodItem", foodItemSchema);

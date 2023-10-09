@@ -1,6 +1,6 @@
 /** @format */
 
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import MenuDropDown from "../components/MenuDropDown";
 import { motion } from "framer-motion";
 import { Product } from "../components";
@@ -32,7 +32,6 @@ const Home = () => {
     useEffect(() => {
         AOS.init();
     }, []);
-
 
     return (
         <div className="px-6 flex flex-col h-full w-full">
@@ -91,7 +90,11 @@ const Home = () => {
                             foodItem.category === selectedType.id ||
                             selectedType.id === categories[0].id
                         ) {
-                            return <Product key={foodItem._id} {...foodItem} />;
+                            return (
+                                <Fragment key={foodItem._id}>
+                                    <Product {...foodItem} />
+                                </Fragment>
+                            );
                         }
                         return null;
                     })}

@@ -12,20 +12,23 @@ const Button = ({
     return (
         <motion.button
             type={btnType}
-            className={`p-4 inline-flex items-center justify-center rounded-lg w-full text-white text-sm hover:shadow-xl transition-all ${color} ${
-                outline ? "border-2 border-color" : "bg-primary-color"
+            className={`p-4 inline-flex items-center justify-center rounded-lg w-full text-white text-sm hover:shadow-xl transition-all ${
+                outline
+                    ? "border-2 border-color"
+                    : color
+                    ? color
+                    : "bg-primary-color"
             } `}
             onClick={handler}
-            whileHover={{ scale: 0.9 }}
-            whileTap={{ scale: 0.8 }} // Apply the hover animation
-        >
+            whileHover={{ opacity: 0.8 }}>
             {btnText}
         </motion.button>
     );
 };
 
 Button.propTypes = {
-    btnText: PropTypes.string.isRequired,
+    // btnText: có thể là text hoặc icon
+    btnText: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     outline: PropTypes.bool,
     handler: PropTypes.func,
     btnType: PropTypes.string,

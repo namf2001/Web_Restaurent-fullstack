@@ -1,3 +1,5 @@
+/** @format */
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import { LayoutBasic, LayoutUser, LayoutAdmin } from "./layouts";
@@ -13,6 +15,7 @@ import {
     Order,
     Setting,
     Product,
+    Success,
 } from "./pages";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -59,10 +62,6 @@ function App() {
                         <Route path="/user/" element={<Home />} />
                         <Route path="/user/discount" element={<Discount />} />
                         <Route path="/user/dashboard" element={<Dashboard />} />
-                        <Route
-                            path="/user/notification"
-                            element={<Notification />}
-                        />
                         <Route path="/user/order" element={<Order />} />
                         <Route path="/user/customer" element={<Customer />} />
                         <Route path="/user/product/:id" element={<Product />} />
@@ -77,12 +76,14 @@ function App() {
                             path="/admin/notification"
                             element={<Notification />}
                         />
+                        <Route path="/admin/order" element={<Order />} />
                         <Route path="/admin/setting" element={<Setting />} />
                         <Route
                             path="/admin/product/:id"
                             element={<Product />}
                         />
                     </Route>
+                    <Route path="/success" element={<Success />} />
                 </Routes>
             </BrowserRouter>
             <ToastContainer

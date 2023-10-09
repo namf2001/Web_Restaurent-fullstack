@@ -1,6 +1,5 @@
 const router = require("express").Router();
-const { register, login, getUser, updateUser } = require("../controllers/user");
-const { getOrdersByUserId } = require("../controllers/order");
+const { register, login, getUser, updateUser, getAllUsers } = require("../controllers/user");
 const { body } = require("express-validator");
 const { validate } = require("../middleware/validation");
 const { verifyToken } = require("../middleware/tokenHandler");
@@ -57,8 +56,7 @@ router.put(
     updateUser
 );
 
-// router.get("/user/:id/orders", verifyToken, getOrdersByUserId);
-
+router.get("/users", verifyToken, getAllUsers);
 
 router.post("/verify-token", verifyToken, (req, res) => {
     res.status(200).json(req.user);

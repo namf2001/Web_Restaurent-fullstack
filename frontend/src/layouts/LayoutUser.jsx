@@ -21,7 +21,6 @@ const LayoutUser = () => {
     useEffect(() => {
         const checkAuth = async () => {
             const user = await authUtils.isAuthenticated();
-            // console.log(user);
             if (!user) {
                 navigate("/");
             } else if (user.role === "admin") {
@@ -41,7 +40,6 @@ const LayoutUser = () => {
         async function fetchCart() {
             try {
                 const data = await CartApi.getCart();
-                console.log(data)
                 dispatch(setCart(data));
             } catch (error) {
                 console.log(error);

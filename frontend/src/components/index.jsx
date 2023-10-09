@@ -7,3 +7,5 @@ export { default as Product } from './Product';
 export { default as ProductItem } from './ProductItem';
 export { default as ConfirmationOrder } from "./ConfirmationOrder/ConfirmationOrder";
 export { default as PaymentOrder } from "./ConfirmationOrder/PaymentOrder";
+export { default as OrderItem } from "./OrderItem";
+export { default as ProgressChecking } from "./ProgressChecking";

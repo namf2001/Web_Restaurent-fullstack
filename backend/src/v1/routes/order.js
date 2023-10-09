@@ -1,19 +1,21 @@
 /** @format */
 
 const router = require("express").Router();
-const { validate } = require("../middleware/validation");
 const { verifyToken } = require("../middleware/tokenHandler");
 const {
     createOrder,
     getAllOrders,
+    getAllOrdersAdmin,
     getOrder,
     updateOrderStatus,
+    getLatest
 } = require("../controllers/order");
 
-router.post("/", verifyToken, validate("createOrder"), createOrder);
+router.post("/", verifyToken, createOrder);
 router.get("/", verifyToken, getAllOrders);
+router.get("/latest", verifyToken, getLatest);
+router.get("/admin", verifyToken, getAllOrdersAdmin);
 router.get("/:id", verifyToken, getOrder);
-router.put("/:id", verifyToken, validate("updateOrderStatus"), updateOrderStatus);
-
+router.put("/:id", verifyToken, updateOrderStatus);
 
 module.exports = router;

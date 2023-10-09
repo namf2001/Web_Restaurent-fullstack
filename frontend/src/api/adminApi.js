@@ -1,0 +1,32 @@
+/** @format */
+
+import axiosClient from "./axiosClient";
+
+const adminApi = {
+    getMostOrderedFoodsTodayAdmin: () => {
+        const url = "/cart/most-ordered-today-admin";
+        return axiosClient.get(url);
+    },
+    getMostOrderedFoodsThisWeekAdmin: () => {
+        const url = "/cart/most-ordered-this-week-admin";
+        return axiosClient.get(url);
+    },
+    getMostOrderedFoodsAllTimeAdmin: () => {
+        const url = "/cart/most-ordered-all-time-admin";
+        return axiosClient.get(url);
+    },
+    getAllUsers: () => {
+        const url = "/auth/users";
+        return axiosClient.get(url);
+    },
+    getAllAdmin: () => {
+        const url = "/order/admin";
+        return axiosClient.get(url);
+    },
+    updateStatus: (param, data) => {
+        const url = `/order/${param}`;
+        return axiosClient.put(url, data);
+    },
+};
+
+export default adminApi;

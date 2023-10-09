@@ -1,13 +1,13 @@
 import axiosClient from "./axiosClient";
 
 const PaymentApi = {
-  confirmPayment: () => {
-    const url = `/payment/`;
-    return axiosClient.get(url);
+  createCheckoutSession: (data) => {
+    const url = `/payment/create-checkout-session`;
+    return axiosClient.post(url, data);
   },
 
   createPayment: (data) => {
-    const url = `/payment/confirm`;
+    const url = `/payment/webhook`;
     return axiosClient.post(url, data);
   },
 };

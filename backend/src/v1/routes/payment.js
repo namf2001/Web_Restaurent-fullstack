@@ -1,13 +1,8 @@
-/** @format */
-
-const router = require("express").Router();
-const {
-        checkout,
-    confirmPayment,
-} = require("../controllers/payment");
+const express = require("express");
+const router = express.Router();
 const { verifyToken } = require("../middleware/tokenHandler");
+const checkoutController = require("../controllers/payment");
 
-router.get("/", verifyToken, checkout);
-router.post("/confirm", verifyToken, confirmPayment);
-
+router.post("/create-checkout-session",verifyToken, checkoutController.createCheckoutSession);
+router.post("/webhook", express.raw({type: 'application/json'}), checkoutController.handleWebhook);
 module.exports = router;

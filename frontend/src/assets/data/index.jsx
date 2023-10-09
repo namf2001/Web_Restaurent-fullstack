@@ -90,11 +90,6 @@ export const USER_MENU = [
         icon: <TbDiscount2 />,
     },
     {
-        name: "Notification",
-        path: "/user/notification",
-        icon: <Notification />,
-    },
-    {
         name: "Order",
         path: "/user/order",
         icon: <Order />,

@@ -18,7 +18,15 @@ const userSchema = new mongoose.Schema(
             },
         ],
     },
-    schemaOptions
+        {
+        toJSON: {
+            virtuals: true,
+        },
+        toObject: {
+            virtuals: true,
+        },
+        timestamps: true,
+    }
 );
 
 const User = mongoose.model("User", userSchema);

@@ -48,7 +48,7 @@ const Input = () => {
                 id="search"
                 className="bg-base/dark-line block rounded-md border-0 py-1.5 pl-10 w-full pr-3 h-full text-light ring-1 ring-inset ring-gray-700 placeholder:text-light focus:ring-2 focus:ring-inset focus:ring-offset-gray-950 focus:outline-none text-sm leading-6"
                 value={searchTerm}
-                placeholder="Search for food, coffee, ..."
+                placeholder="Tìm kiếm sản phẩm"
                 onChange={handleSuggestions}
                 onBlur={() => {
                     setTimeout(() => {

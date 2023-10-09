@@ -11,6 +11,10 @@ import { useSelector } from "react-redux";
 import ProductItem from "../ProductItem";
 import PaymentOrder from "./PaymentOrder";
 import LocationOrder from "./LocationOrder.jsx";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe("your_stripe_api_key");
 
 const ConfirmationOrder = () => {
     const { openCart, toggleCart } = useContext(CartContext);
@@ -160,7 +164,9 @@ const ConfirmationOrder = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <PaymentOrder />
+                                            <Elements stripe={stripePromise}>
+                                                <PaymentOrder />
+                                            </Elements>
                                             <LocationOrder />
                                         </div>
                                     </Dialog.Panel>

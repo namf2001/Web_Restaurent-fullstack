@@ -1,8 +1,5 @@
-// import React from "react";
-
 import { useState } from "react";
 import ModalAuth from "../components/modal/ModalAuth";
-
 
 const Login = () => {
     const [modalOpen, setModalOpen] = useState(false);

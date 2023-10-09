@@ -2,7 +2,6 @@
 
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const { schemaOptions } = require("./modelOptions");
 
 const cartSchema = new Schema(
     {
@@ -31,7 +30,15 @@ const cartSchema = new Schema(
             default: "pending",
         },
     },
-    schemaOptions
+    {
+        toJSON: {
+            virtuals: true,
+        },
+        toObject: {
+            virtuals: true,
+        },
+        timestamps: true,
+    }
 );
 
 module.exports = mongoose.model("Cart", cartSchema);

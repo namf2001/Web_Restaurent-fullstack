@@ -23,7 +23,6 @@ const Product = (props) => {
             y: 0,
             opacity: 1,
         },
-        
     };
     return (
         <>
@@ -50,17 +49,24 @@ const Product = (props) => {
                     </h3>
                     <p className="text-sm font-light">$ {props.price}</p>
                     <p className="text-sm font-extralight text-light">
-                        {props.quantity} Bowls available
+                        {props.quantity} Bát có sẵn
                     </p>
                 </div>
                 <div className="w-full">
                     <Button
-                        btnText="Order Now"
+                        btnText="Mua ngay"
                         handler={() => {
                             setModalOpen(true);
                         }}
                     />
                 </div>
+                {props.discount > 0 && (
+                    <div className="absolute top-1/4 z-50 left-0 shadow-xl overflow-hidden bg-primary-color flex flex-col justify-center w-24 h-12 items-center rounded-e-lg">
+                        <div className="text-center selection:font-semibold  text-white">
+                            {props.discount}% off
+                        </div>
+                    </div>
+                )}
             </motion.li>
             <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}>
                 <FormProduct
@@ -79,6 +85,7 @@ Product.propTypes = {
     price: PropTypes.number.isRequired,
     quantity: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
+    discount: PropTypes.number.isRequired,
 };
 
 export default Product;

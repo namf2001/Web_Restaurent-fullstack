@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { schemaOptions } = require("./modelOptions");
 
 const orderSchema = new mongoose.Schema(
     {
@@ -10,11 +9,9 @@ const orderSchema = new mongoose.Schema(
         },
         items: [
             {
-                item_id: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: "Cart",
-                    required: true,
-                }
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Cart",
+                required: true,
             }
         ],
         total: { type: Number, required: true },
@@ -23,10 +20,21 @@ const orderSchema = new mongoose.Schema(
             enum: ["pending", "confirmed", "delivered"],
             default: "pending",
         },
+        payment_status: { type: String },
+        // lấy phone và address từ user
+        phone: { type: String, required: true, ref: "User" },
         address: { type: String, required: true },
         note: { type: String, default: "" },
     },
-    schemaOptions
+    {
+        toJSON: {
+            virtuals: true,
+        },
+        toObject: {
+            virtuals: true,
+        },
+        timestamps: true,
+    }
 );
 
 const Order = mongoose.model("Order", orderSchema);
