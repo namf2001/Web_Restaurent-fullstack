@@ -26,7 +26,7 @@ const LayoutUser = () => {
             } else if (user.role === "admin") {
                 dispatch(setUser(user));
                 setLoading(false);
-                navigate("/admin");
+                navigate("/admin/");
             } else {
                 dispatch(setUser(user));
                 setLoading(false);

@@ -1,6 +1,5 @@
 // models/user.js
 const mongoose = require("mongoose");
-const { schemaOptions } = require("./modelOptions");
 
 const userSchema = new mongoose.Schema(
     {
@@ -15,6 +14,12 @@ const userSchema = new mongoose.Schema(
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Order",
+            },
+        ],
+        wishlist: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "FoodItem",
             },
         ],
     },

@@ -18,13 +18,22 @@ const ProgressChecking = ({ status }) => {
                 <div className="absolute w-full h-1 border-0 border-t-8 border-dotted border-t-white top-1/2 transform -translate-y-1/2"></div>
                 <motion.div
                     variants={
-                        status === "confirmed"
+                        status === "pending"
                             ? {
                                   hidden: {
                                       width: "0%",
                                   },
                                   visible: {
-                                      width: "25%",
+                                      width: "0%",
+                                  },
+                              }
+                            : status === "confirmed"
+                            ? {
+                                  hidden: {
+                                      width: "0%",
+                                  },
+                                  visible: {
+                                      width: "20%",
                                   },
                               }
                             : {
@@ -44,13 +53,22 @@ const ProgressChecking = ({ status }) => {
                     className="absolute w-1/4 h-1 border-0 border-t-[10px] border-t-primary-color rounded-s-full top-1/2 transform -translate-y-1/2"></motion.div>
                 <motion.div
                     variants={
-                        status === "confirmed"
+                        status === "pending"
                             ? {
                                   hidden: {
                                       left: "0%",
                                   },
                                   visible: {
-                                      left: "25%",
+                                      left: "0%",
+                                  },
+                              }
+                            : status === "confirmed"
+                            ? {
+                                  hidden: {
+                                      left: "0%",
+                                  },
+                                  visible: {
+                                      left: "20%",
                                   },
                               }
                             : {

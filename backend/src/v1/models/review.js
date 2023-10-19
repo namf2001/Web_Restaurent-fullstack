@@ -1,28 +1,40 @@
 /** @format */
 
+//design review model
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const { schemaOptions } = require("./modelOptions");
 
 const reviewSchema = new Schema(
     {
-        user_id: {
-            type: mongoose.Schema.Types.ObjectId,
+        foodItemId: {
+            type: Schema.Types.ObjectId,
+            ref: "FoodItem",
+            required: true,
+        },
+        userId: {
+            type: Schema.Types.ObjectId,
             ref: "User",
             required: true,
         },
-        menu_item_id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "FoodItem",
-            require: true,
-        },
         rating: {
             type: Number,
-            require: true,
+            required: true,
         },
         comment: {
             type: String,
         },
+        likes: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "User",
+            },
+        ],
+        dislikes: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "User",
+            },
+        ],
     },
     {
         toJSON: {

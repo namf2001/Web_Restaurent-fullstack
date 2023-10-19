@@ -27,6 +27,14 @@ const adminApi = {
         const url = `/order/${param}`;
         return axiosClient.put(url, data);
     },
+    getTopCustomersLastWeek: () => {
+        const url = "/order/top-customers";
+        return axiosClient.get(url);
+    },
+    getOrderCountsByStatusThisWeek: () => {
+        const url = "/order/counts-by-status";
+        return axiosClient.get(url);
+    },
 };
 
 export default adminApi;

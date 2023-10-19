@@ -2,7 +2,6 @@
 
 // models/foodItem.js
 const mongoose = require("mongoose");
-const { schemaOptions } = require("./modelOptions");
 
 const foodItemSchema = new mongoose.Schema(
     {
@@ -26,16 +25,15 @@ const foodItemSchema = new mongoose.Schema(
         quantity: { type: Number, required: true },
         isAvailable: { type: Boolean, default: true },
         discount: { type: Number, default: 0 },
-        rating: { type: Number, default: 0 },
-        highlights: [
-            {
-                type: String,
-            },
-        ],
         reviews: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Review",
+            },
+        ],
+        highlights: [
+            {
+                type: String,
             },
         ],
     },

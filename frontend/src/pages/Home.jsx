@@ -86,6 +86,7 @@ const Home = () => {
                     initial="hidden"
                     animate="visible">
                     {foodItems.map((foodItem) => {
+                        console.log(foodItem)
                         if (
                             foodItem.category === selectedType.id ||
                             selectedType.id === categories[0].id

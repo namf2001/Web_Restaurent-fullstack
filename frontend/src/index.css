@@ -70,24 +70,24 @@ body {
         width: 1px;
     }
     .checkbox-input:checked + .checkbox-tile {
-        @apply border-color text-primary-color shadow-xl
+        @apply border-color text-primary-color shadow-xl;
     }
     .checkbox-input:checked + .checkbox-tile:before {
-        @apply bg-primary-color border-color opacity-100 scale-100
+        @apply bg-primary-color border-color opacity-100 scale-100;
     }
     .checkbox-input:checked + .checkbox-tile .checkbox-icon,
     .checkbox-input:checked + .checkbox-tile .checkbox-label {
-        @apply text-primary-color
+        @apply text-primary-color;
     }
     .checkbox-input:focus + .checkbox-tile {
-        @apply border-color text-primary-color shadow-xl
+        @apply border-color text-primary-color shadow-xl;
     }
     .checkbox-input:focus + .checkbox-tile:before {
-        @apply opacity-100 scale-100
+        @apply opacity-100 scale-100;
     }
 
     .checkbox-tile {
-        @apply flex flex-col items-center justify-center w-28 rounded-md border-2 border-dark shadow-sm transition duration-150 ease-in-out cursor-pointer relative
+        @apply flex flex-col items-center justify-center w-28 rounded-md border-2 border-dark shadow-sm transition duration-150 ease-in-out cursor-pointer relative;
     }
     .checkbox-tile:before {
         content: "";
@@ -109,21 +109,21 @@ body {
         background-position: 50% 50%;
     }
     .checkbox-tile:hover {
-        @apply border-color text-primary-color shadow-xl
+        @apply border-color text-primary-color shadow-xl;
     }
     .checkbox-tile:hover:before {
-        @apply opacity-100 scale-100
+        @apply opacity-100 scale-100;
     }
 
     .checkbox-icon {
-        @apply text-gray-400 transition duration-300 ease-linear
+        @apply text-gray-400 transition duration-300 ease-linear;
     }
     .checkbox-icon svg {
-        @apply w-6 h-6
+        @apply w-6 h-6;
     }
 
     .checkbox-label {
-        @apply text-gray-400 text-center transition duration-300 ease-linear
+        @apply text-gray-400 text-center transition duration-300 ease-linear;
     }
     /* Hide the default number input spinner */
     ::-webkit-inner-spin-button,
@@ -149,6 +149,43 @@ body {
     [type="number"]::-webkit-outer-spin-button:active:before {
         content: "↑";
         color: #0056b3;
+    }
+
+    .mySwiper {
+        box-sizing: border-box;
+        padding: 5px 10px;
+    }
+
+    .mySwiper .swiper-slide {
+        opacity: 0.4;
+    }
+
+    .mySwiper .swiper-slide-thumb-active {
+        opacity: 1;
+    }
+
+    .mySwiper .swiper-slide-thumb-active img {
+        transform: scale(1.1);
+        filter: drop-shadow(1px 1px 10px #000000);
+    }
+
+    .mySwiper .swiper-wrapper {
+        @apply flex items-center
+    }
+    .icon__cloud-item {
+        @apply px-4 py-6 rounded-lg transition-all duration-150 ease-in-out;
+    }
+
+    .icon__cloud-item:hover {
+        @apply bg-main-dark-bg shadow-xl scale-105;
+    }
+
+    .icon__cloud-item:hover svg {
+        @apply text-primary-color animate-pulse;
+    }
+
+    .icon__cloud-item:hover span {
+        @apply text-white;
     }
 }
 

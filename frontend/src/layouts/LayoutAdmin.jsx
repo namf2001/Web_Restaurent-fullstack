@@ -27,8 +27,6 @@ const LayoutAdmin = () => {
         checkAuth();
     }, [dispatch, navigate]);
 
-    
-
     if (loading) {
         return <Loading />;
     }

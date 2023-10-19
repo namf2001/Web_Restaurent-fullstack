@@ -9,16 +9,16 @@ import getAddressDetails from "../../utils/locationUtils";
 import lottie from "lottie-web";
 import { defineElement } from "lord-icon-element"; // define "lord-icon" custom element with default properties
 import { useDispatch, useSelector } from "react-redux";
-import orderApi from "../../api/orderApi";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { setCart } from "../../redux/features/cartSlice";
+// import orderApi from "../../api/orderApi";
+// import { useNavigate } from "react-router-dom";
+// import { toast } from "react-toastify";
+// import { setCart } from "../../redux/features/cartSlice";
 import PaymentApi from "../../api/paymentApi";
 defineElement(lottie.loadAnimation);
 
 const LocationOrder = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+    // const navigate = useNavigate();
+    // const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart.value);
     const { openLocation, toggleLocation } = useContext(CartContext);
     const [latitude, setLatitude] = useState(null);
@@ -61,30 +61,30 @@ const LocationOrder = () => {
         }
     }, [latitude, longitude]);
 
-    const handleCreateOrder = async () => {
-        try {
-            const total = cart.reduce((total, item) => {
-                return total + item.quantity * item.foodId.price;
-            }, 0);
-            const order = {
-                address: locationData,
-                items: cart.map((item) => item._id), // Sử dụng _id của mỗi mục Cart
-                total: total,
-                node: note,
-            };
-            const response = await orderApi.add(order);
-            if (response.success) {
-                toast.success("Đặt hàng thành công");
-                dispatch(setCart([]));
-                navigate("/user/order");
-            } else {
-                toast.error("ban chua câp nhat thong tin của mình");
-            }
-        } catch (error) {
-            console.log(error);
-            toast.error("ban chua câp nhat thong tin của mình");
-        }
-    };
+    // const handleCreateOrder = async () => {
+    //     try {
+    //         const total = cart.reduce((total, item) => {
+    //             return total + item.quantity * item.foodId.price;
+    //         }, 0);
+    //         const order = {
+    //             address: locationData,
+    //             items: cart.map((item) => item._id), // Sử dụng _id của mỗi mục Cart
+    //             total: total,
+    //             node: note,
+    //         };
+    //         const response = await orderApi.add(order);
+    //         if (response.success) {
+    //             toast.success("Đặt hàng thành công");
+    //             dispatch(setCart([]));
+    //             navigate("/user/order");
+    //         } else {
+    //             toast.error("ban chua câp nhat thong tin của mình");
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //         toast.error("ban chua câp nhat thong tin của mình");
+    //     }
+    // };
 
     const handleCheckout = async () => {
         const total = cart.reduce((total, item) => {

@@ -1,86 +1,80 @@
-Designing a database schema for a web food restaurant using MongoDB involves creating collections that can store relevant information about the restaurant's operations, menu items, orders, customers, and more. Below, I'll outline eight collections and describe their intended purposes and the fields they may contain:
+/** @format */
 
-Users Collection
+import { useState } from "react";
+import reviewApi from "../../../api/reviewApi";
 
-Purpose: To store information about restaurant staff and customers.
-Fields:
-_id (unique user ID)
-username
-email
-password (hashed)
-role (customer, chef, manager, etc.)
-Other user-specific information (e.g., name, contact info, address)
+const Review = ({ idProduct }) => {
+    const [rating, setRating] = useState(0);
+    const [review, setReview] = useState("");
+    const [loading, setLoading] = useState(false);
 
-Menu Items Collection
+    const submitReview = async (e) => {
+        e.preventDefault();
+        // Thực hiện gửi đánh giá lên máy chủ tại đây
+        const data = {
+            product: idProduct,
+            rating,
+            review,
+        };
+        setLoading(true);
+        // Sử dụng fetch hoặc axios để gửi dữ liệu đánh giá lên máy chủ
+        try {
+            const res = await reviewApi.create(data);
+            setLoading(false);
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+        }
+        // Sau khi gửi xong, bạn có thể làm một số xử lý khác như hiển thị thông báo thành công
+        console.log(`Rating: ${rating}, Review: ${review}`);
+    };
 
-Purpose: To store details about the items available on the restaurant's menu.
-Fields:
-_id (unique menu item ID)
-name
-description
-price
-category (e.g., appetizer, main course, dessert)
-ingredients
-image_url
+    return (
+        <div>
+            <h2 className="text-xl font-semibold mb-2">Đánh giá sản phẩm</h2>
+            <div className="mb-4">
+                <label className="block text-gray-600">Đánh giá:</label>
+                <select
+                    className="border rounded px-3 py-2 w-32 text-black"
+                    onChange={(e) => setRating(e.target.value)}>
+                    <option value="1">1 sao</option>
+                    <option value="2">2 sao</option>
+                    <option value="3">3 sao</option>
+                    <option value="4">4 sao</option>
+                    <option value="5">5 sao</option>
+                </select>
+            </div>
+            <div className="mb-4">
+                <label className="block text-gray-600">Nhận xét:</label>
+                <textarea
+                    className="border rounded px-3 py-2 w-full"
+                    rows="4"
+                    onChange={(e) => {
+                        setReview(e.target.value);
+                    }}></textarea>
+            </div>
 
-Orders Collection
+            {!loading ? (
+                <button
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                    onClick={submitReview}>
+                    Gửi đánh giá
+                </button>
+            ) : (
+                // loading button
+                <button className="flex w-full justify-center rounded-md bg-primary-color px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-color-67 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    <div
+                        className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-primary motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                        role="status">
+                        <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                            Loading...
+                        </span>
+                    </div>
+                </button>
+            )}
+        </div>
+    );
+};
 
-Purpose: To track customer orders.
-Fields:
-_id (unique order ID)
-user_id (reference to the user who placed the order)
-items (an array of objects representing ordered menu items with quantity and price)
-order_date
-status (e.g., pending, preparing, completed, delivered)
-total_price
-delivery_address
-
-Reviews Collection
-
-Purpose: To store customer reviews and ratings for menu items.
-Fields:
-_id (unique review ID)
-user_id (reference to the user who wrote the review)
-menu_item_id (reference to the reviewed menu item)
-rating
-comment
-review_date
-
-Promotions Collection
-
-Purpose: To manage promotional offers and discounts.
-Fields:
-_id (unique promotion ID)
-name
-description
-start_date
-end_date
-discount_percent
-applicable_menu_items (an array of menu item IDs to which the promotion applies)
-Ingredients Collection
-
-Purpose: To store details about ingredients used in menu items.
-Fields:
-_id (unique ingredient ID)
-name
-description
-Tables Collection
-
-Purpose: To manage restaurant table reservations and availability.
-Fields:
-_id (unique table ID)
-table_number
-capacity
-is_reserved
-reservation_details (if reserved, contains reservation information)
-Categories Collection
-
-Purpose: To categorize menu items.
-Fields:
-_id (unique category ID)
-name
-description
-This schema provides a basic structure for a web food restaurant application in MongoDB. You can extend or modify it based on the specific requirements of your restaurant's business logic and features. It's essential to define proper indexes and relationships (e.g., references between collections) to optimize query performance and maintain data integrity.
-
-
-
+export default Review;

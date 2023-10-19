@@ -8,5 +8,5 @@ export { default as Order } from "./Order";
 export { default as Customer } from "./customer/Customer";
 export { default as Setting } from "./setting/Setting";
 export { default as Login } from "./Login";
-export { default as Product } from "./Product";
+export { default as Product } from "./Product/Product";
 export { default as Success } from "./Success";

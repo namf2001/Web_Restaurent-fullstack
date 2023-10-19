@@ -36,7 +36,7 @@ const MostOrder = () => {
     return (
         <div className="bg-base/dark-bg-2-14 flex flex-col gap-5 w-[400px] min-h-[400px] p-6 rounded-lg">
             <div className=" bg-base/dark-bg-2-14 flex justify-between items-center">
-                <div className="text-xl  font-semibold leading-[28px] text-white">
+                <div className="text-xl font-semibold text-white">
                     Most Ordered
                 </div>
                 <MenuDropDown

@@ -19,11 +19,11 @@ const LayoutBasic = () => {
             if (user && user.role === "admin") {
                 dispatch(setUser(user));
                 setLoading(false);
-                navigate("/admin");
+                navigate("/admin/");
             } else if (user) {
                 dispatch(setUser(user));
                 setLoading(false);
-                navigate("/user");
+                navigate("/user/");
             } else {
                 setLoading(false);
             }
