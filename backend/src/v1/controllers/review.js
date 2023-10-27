@@ -15,8 +15,8 @@ const createReview = async (req, res) => {
         if (!foodItem) {
             return res.status(404).json({ message: "Sản phẩm không tồn tại" });
         }
-        
-        // Kiểm tra xem người dùng 
+
+        // Kiểm tra xem người dùng
         if (!userId) {
             return res.status(404).json({
                 success: false,
@@ -35,7 +35,11 @@ const createReview = async (req, res) => {
         // Thêm review vào sản phẩm
         foodItem.reviews.push(newReview._id);
         await foodItem.save();
-        
+
+        // tôi muốn kết quả trả về có thêm thông tin của người dùng
+        // nên tôi sẽ populate userId
+        await newReview.populate("userId", "username avatar");
+
         res.status(201).json({
             success: true,
             rating: newReview,
@@ -59,7 +63,7 @@ const getReviewsByProduct = async (req, res) => {
         const reviews = await Review.find({ foodItemId })
             .populate("userId", "username avatar")
             .sort({ createdAt: -1 });
-        
+
         res.status(200).json({
             success: true,
             reviews,
@@ -115,7 +119,104 @@ const checkPurchaseStatus = async (req, res) => {
             reviewed: false,
             message: isPurchased ? "Đã mua hàng" : "Chưa mua hàng",
         });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Lỗi server" });
+    }
+};
 
+const likeReview = async (req, res) => {
+    try {
+        const reviewId = req.params.reviewId;
+        const userId = req.user._id;
+        // Kiểm tra xem người dùng có tồn tại không
+        if (!userId) {
+            return res.status(404).json({
+                liked: false,
+                message: "Người dùng không tồn tại",
+            });
+        }
+        const review = await Review.findById(reviewId);
+        if (!review) {
+            return res.status(404).json({ message: "Đánh giá không tồn tại" });
+        }
+
+        const isLiked = review.likes.includes(userId);
+
+        // neu nguoi dung da like thi unlike
+        if (isLiked) {
+            review.likes.pull(userId);
+            await review.save();
+            return res.status(200).json({
+                liked: false,
+                message: "Unlike thành công",
+                review: review,
+            });
+        }
+
+        // neu nguoi dung da dislike thi undislike
+        if (review.dislikes.includes(userId)) {
+            review.dislikes.pull(userId);
+            await review.save();
+        }
+
+        review.likes.push(userId);
+        await review.save();
+
+        res.status(200).json({
+            liked: true,
+            message: "Like thành công",
+            review: review,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Lỗi server" });
+    }
+};
+
+const dislikeReview = async (req, res) => {
+    try {
+        const reviewId = req.params.reviewId;
+        const userId = req.user._id;
+        // Kiểm tra xem người dùng có tồn tại không
+        if (!userId) {
+            return res.status(404).json({
+                liked: false,
+                message: "Người dùng không tồn tại",
+            });
+        }
+        const review = await Review.findById(reviewId);
+        if (!review) {
+            return res.status(404).json({ message: "Đánh giá không tồn tại" });
+        }
+
+        const isDisliked = review.dislikes.includes(userId);
+
+        // neu nguoi dung da dislike thi undislike
+        if (isDisliked) {
+            review.dislikes.pull(userId);
+            await review.save();
+            return res.status(200).json({
+                disliked: false,
+                message: "Undislike thành công",
+                review: review,
+            });
+        }
+
+        // neu nguoi dung da like thi unlike
+        if (review.likes.includes(userId)) {
+            review.likes.pull(userId);
+            await review.save();
+        }
+
+        review.dislikes.push(userId);
+        await review.save();
+
+        res.status(200).json({
+            disliked: true,
+            message: "Dislike thành công",
+            review: review,
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Lỗi server" });
@@ -126,4 +227,6 @@ module.exports = {
     createReview,
     getReviewsByProduct,
     checkPurchaseStatus,
+    likeReview,
+    dislikeReview,
 };

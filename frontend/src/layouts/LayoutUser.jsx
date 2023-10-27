@@ -55,7 +55,7 @@ const LayoutUser = () => {
             <div className="relative dark:bg-main-dark-bg bg-base/dark-bg-1-18">
                 <Sidebar links={USER_MENU} />
                 <div className="ml-[100px] fixed dark:bg-main-dark-bg w-[calc(100vw-100px)] text-white flex min-h-[100vh] justify-between">
-                    <div className="flex-1">
+                    <div className="flex-1 w-800">
                         <Navbar />
                         <Outlet />
                     </div>

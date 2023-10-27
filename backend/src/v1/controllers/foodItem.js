@@ -1,7 +1,7 @@
 /** @format */
 
 const FoodItem = require("../models/foodItem");
-
+const User = require("../models/user");
 const getAllFoodItems = async (req, res) => {
     try {
         const foodItems = await FoodItem.find()
@@ -145,8 +145,8 @@ const addWishList = async (req, res) => {
             const index = user.wishlist.indexOf(id);
             user.wishlist.splice(index, 1);
             await user.save();
-
-            return res.status(400).json({
+            
+            return res.status(200).json({
                 success: true,
                 message: "Food item removed from wishlist successfully!",
                 data: user,
@@ -176,4 +176,5 @@ module.exports = {
     createFoodItem,
     updateFoodItem,
     deleteFoodItem,
+    addWishList,
 };

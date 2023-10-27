@@ -3,29 +3,11 @@
 import { useState } from "react";
 import propTypes from "prop-types";
 import { useParams } from "react-router-dom";
-import reviewApi from "../../api/reviewApi";
-const FromReview = ({ setModalOpen }) => {
+const FromReview = ({ setModalOpen, handlerReview }) => {
     const params = useParams();
     const { id } = params;
-    console.log(id);
     const [rating, setRating] = useState(1);
     const [comment, setComment] = useState("");
-
-    const handlerReview = async (foodId, rating, comment) => {
-        const data = {
-            rating,
-            comment,
-        };
-
-        try {
-            const res = await reviewApi.create(foodId, data);
-            console.log(res);
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setModalOpen();
-        }
-    };
 
     return (
         <div className="bg-white min-w-1xl flex flex-col rounded-xl shadow-lg max-w-lg mx-auto">
@@ -96,6 +78,7 @@ const FromReview = ({ setModalOpen }) => {
 
 FromReview.propTypes = {
     setModalOpen: propTypes.func.isRequired,
+    handlerReview: propTypes.func.isRequired,
 };
 
 export default FromReview;

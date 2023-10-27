@@ -1,8 +1,7 @@
 /** @format */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "../../../components";
 import { toast } from "react-toastify";
-import { FiStar } from "react-icons/fi";
 import { FaCartPlus } from "react-icons/fa";
 import propTypes from "prop-types";
 import { HiInformationCircle as FaCircleInfo, HiFire } from "react-icons/hi";
@@ -23,27 +22,25 @@ import {
     FreeMode,
     Thumbs,
 } from "swiper/modules";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
-const ProductDetail = ({ product, handleAddToCart }) => {
+const ProductDetail = ({
+    product,
+    handleAddToCart,
+    rating,
+    handleAddToWishlist,
+    isWishlist,
+}) => {
     const [quantity, setQuantity] = useState(1);
-    const [rating, setRating] = useState(0);
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
-
-    useEffect(() => {
-        const getRating = product.reviews?.reduce(
-            (acc, item) => acc + item.rating,
-            0
-        );
-        setRating(getRating / product.reviews?.length);
-    }, [product.reviews]);
 
     return (
         <div className="flex bg-gradient-to-r from-slate-950 via-slate-950 to-slate-900 rounded-xl shadow-xl">
-            <div className="bg-base/dark-bg-2-14 flex-1 flex flex-col gap-10 relative p-12 rounded-xl rounded-br-3xl rounded-tr-3xl">
+            <div className="bg-base/dark-bg-2-14 flex-1 flex flex-col gap-10 relative p-12 rounded-xl rounded-br-3xl rounded-tr-3xl shadow-inner">
                 <div>
                     <h2 className="text-xl font-bold">NONE@</h2>
                     <span className="text-gray-400 text-xs">
@@ -180,6 +177,8 @@ const ProductDetail = ({ product, handleAddToCart }) => {
                                         className="w-10 h-10 rounded-e-md bg-base/dark-line-1"
                                         onClick={() => {
                                             if (quantity < product.quantity) {
+                                                setQuantity(quantity + 1);
+                                            } else {
                                                 toast.error(
                                                     "Số lượng sản phẩm trong kho không đủ",
                                                     {
@@ -193,7 +192,6 @@ const ProductDetail = ({ product, handleAddToCart }) => {
                                                         theme: "dark",
                                                     }
                                                 );
-                                                setQuantity(quantity + 1);
                                             }
                                         }}>
                                         +
@@ -217,76 +215,77 @@ const ProductDetail = ({ product, handleAddToCart }) => {
                         </div>
                     </SwiperSlide>
                 </Swiper>
-                <div className="absolute top-0 right-16 w-16 h-28 flex justify-center items-center bg-primary-color rounded-b-full">
-                    <FiStar className="text-3xl text-white" />
+                <div className="absolute top-0 right-16 w-16 h-28 flex justify-center items-center bg-primary-color rounded-b-full shadow-3xl">
+                    <button
+                        className="w-10 h-10 rounded-full bg-primary-color/50 flex justify-center items-center"
+                        onClick={() => handleAddToWishlist(product._id)}>
+                        {isWishlist ? (
+                            <AiFillHeart className="text-red-600 text-3xl" />
+                        ) : (
+                            <AiOutlineHeart className="text-white text-3xl" />
+                        )}
+                    </button>
                 </div>
             </div>
             <div className="flex-1 rounded-2xl overflow-hidden">
                 <div className="flex flex-col justify-between gap-40 bg-[url('https://learnenglish.britishcouncil.org/sites/podcasts/files/2021-10/RS4905_81989918-hig_0.jpg')] h-full rounded-sm">
                     <div className="flex flex-col items-center justify-center gap-4 bg-gradient-to-r from-slate-950 via-slate-300/20 to-slate-900 h-full rounded-sm">
-                        <div>
-                            <Swiper
-                                autoplay={{
-                                    delay: 2500,
-                                    disableOnInteraction: false,
-                                }}
-                                spaceBetween={10}
-                                thumbs={{ swiper: thumbsSwiper }}
-                                modules={[
-                                    FreeMode,
-                                    Navigation,
-                                    Thumbs,
-                                    Autoplay,
-                                ]}
-                                loop={true}
-                                className="w-[500px] h-[350px]">
-                                <SwiperSlide>
-                                    <img
-                                        src={product.image}
-                                        className="object-contain h-[350px] mx-auto rounded-full"
-                                    />
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <img
-                                        src="https://freepngimg.com/download/pizza/34833-1-pizza-slice-transparent-background.png"
-                                        className="object-contain h-[350px] mx-auto"
-                                    />
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <img
-                                        src="https://th.bing.com/th/id/R.b833182f7ef05628f6c15ac7b74fbb73?rik=ZmKh59V2cFD6kg&riu=http%3a%2f%2fpngimg.com%2fuploads%2fpizza%2fpizza_PNG7143.png&ehk=tIYK0zpgeiuutcFQ28M8j11noK3Ix7OgDpB6EVNR92M%3d&risl=&pid=ImgRaw&r=0"
-                                        className="object-contain h-[350px] mx-auto"
-                                    />
-                                </SwiperSlide>
-                            </Swiper>
-                            <Swiper
-                                onSwiper={setThumbsSwiper}
-                                spaceBetween={30}
-                                slidesPerView={3}
-                                freeMode={true}
-                                watchSlidesProgress={true}
-                                modules={[FreeMode, Navigation, Thumbs]}
-                                className="max-w-[50%] mySwiper flex items-center mt-10">
-                                <SwiperSlide>
-                                    <img
-                                        src={product.image}
-                                        className="object-contain rounded-full m-auto"
-                                    />
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <img
-                                        src="https://freepngimg.com/download/pizza/34833-1-pizza-slice-transparent-background.png"
-                                        className="object-contain m-auto"
-                                    />
-                                </SwiperSlide>
-                                <SwiperSlide className="flex items-center">
-                                    <img
-                                        src="https://th.bing.com/th/id/R.b833182f7ef05628f6c15ac7b74fbb73?rik=ZmKh59V2cFD6kg&riu=http%3a%2f%2fpngimg.com%2fuploads%2fpizza%2fpizza_PNG7143.png&ehk=tIYK0zpgeiuutcFQ28M8j11noK3Ix7OgDpB6EVNR92M%3d&risl=&pid=ImgRaw&r=0"
-                                        className="object-contain my-auto"
-                                    />
-                                </SwiperSlide>
-                            </Swiper>
-                        </div>
+                        <Swiper
+                            autoplay={{
+                                delay: 2500,
+                                disableOnInteraction: false,
+                            }}
+                            spaceBetween={10}
+                            thumbs={{ swiper: thumbsSwiper }}
+                            modules={[FreeMode, Navigation, Thumbs, Autoplay]}
+                            loop={true}
+                            className="w-full h-[350px]">
+                            <SwiperSlide className="flex items-center">
+                                <img
+                                    src={product.image}
+                                    className="object-contain max-h-[350px] max-w-[80%] m-auto rounded-full"
+                                />
+                            </SwiperSlide>
+                            <SwiperSlide className="flex items-center">
+                                <img
+                                    src="https://freepngimg.com/download/pizza/34833-1-pizza-slice-transparent-background.png"
+                                    className="object-contain h-[350px] w-4/5 mx-auto"
+                                />
+                            </SwiperSlide>
+                            <SwiperSlide className="flex items-center">
+                                <img
+                                    src="https://th.bing.com/th/id/R.b833182f7ef05628f6c15ac7b74fbb73?rik=ZmKh59V2cFD6kg&riu=http%3a%2f%2fpngimg.com%2fuploads%2fpizza%2fpizza_PNG7143.png&ehk=tIYK0zpgeiuutcFQ28M8j11noK3Ix7OgDpB6EVNR92M%3d&risl=&pid=ImgRaw&r=0"
+                                    className="object-contain h-[350px] w-4/5 mx-auto"
+                                />
+                            </SwiperSlide>
+                        </Swiper>
+                        <Swiper
+                            onSwiper={setThumbsSwiper}
+                            spaceBetween={30}
+                            slidesPerView={3}
+                            freeMode={true}
+                            watchSlidesProgress={true}
+                            modules={[FreeMode, Navigation, Thumbs]}
+                            className="max-w-[50%] mySwiper flex items-center mt-10">
+                            <SwiperSlide>
+                                <img
+                                    src={product.image}
+                                    className="object-contain rounded-full m-auto"
+                                />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img
+                                    src="https://freepngimg.com/download/pizza/34833-1-pizza-slice-transparent-background.png"
+                                    className="object-contain m-auto"
+                                />
+                            </SwiperSlide>
+                            <SwiperSlide className="flex items-center">
+                                <img
+                                    src="https://th.bing.com/th/id/R.b833182f7ef05628f6c15ac7b74fbb73?rik=ZmKh59V2cFD6kg&riu=http%3a%2f%2fpngimg.com%2fuploads%2fpizza%2fpizza_PNG7143.png&ehk=tIYK0zpgeiuutcFQ28M8j11noK3Ix7OgDpB6EVNR92M%3d&risl=&pid=ImgRaw&r=0"
+                                    className="object-contain my-auto"
+                                />
+                            </SwiperSlide>
+                        </Swiper>
                     </div>
                 </div>
             </div>
@@ -297,6 +296,9 @@ const ProductDetail = ({ product, handleAddToCart }) => {
 ProductDetail.propTypes = {
     product: propTypes.object.isRequired,
     handleAddToCart: propTypes.func.isRequired,
+    rating: propTypes.number.isRequired,
+    handleAddToWishlist: propTypes.func.isRequired,
+    isWishlist: propTypes.bool.isRequired,
 };
 
 export default ProductDetail;

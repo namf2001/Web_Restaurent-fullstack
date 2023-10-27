@@ -63,6 +63,12 @@ export const links = [
         path: "/setting",
         icon: <Setting />,
     },
+    {
+        id: 8,
+        name: "Reservation",
+        path: "/reservation",
+        icon: <BiAt />,
+    },
 ];
 
 export const MENU_ITEMS = [
@@ -75,6 +81,11 @@ export const MENU_ITEMS = [
         name: "Discount",
         path: "/discount",
         icon: <TbDiscount2 />,
+    },
+    {
+        name: "Reservation",
+        path: "/reservation",
+        icon: <BiAt />,
     },
 ];
 
@@ -98,6 +109,11 @@ export const USER_MENU = [
         name: "Customer",
         path: "/user/customer",
         icon: <Customer />,
+    },
+    {
+        name: "Reservation",
+        path: "/user/reservation",
+        icon: <BiAt />,
     },
 ];
 

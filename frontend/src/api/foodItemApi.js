@@ -20,7 +20,11 @@ const foodItemApi = {
     delete: (id) => {
         const url = `/food-items/${id}`;
         return axiosClient.delete(url);
-    }
+    },
+    addToWishList: (id) => {
+        const url = `/food-items/${id}/wishlist`;
+        return axiosClient.post(url);
+    },
 }
 
 export default foodItemApi;

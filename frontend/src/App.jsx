@@ -16,6 +16,7 @@ import {
     Setting,
     Product,
     Success,
+    Reservation
 } from "./pages";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -57,6 +58,7 @@ function App() {
                         <Route path="/discount" element={<Discount />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/product/:id" element={<Product />} />
+                        <Route path="/reservation" element={<Reservation />} />
                     </Route>
                     <Route path="/user" element={<LayoutUser />}>
                         <Route path="/user/" element={<Home />} />
@@ -65,6 +67,10 @@ function App() {
                         <Route path="/user/order" element={<Order />} />
                         <Route path="/user/customer" element={<Customer />} />
                         <Route path="/user/product/:id" element={<Product />} />
+                        <Route
+                            path="/user/reservation"
+                            element={<Reservation />}
+                        />
                     </Route>
                     <Route path="/admin" element={<LayoutAdmin />}>
                         <Route path="/admin/" element={<Home />} />

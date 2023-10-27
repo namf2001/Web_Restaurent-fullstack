@@ -1,5 +1,9 @@
+/** @format */
+
 import { useState } from "react";
 import ModalAuth from "../components/modal/ModalAuth";
+import Modal from "../components/modal/Modal";
+import { FormAuth } from "../components/form";
 
 const Login = () => {
     const [modalOpen, setModalOpen] = useState(false);
@@ -21,7 +25,12 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-            <ModalAuth modalOpen={modalOpen} setModalOpen={setModalOpen} />
+            {/* <ModalAuth modalOpen={modalOpen} setModalOpen={setModalOpen} /> */}
+            <Modal
+                modalOpen={modalOpen}
+                setModalOpen={() => setModalOpen(false)}>
+                <FormAuth />
+            </Modal>
         </>
     );
 };

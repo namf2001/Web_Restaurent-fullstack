@@ -1,3 +1,5 @@
+/** @format */
+
 const router = require("express").Router();
 const { param } = require("express-validator");
 const { validate } = require("../middleware/validation");
@@ -8,6 +10,7 @@ const {
     createFoodItem,
     updateFoodItem,
     deleteFoodItem,
+    addWishList,
 } = require("../controllers/foodItem");
 
 router.get("/", getAllFoodItems);
@@ -18,11 +21,7 @@ router.get(
     getFoodItemById
 );
 
-router.post(
-    "/",
-    verifyToken,
-    createFoodItem
-);
+router.post("/", verifyToken, createFoodItem);
 
 router.put(
     "/:id",
@@ -38,6 +37,14 @@ router.delete(
     param("id").isMongoId().withMessage("Invalid food item id"),
     validate,
     deleteFoodItem
+);
+
+router.post(
+    "/:id/wishlist",
+    verifyToken,
+    param("id").isMongoId().withMessage("Invalid food item id"),
+    validate,
+    addWishList
 );
 
 module.exports = router;

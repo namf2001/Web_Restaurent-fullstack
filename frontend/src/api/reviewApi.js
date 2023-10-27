@@ -12,7 +12,15 @@ const reviewApi = {
     checkPurchaseStatus: (foodItemId) => {
         const url = `/review/check/${foodItemId}`;
         return axiosClient.get(url);
-    }
+    },
+    likeReview: (reviewId) => {
+        const url = `/review/like/${reviewId}`;
+        return axiosClient.post(url);
+    },
+    dislikeReview: (reviewId) => {
+        const url = `/review/dislike/${reviewId}`;
+        return axiosClient.post(url);
+    },
 };
 
 export default reviewApi;

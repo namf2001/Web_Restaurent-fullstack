@@ -7,6 +7,10 @@ const orderSchema = new mongoose.Schema(
             ref: "User",
             required: true,
         },
+        table_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Table",
+        },
         items: [
             {
                 type: mongoose.Schema.Types.ObjectId,
@@ -22,8 +26,8 @@ const orderSchema = new mongoose.Schema(
         },
         payment_status: { type: String },
         // lấy phone và address từ user
-        phone: { type: String, required: true, ref: "User" },
-        address: { type: String, required: true },
+        phone: { type: String, required: true, trim: true },
+        address: { type: String, trim: true },
         note: { type: String, default: "" },
     },
     {

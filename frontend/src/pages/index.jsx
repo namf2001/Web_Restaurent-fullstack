@@ -10,3 +10,4 @@ export { default as Setting } from "./setting/Setting";
 export { default as Login } from "./Login";
 export { default as Product } from "./Product/Product";
 export { default as Success } from "./Success";
+export { default as Reservation } from "./reservation/Reservation";

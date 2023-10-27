@@ -5,7 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import authApi from "../../../api/authApi";
 import { format } from "date-fns";
 import { setUser } from "../../../redux/features/userSlice";
-import { resizeAndCompressImage, convertFileToBase64 } from "../../../utils/image";
+import {
+    resizeAndCompressImage,
+    convertFileToBase64,
+} from "../../../utils/image";
 
 const timeout = 500;
 let timer = null;
@@ -131,7 +134,7 @@ const FormUser = () => {
                         className={`border-solid ${
                             error ? "border-red-500" : "border-[#393c49]"
                         } bg-[#2d303e]
-                            } self-stretch flex flex-col justify-center pl-3 h-12 shrink-0 items-start border rounded-lg focus:outline-none`}
+                            self-stretch flex flex-col justify-center pl-3 h-12 shrink-0 items-start border rounded-lg focus:outline-none`}
                     />
                 </div>
                 <div className="flex flex-col gap-2 items-start flex-1">

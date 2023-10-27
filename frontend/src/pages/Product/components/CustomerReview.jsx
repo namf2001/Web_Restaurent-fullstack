@@ -5,9 +5,14 @@ import { Button } from "../../../components";
 import { useEffect, useState } from "react";
 import Modal from "../../../components/modal/Modal";
 import FromReview from "../../../components/form/FromReview";
+import reviewApi from "../../../api/reviewApi";
 
-const CustomerReview = ({ rating = 0, reviews, checkPurchaseStatus }) => {
-    console.log(checkPurchaseStatus);
+const CustomerReview = ({
+    rating = 0,
+    reviews,
+    checkPurchaseStatus,
+    handleUpdateProductAndReviews,
+}) => {
     const [modalOpen, setModalOpen] = useState(false);
     const [ratingValue, setRatingValue] = useState(0);
     const [reviewValue, setReviewValue] = useState([]);
@@ -17,7 +22,6 @@ const CustomerReview = ({ rating = 0, reviews, checkPurchaseStatus }) => {
         setReviewValue(reviews);
     }, [rating, reviews]);
 
-    // console.log(reviewValue);
     function calculateRatingPercentage(data) {
         const ratingCount = {};
         const totalRatings = data?.length;
@@ -47,7 +51,30 @@ const CustomerReview = ({ rating = 0, reviews, checkPurchaseStatus }) => {
     }
 
     const ratingPercentage = calculateRatingPercentage(reviewValue);
-    // console.log(ratingPercentage);
+
+    const handlerReview = async (foodId, rating, comment) => {
+        const data = {
+            rating,
+            comment,
+        };
+
+        try {
+            const res = await reviewApi.create(foodId, data);
+            console.log(res);
+            handleUpdateProductAndReviews(
+                {
+                    _id: res.rating.id,
+                    rating: res.rating.rating,
+                    id: res.rating.id,
+                },
+                res.rating
+            );
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setModalOpen();
+        }
+    };
 
     return (
         <>
@@ -104,7 +131,10 @@ const CustomerReview = ({ rating = 0, reviews, checkPurchaseStatus }) => {
             <Modal
                 modalOpen={modalOpen}
                 setModalOpen={() => setModalOpen(false)}>
-                <FromReview setModalOpen={() => setModalOpen(false)} />
+                <FromReview
+                    setModalOpen={() => setModalOpen(false)}
+                    handlerReview={handlerReview}
+                />
             </Modal>
         </>
     );
@@ -131,11 +161,12 @@ CustomerReview.propTypes = {
     rating: PropTypes.number,
     reviews: PropTypes.array,
     checkPurchaseStatus: PropTypes.object,
+    handleUpdateProductAndReviews: PropTypes.func,
 };
 
 RatingBar.propTypes = {
     rating: PropTypes.number,
-    percentage: PropTypes.number,
+    percentage: PropTypes.string,
 };
 
 export default CustomerReview;

@@ -25,8 +25,6 @@ const CategoriesManagement = () => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [image, setImage] = useState("");
-    console.log(image);
-    // const [enable, setEnable] = useState(true);
 
     useEffect(() => {
         setName(selectedCategory !== undefined ? selectedCategory.name : "");

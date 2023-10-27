@@ -8,4 +8,6 @@ router.use("/payment", require("./payment"));
 router.use("/order", require("./order"));
 router.use("/review", require("./review"));
 router.use("/comment", require("./comment"));
+router.use("/reservations", require("./reservation"));
+router.use("/tables", require("./table"));
 module.exports = router;

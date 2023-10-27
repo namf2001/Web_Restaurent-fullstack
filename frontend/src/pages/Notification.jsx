@@ -16,7 +16,7 @@ const Notification = () => {
             try {
                 const res = await adminApi.getAllAdmin();
                 setOrders(res);
-                console.log(res)
+                // console.log(res)
             } catch (error) {
                 console.log(error);
             }
@@ -49,7 +49,7 @@ const Notification = () => {
     };
 
     return (
-        <div className="flex flex-col w-full px-4">
+        <div className="w-full px-4">
             <div className="flex flex-col bg-base/dark-bg-2-14 rounded-md p-6">
                 <div className="flex flex-col justify-between shrink-0 items-start">
                     <div className="self-stretch flex justify-between items-center">

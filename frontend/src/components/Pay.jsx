@@ -40,7 +40,7 @@ const Pay = () => {
         <>
             <div
                 className={`${
-                    !openPayment ? "w-20" : "min-w-[408px]"
+                    !openPayment ? "w-20" : "min-w-[480px]"
                 } bg-base/dark-bg-2-14 py-6 px-4 transition-all duration-500`}>
                 <div className={`${openPayment ? "hidden" : ""} w-12`}>
                     <Button btnText={<Cart />} handler={togglePayment} />

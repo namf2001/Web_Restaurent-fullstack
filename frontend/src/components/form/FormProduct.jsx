@@ -21,7 +21,6 @@ const FormProduct = ({ setModalOpen, foodDetail }) => {
     const [rating, setRating] = useState(0);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-console.log(foodDetail)
     useEffect(() => {
         const getRating = foodDetail.reviews?.reduce(
             (acc, item) => acc + item.rating,
@@ -152,7 +151,7 @@ console.log(foodDetail)
                                                 ) {
                                                     setQuantity(quantity + 1);
                                                 } else {
-                                                     toast.error(
+                                                    toast.error(
                                                         "Số lượng sản phẩm trong kho không đủ",
                                                         {
                                                             position:
