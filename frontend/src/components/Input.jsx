@@ -38,7 +38,7 @@ const Input = () => {
             transition={{ duration: 0.3 }} // Animation duration
         >
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center px-3">
-                <span className="text-light">
+                <span className="text-light dark:text-slate-600">
                     <FiSearch />
                 </span>
             </div>
@@ -46,7 +46,7 @@ const Input = () => {
                 type="text"
                 name="search"
                 id="search"
-                className="bg-base/dark-line block rounded-md border-0 py-1.5 pl-10 w-full pr-3 h-full text-light ring-1 ring-inset ring-gray-700 placeholder:text-light focus:ring-2 focus:ring-inset focus:ring-offset-gray-950 focus:outline-none text-sm leading-6"
+                className="bg-base/dark-line dark:bg-light-bg-1 block rounded-md border-0 py-1.5 pl-10 w-full pr-3 h-full text-light dark:text-slate-600 ring-1 ring-inset ring-gray-700 dark:ring-orange-200 placeholder:text-light dark:placeholder:text-slate-600 focus:ring-2 focus:ring-inset focus:ring-offset-gray-950 dark:focus:ring-offset-orange-200 focus:outline-none text-sm leading-6"
                 value={searchTerm}
                 placeholder="Tìm kiếm sản phẩm"
                 onChange={handleSuggestions}
@@ -59,7 +59,7 @@ const Input = () => {
             />
             {suggestions.length > 0 && (
                 <motion.ul
-                    className="absolute z-10 bg-base/dark-line w-full rounded-md mt-2"
+                    className="absolute z-10 bg-base/dark-line dark:bg-light-bg-1 w-full rounded-md mt-2 shadow-2xl dark:text-dark"
                     initial={{ opacity: 0, y: 10 }} // Initial animation values
                     animate={{ opacity: 1, y: 0 }} // Animation properties
                     transition={{ duration: 0.3 }} // Animation duration

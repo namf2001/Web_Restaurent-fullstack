@@ -4,6 +4,7 @@ const Stripe = require("stripe");
 const Order = require("../models/order");
 const Cart = require("../models/cart");
 const User = require("../models/user");
+const Table = require("../models/table");
 
 const { default: mongoose } = require("mongoose");
 require("dotenv").config();
@@ -13,14 +14,15 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 const createCheckoutSession = async (req, res) => {
     const userId = req.user;
     const items = req.body.items;
-    const { address, note, total } = req.body;
+    const {table_id, address, note, total } = req.body;
     console.log(req.body);
 
     const customer = await stripe.customers.create({
         metadata: {
             userId: userId._id.toString(),
             carts: JSON.stringify(items),
-            address: address, // Lưu địa chỉ vào metadata
+            address: address || null, // Lưu địa chỉ vào metadata
+            table_id: table_id || null,
             note: note,
             total: total,
         },
@@ -44,6 +46,7 @@ const createCheckoutSession = async (req, res) => {
                             userId: userId._id.toString(),
                             carts: JSON.stringify(items),
                             address: address, // Lưu địa chỉ vào metadata
+                            table_id: table_id,
                             note: note,
                             total: total,
                         },
@@ -64,6 +67,7 @@ const createCheckoutSession = async (req, res) => {
                 userId: userId._id.toString(),
                 carts: JSON.stringify(items),
                 address: address, // Lưu địa chỉ vào metadata
+                table_id: table_id,
                 note: note,
                 total: total,
             },
@@ -81,24 +85,39 @@ const createCheckoutSession = async (req, res) => {
 
 const createOrder = async (metadata, phone) => {
     try {
-        const { userId, carts, address, note, total } = metadata;
+        const { userId, carts, address, table_id, note, total } = metadata;
         console.log(metadata)
         const items = JSON.parse(carts);
         // Phân tích chuỗi JSON và chuyển đổi thành mảng ObjectId
         // const itemsArray = items.map(itemId => mongoose.Types.ObjectId(itemId)); // Chuyển đổi thành mảng ObjectId
-        const order = await Order.create({
+        const order = table_id ? new Order({
             user_id: userId,
-            items: items,
+            items,
             total,
             note,
-            address,
             phone,
+            table_id,
+        }) : new Order({
+            user_id: userId,
+            items,
+            total,
+            note,
+            phone,
+            address,
         });
+        await order.save();
         // update status of cart items to confirmed
         await Cart.updateMany(
             { _id: { $in: items } },
             { $set: { status: "confirmed" } }
         );
+        // update status of table
+        if (table_id) {
+            await Table.updateOne(
+                { _id: table_id },
+                { $set: { status: "Occupied", order: order._id } }
+            );
+        }
         // update order array in user model
         await User.findByIdAndUpdate(
             userId._id,
@@ -113,7 +132,6 @@ const createOrder = async (metadata, phone) => {
 const handleWebhook = async (req, res) => {
     let eventType;
     let data;
-
     // Check if webhook signing is configured.
     let webhookSecret = process.env.STRIPE_WEBHOOK_SECRET_1;
     eventType = req.body.type;

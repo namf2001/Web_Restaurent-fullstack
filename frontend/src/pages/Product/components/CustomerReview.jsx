@@ -79,25 +79,25 @@ const CustomerReview = ({
     return (
         <>
             <div className="flex flex-col gap-4 py-6 px-4 rounded-lg shadow-xl shaw">
-                <h2 className="text-2xl font-bold">Đánh giá của khách hàng</h2>
-                <div className="flex gap-1 items-center">
+                <h2 className="text-2xl font-bold dark:text-dark">Đánh giá của khách hàng</h2>
+                <div className="flex gap-1 items-center dark:text-dark">
                     {[0, 1, 2, 3, 4].map((star) => (
                         <HiFire
                             key={star}
                             className={`${
                                 ratingValue > star
                                     ? "text-primary-color"
-                                    : "text-gray-200"
+                                    : "text-gray-200 dark:text-slate-600"
                             } h-5 w-5 flex-shrink-0`}
                             aria-hidden="true"
                         />
                     ))}{" "}
                     | {reviewValue?.length}{" "}
-                    <span className="text-xs text-gray-400 ml-1">
+                    <span className="text-xs text-gray-400 dark:text-slate-600 ml-1">
                         lượt đánh giá
                     </span>
                 </div>
-                <hr className="w-full h-[1px] bg-base/dark-line-1 border-0 my-3" />
+                <hr className="w-full h-[1px] bg-base/dark-line-1 dark:bg-primary-color border-0 my-3" />
                 {reviewValue && reviewValue?.length > 0 ? (
                     <div>
                         {ratingPercentage?.map((percentage, index) => (
@@ -109,9 +109,9 @@ const CustomerReview = ({
                         ))}
                     </div>
                 ) : (
-                    <div className="text-center text-xl h-40">
+                    <div className="text-center text-xl h-40 dark:text-dark-1">
                         Chưa có đánh giá nào{" "}
-                        <p className="text-gray-400 text-sm">
+                        <p className="text-gray-400 dark:text-slate-600 text-sm">
                             Hãy là người đầu tiên đánh giá sản phẩm này
                         </p>
                     </div>
@@ -143,16 +143,16 @@ const CustomerReview = ({
 const RatingBar = ({ rating, percentage }) => {
     return (
         <div className="flex items-center">
-            <span className="text-xs text-gray-400 mr-1">{rating + 1}</span>
+            <span className="text-xs text-gray-400 dark:text-dark mr-1">{rating + 1}</span>
             <HiFire className="text-primary-color h-5 w-5 flex-shrink-0" />
             <div className="w-[75%] px-2">
-                <div className="h-2 bg-slate-500 rounded-full">
+                <div className="h-2 bg-slate-500 dark:bg-primary-color/30 rounded-full">
                     <div
-                        className="h-2 bg-primary-color rounded-full"
+                        className="h-2 bg-primary-color rounded-full dark:text-dark"
                         style={{ width: `${percentage}` }}></div>
                 </div>
             </div>
-            <span className="text-xs text-gray-400">{percentage}</span>
+            <span className="text-xs text-gray-400 dark:text-dark">{percentage}</span>
         </div>
     );
 };

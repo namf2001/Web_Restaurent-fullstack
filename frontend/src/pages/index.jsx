@@ -11,3 +11,7 @@ export { default as Login } from "./Login";
 export { default as Product } from "./Product/Product";
 export { default as Success } from "./Success";
 export { default as Reservation } from "./reservation/Reservation";
+export { default as Contact } from "./contact/Contact";
+export { default as Main } from "./main/Main";
+export { default as Calender } from "./Calender";
+export { default as DeskManager } from "./DeskManager/DeskManager"; // Updated import statement

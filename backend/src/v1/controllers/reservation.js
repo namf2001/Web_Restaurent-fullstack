@@ -1,7 +1,7 @@
 /** @format */
 
 const mongoose = require("mongoose");
-
+const moment = require('moment');
 const Reservation = require("../models/reservation");
 const Table = require("../models/table");
 const Cart = require("../models/cart");
@@ -15,14 +15,6 @@ const getAllReservations = async (req, res) => {
                 path: "user",
                 select: "name",
             })
-            .populate({
-                path: "table",
-                select: "name",
-            })
-            .populate({
-                path: "cart",
-                select: "name",
-            });
         res.status(200).json(reservations);
     } catch (err) {
         console.error(err);
@@ -63,6 +55,7 @@ const getReservationById = async (req, res) => {
 
 const createReservation = async (req, res) => {
     const { user, user_name, note, date, time, guests, phone } = req.body;
+
     try {
         const reservation = await Reservation.create({
             user,

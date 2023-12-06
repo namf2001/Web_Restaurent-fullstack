@@ -5,7 +5,7 @@ defineElement(lottie.loadAnimation);
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 
-const ProgressChecking = ({ status }) => {
+const ProgressChecking = ({ status, isTable }) => {
     return (
         <div className="flex flex-row gap-6 w-full items-center justify-between px-2 my-4">
             <div className="flex flex-col mr-2 gap-2 w-24 shrink-0 items-center">
@@ -87,7 +87,14 @@ const ProgressChecking = ({ status }) => {
                     }}
                     className="absolute w-20 h-20 transform -translate-y-1/2 -translate-x-1/2 -top-1">
                     <lord-icon
-                        src="https://cdn.lordicon.com/fevpdbjk.json"
+                        // src="https://cdn.lordicon.com/fevpdbjk.json"
+                        src={`
+                            ${
+                                !isTable
+                                    ? "https://cdn.lordicon.com/fevpdbjk.json"
+                                    : "https://cdn.lordicon.com/knfxypdv.json"
+                            }
+                        `}
                         trigger="loop"
                         colors="primary:#121331,secondary:#3a3347,tertiary:#646e78,quaternary:#ffc738,quinary:#2ca58d,senary:#f9c9c0,septenary:#f24c00,octonary:#ebe6ef"
                         stroke="0"
@@ -107,6 +114,7 @@ const ProgressChecking = ({ status }) => {
 
 ProgressChecking.propTypes = {
     status: PropTypes.string,
+    isTable: PropTypes.bool,
 };
 
 export default ProgressChecking;

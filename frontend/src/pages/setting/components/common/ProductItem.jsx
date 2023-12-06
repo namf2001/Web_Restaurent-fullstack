@@ -15,21 +15,21 @@ const ProductItem = ({ foodItem, setSelectedFoodItem, setModalUpdateOpen }) => {
             className="flex flex-col justify-between h-[300px] max-w-[220px]"
             key={foodItem.id}
             variants={item}>
-            <div className="border-dashed border-dark flex flex-col pt-6 gap-4 m-0 border rounded-lg h-full">
+            <div className="border-dashed border-dark dark:border-primary-color flex flex-col pt-6 gap-4 m-0 border rounded-lg h-full">
                 <img
                     src={foodItem.image}
                     className="self-center rounded-full w-36 h-36"
                 />
                 <div className="flex flex-col gap-2 mx-10">
-                    <div className="text-center text-sm font-medium leading-[18.2px] text-white truncate">
+                    <div className="text-center text-sm font-medium leading-[18.2px]  truncate">
                         {foodItem.name}
                     </div>
                     <div className="flex flex-row justify-between items-center mx-4">
-                        <div className="text-center whitespace-nowrap text-sm  text-[#abbbc2] w-10 shrink-0">
+                        <div className="text-center whitespace-nowrap text-sm  text-[#abbbc2] dark:text-slate-600 w-10 shrink-0">
                             $ {foodItem.price}
                         </div>
                         <span>•</span>
-                        <div className="text-center whitespace-nowrap text-sm  text-[#abbbc2] w-1/2">
+                        <div className="text-center whitespace-nowrap text-sm  text-[#abbbc2] dark:text-slate-600 w-1/2">
                             {foodItem.quantity} Bowls
                         </div>
                     </div>

@@ -37,18 +37,18 @@ const CircleChart = () => {
             },
         ],
     };
-
+    console.log(chartData)
     return (
-        <div className="bg-base/dark-bg-2-14 flex flex-col gap-5 min-h-[330px] p-6 rounded-lg">
-            <div className=" bg-base/dark-bg-2-14 flex justify-between items-center">
-                <div className="text-xl font-semibold ">Most Ordered</div>
+        <div className="bg-base/dark-bg-2-14 dark:bg-light-bg-1 flex flex-col gap-5 min-h-[330px] p-6 rounded-lg">
+            <div className=" bg-base/dark-bg-2-14 dark:bg-light-bg-1 flex justify-between items-center">
+                <div className="text-xl font-semibold dark:text-dark">Most Ordered</div>
                 <MenuDropDown
                     option={option}
                     options={orderOption}
                     setOptions={setOrderOption}
                 />
             </div>
-            <hr className="h-[1px] bg-base/dark-line border-0" />
+            <hr className="h-[2px] bg-base/dark-line dark:bg-primary-color border-0" />
             <div className="w-full flex justify-between items-center">
                 <div className="w-3/5">
                     <Doughnut
@@ -69,9 +69,9 @@ const CircleChart = () => {
                             className="mt-px w-4 shrink-0"
                         />
                         <div className="flex flex-col gap-px w-16 shrink-0 items-start">
-                            <div className="text-sm font-medium ">Pending</div>
-                            <div className="text-xs text-gray-400">
-                                {order[0]?.count} đơn hàng
+                            <div className="text-sm font-medium dark:text-dark">Pending</div>
+                            <div className="text-xs text-gray-400 dark:text-slate-600">
+                                {order[0]?.count || 0} đơn hàng
                             </div>
                         </div>
                     </div>
@@ -81,23 +81,22 @@ const CircleChart = () => {
                             className="mt-px w-4 shrink-0"
                         />
                         <div className="flex flex-col gap-px w-20 shrink-0 items-start">
-                            <div className="text-sm font-medium  ">
+                            <div className="text-sm font-medium dark:text-dark">
                                 Confirmed
                             </div>
-                            <div className="text-xs text-gray-400">
-                                {order[1]?.count} đơn hàng
+                            <div className="text-xs text-gray-400 dark:text-slate-600">
+                                {order[1]?.count || 0} đơn hàng
                             </div>
                         </div>
                     </div>
                     <div className="relative flex flex-col pt-2 pb-8">
                         <div
-                            id="Info"
-                            className="w-24 h-12 bg-[#1f1d2b] absolute top-0 left-px flex flex-col gap-px items-start pl-4 py-1">
-                            <div className="text-sm font-medium  ml-2">
+                            className="w-24 h-12 absolute top-0 left-px flex flex-col gap-px items-start pl-4 py-1">
+                            <div className="text-sm font-medium ml-2 dark:text-dark">
                                 Delivered
                             </div>
-                            <div className="text-xs text-gray-400 ml-2">
-                                {order[2]?.count} đơn hàng
+                            <div className="text-xs text-gray-400 dark:text-slate-600 ml-2">
+                                {order[2]?.count || 0} đơn hàng
                             </div>
                         </div>
                         <img

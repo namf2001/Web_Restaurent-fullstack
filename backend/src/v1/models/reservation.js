@@ -13,7 +13,8 @@ const reservationSchema = new mongoose.Schema({
         required: true,
     },
     date: {
-        type: Date, // Ngày đặt bàn
+       // Ngày va giờ đặt bàn (ví dụ: 2021-05-30T17:00:00.000Z)
+        type: Date,
         required: true,
     },
     time: {
@@ -36,7 +37,11 @@ const reservationSchema = new mongoose.Schema({
         enum: ["Confirmed", "Unconfirmed", "Completed"],
         default: "Unconfirmed", // Trạng thái mặc định
     },
-});
+},
+    {
+        timestamps: true, // Ngày tạo
+    }
+);
 
 const Reservation = mongoose.model("Reservation", reservationSchema);
 

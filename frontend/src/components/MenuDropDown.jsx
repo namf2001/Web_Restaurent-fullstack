@@ -25,9 +25,9 @@ const MenuDropDown = (props) => {
 	return (
         <Menu as="div" className="relative inline-block text-left">
             <div>
-                <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-base/dark-bg-2-14 px-4 py-3 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-700 hover:bg-gray-700">
+                <Menu.Button className="inline-flex w-full justify-center rounded-md bg-base/dark-bg-2-14 dark:bg-light-bg-1 px-4 py-3 text-sm font-semibold text-white dark:text-dark shadow-sm hover:ring-2 ring-inset ring-gray-700 dark:ring-orange-200 hover:bg-gray-700">
                     <FaChevronDown
-                        className="mr-1 h-5 w-5 text-white"
+                        className="mr-1 h-5 w-5"
                         aria-hidden="true"
                     />
                     {options}
@@ -41,8 +41,8 @@ const MenuDropDown = (props) => {
                 leave="transition ease-in duration-75"
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95">
-                <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-base/dark-bg-2-14 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <ul className="py-1 max-h-40 overflow-hidden overflow-y-scroll scrollbar-thin scrollbar-thumb-primary-color scrollbar-thumb-rounded-full">
+                <Menu.Items className="absolute right-0 z-40 mt-2 w-56 origin-top-right rounded-md bg-base/dark-bg-2-14 dark:bg-light-bg-1 shadow-lg hover:ring-1 ring-black ring-opacity-5 focus:outline-none px-0">
+                    <ul className="max-h-40 overflow-hidden overflow-y-scroll scrollbar-thin scrollbar-thumb-primary-color scrollbar-thumb-rounded-full">
                         {option.map((item) => {
                             return (
                                 <Menu.Item key={item}>
@@ -51,10 +51,16 @@ const MenuDropDown = (props) => {
                                             key={item}
                                             className={`block px-4 py-2 text-sm ${
                                                 active
-                                                    ? "bg-gray-700 text-primary-color"
-                                                    : "text-white"
+                                                    ? "bg-gray-700 dark:bg-orange-200 rounded-lg  text-primary-color"
+                                                    : "text-white dark:text-dark"
                                             }`}
-                                            onClick={() => setOptions(item)}>
+                                            tabIndex="0"
+                                            onClick={() => setOptions(item)}
+                                            onKeyDown={(event) => {
+                                                if (event.key === "Enter" || event.key === " ") {
+                                                    setOptions(item);
+                                                }
+                                            }}>
                                             {item}
                                         </li>
                                     )}

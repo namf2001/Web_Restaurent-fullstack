@@ -83,15 +83,16 @@ const Comment = ({
     isDisliked,
 }) => {
     return (
-        <div className="flex flex-col gap-2 items-start px-4 py-6 rounded-lg shadow-xl hover:bg-main-dark-bg">
+        <div className="flex flex-col gap-2 items-start px-4 py-6 rounded-lg shadow-xl hover:bg-main-dark-bg dark:hover:bg-light-bg-1">
             <div className="flex gap-4 w-full">
                 <img
                     src={review.userId.avatar}
                     alt="Avatar"
                     className="w-12 h-12 rounded-full object-cover"
+                    // loading="lazy"
                 />
                 <div>
-                    <span className="text-gray-300 font-bold">
+                    <span className="text-gray-300 dark:text-dark font-bold">
                         {review.userId.username}
                     </span>
                     <div className="flex items-center justify-between mt-1">
@@ -102,7 +103,7 @@ const Comment = ({
                                     className={classNames(
                                         review.rating > star
                                             ? "text-primary-color"
-                                            : "text-gray-200",
+                                            : "text-gray-200 dark:text-slate-600",
                                         "h-5 w-5 flex-shrink-0"
                                     )}
                                     aria-hidden="true"
@@ -111,7 +112,7 @@ const Comment = ({
                         </div>
                     </div>
                 </div>
-                <span className="text-gray-400 ml-auto">
+                <span className="text-gray-400 dark:text-slate-600 ml-auto">
                     {review.createdAt
                         ? formatDistanceToNow(
                               new Date(review.createdAt),
@@ -124,7 +125,7 @@ const Comment = ({
                 </span>
             </div>
             <div className="flex flex-col w-full">
-                <p className="text-gray-400 italic pr-3">{review.comment}</p>
+                <p className="text-gray-400 dark:text-slate-600 italic pr-3">{review.comment}</p>
                 {/* like and dislike */}
                 <div className="flex items-center justify-between mt-4">
                     <div className="flex items-center space-x-2">

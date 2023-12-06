@@ -9,6 +9,10 @@ const tableSchema = new mongoose.Schema(
             unique: true, // Đảm bảo số thứ tự duy nhất cho mỗi bàn
             required: true,
         },
+        order: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Order",
+        },
         capacity: {
             type: Number, // Sức chứa của bàn (số lượng người có thể ngồi)
             required: true,

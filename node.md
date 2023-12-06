@@ -78,3 +78,34 @@ const Review = ({ idProduct }) => {
 };
 
 export default Review;
+
+                <video
+                    className="w-full h-[180px] object-cover"
+                    loop
+                    autoPlay
+                    muted>
+                    <source src={VideoIntro} type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
+
+                <h1>Thông tin đặt bàn</h1>
+                <div className="flex flex-col gap-2">
+                    <div className="flex justify-between">
+                        <span className="text-white">Tên khách hàng</span>
+                        <span className="text-white">{selectedName}</span>
+                    </div>
+                    <div className="flex justify-between">
+                        <span className="text-white">Số điện thoại</span>
+                        <span className="text-white">{selectedPhone}</span>
+                    </div>
+                    <div className="flex justify-between">
+                        <span className="text-white">Số lượng khách</span>
+                        <span className="text-white">{selectedGuests}</span>
+                    </div>
+                    <div className="flex justify-between">
+                        <span className="text-white">Ghi chú</span>
+                        <span className="text-white">{selectedNote}</span>
+                    </div>
+                </div>
+
+

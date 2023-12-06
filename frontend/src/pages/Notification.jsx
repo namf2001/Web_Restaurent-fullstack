@@ -49,11 +49,11 @@ const Notification = () => {
     };
 
     return (
-        <div className="w-full px-4">
-            <div className="flex flex-col bg-base/dark-bg-2-14 rounded-md p-6">
+        <div className="w-full px-6">
+            <div className="flex flex-col bg-base/dark-bg-2-14 dark:bg-light-bg-1 rounded-md p-6 transition-all">
                 <div className="flex flex-col justify-between shrink-0 items-start">
                     <div className="self-stretch flex justify-between items-center">
-                        <div className="text-2xl font-semibold text-white">
+                        <div className="text-2xl font-semibold text-white dark:text-dark">
                             Thông báo đơn hàng
                         </div>
                         <button className="border-solid border-dark border-2 self-start flex flex-row justify-center gap-2 h-12 items-center px-12 py-3 rounded-lg">
@@ -63,59 +63,62 @@ const Notification = () => {
                                     className="w-4"
                                 />
                             </div>
-                            <div className="text-sm font-medium text-white">
+                            <div className="text-sm font-medium text-white dark:text-dark">
                                 Filter Order
                             </div>
                         </button>
                     </div>
                 </div>
                 <div className="flex flex-col w-full h-[600px] py-6">
-                    <div className="flex items-start">
-                        <div className="text-sm font-semibold text-white flex-1">
+                    <div className="flex items-start dark:text-dark">
+                        <div className="text-sm font-semibold flex-1">
                             Mã đơn hàng
                         </div>
-                        <div className="text-sm font-semibold text-white flex-1">
+                        <div className="text-sm font-semibold flex-1">
                             Khách hàng
                         </div>
-                        <div className="text-sm font-semibold text-white flex-1">
+                        <div className="text-sm font-semibold flex-1">
                             Tổng tiền
                         </div>
-                        <div className="text-sm font-semibold text-white flex-1 text-center">
+                        <div className="text-sm font-semibold flex-1 text-center">
                             Trạng thái
                         </div>
                     </div>
-                    <hr className="w-full h-[2px] bg-base/dark-line-1 border-0 my-4" />
+                    <hr className="w-full h-[2px] bg-base/dark-line-1 dark:bg-primary-color border-0 my-4" />
                     <div className="overflow-y-auto scrollbar-none">
                         <div className="w-full">
                             {orders.map((order) => (
                                 <Disclosure key={order._id}>
                                     {({ open }) => (
                                         <>
-                                            <Disclosure.Button className="flex w-full justify-between rounded-t-lg py-2 text-left text-sm font-medium">
+                                            <Disclosure.Button
+                                                className={`flex w-full justify-between rounded-lg p-2 text-left text-sm font-medium hover:bg-primary-color transition ${order.table_id
+                                                        ? "bg-primary-color/50"
+                                                        : "bg-base/dark-bg-2-14 dark:bg-light-bg-1"
+                                                    }`}>
                                                 <div className="flex shrink-0 items-center py-2 w-full relative">
-                                                    <div className="text-xl font-semibold text-white self-center flex-1">
+                                                    <div className="text-xl font-semibold text-white dark:text-dark self-center flex-1">
                                                         #Orders{" "}
                                                         {order._id.slice(0, 5)}
                                                     </div>
-                                                    <div className="flex-1 text-gray-400">
+                                                    <div className="flex-1 text-gray-400 dark:text-slate-600">
                                                         #Customer{" "}
                                                         {order.user_id.slice(
                                                             0,
                                                             5
                                                         )}
                                                     </div>
-                                                    <div className="text-xl flex-1 font-bold text-gray-400">
+                                                    <div className="text-xl flex-1 font-bold text-gray-400 dark:text-dark">
                                                         ${order.total}
                                                     </div>
                                                     <div className="flex flex-col items-center py-2 flex-1">
                                                         <div
                                                             className={`text-center text-sm font-medium rounded-xl px-6
-                                                                ${
-                                                                    order.status ===
+                                                                ${order.status ===
                                                                     "pending"
-                                                                        ? "bg-blue-400"
-                                                                        : order.status ===
-                                                                          "delivered"
+                                                                    ? "bg-blue-400"
+                                                                    : order.status ===
+                                                                        "delivered"
                                                                         ? "bg-yellow-400"
                                                                         : "bg-green-400"
                                                                 }
@@ -124,29 +127,22 @@ const Notification = () => {
                                                         </div>
                                                     </div>
                                                     {/* icon */}
-                                                    <div className="absolute right-0 top-0 h-full flex items-center justify-center">
-                                                        <div
-                                                            className={`h-8 w-8 transition-transform duration-300 ${
-                                                                open
-                                                                    ? "transform rotate-180"
-                                                                    : ""
+                                                    <button
+                                                        className={`h-8 w-8 transition-transform duration-300 dark:bg-primary-color rounded-full ${open ? "transform rotate-180" : ""
                                                             }`}
-                                                            onClick={() => {
-                                                                handleTrack(
-                                                                    order._id,
-                                                                    order.status
-                                                                );
-                                                            }}>
-                                                            <lord-icon
-                                                                src="https://cdn.lordicon.com/rxufjlal.json"
-                                                                trigger="hover"
-                                                                colors="primary:#b4b4b4"
-                                                                style={{
-                                                                    width: "100%",
-                                                                    height: "100%",
-                                                                }}></lord-icon>
-                                                        </div>
-                                                    </div>
+                                                        type="button"
+                                                        onClick={() => {
+                                                            handleTrack(order._id, order.status);
+                                                        }}>
+                                                        <lord-icon
+                                                            src="https://cdn.lordicon.com/rxufjlal.json"
+                                                            trigger="hover"
+                                                            colors="primary:#fff"
+                                                            style={{
+                                                                width: "100%",
+                                                                height: "100%",
+                                                            }}></lord-icon>
+                                                    </button>
                                                 </div>
                                             </Disclosure.Button>
                                             <Transition
@@ -174,9 +170,9 @@ const Notification = () => {
                                                     <Transition
                                                         show={
                                                             selectedOrderId ===
-                                                                order._id &&
+                                                            order._id &&
                                                             order.status ===
-                                                                "pending"
+                                                            "pending"
                                                         }
                                                         className="flex gap-4">
                                                         <Disclosure.Button className="flex-1">
@@ -185,7 +181,7 @@ const Notification = () => {
                                                                 outline={true}
                                                             />
                                                         </Disclosure.Button>
-                                                        <div className="flex-1">
+                                                        <div className="flex-1 text-white">
                                                             <Button
                                                                 btnText="Xác nhận"
                                                                 color="bg-blue-500"
@@ -201,9 +197,9 @@ const Notification = () => {
                                                     <Transition
                                                         show={
                                                             order.status ===
-                                                                "confirmed" ||
+                                                            "confirmed" ||
                                                             order.status ===
-                                                                "delivered"
+                                                            "delivered"
                                                         }>
                                                         <ProgressChecking
                                                             status={
@@ -227,17 +223,19 @@ const Notification = () => {
                                                             </Disclosure.Button>
                                                             {order.status ===
                                                                 "confirmed" && (
-                                                                <Button
-                                                                    btnText="Đang giao hàng"
-                                                                    color="bg-green-500"
-                                                                    handler={() =>
-                                                                        updateOrderStatus(
-                                                                            order._id,
-                                                                            "delivered"
-                                                                        )
-                                                                    }
-                                                                />
-                                                            )}
+                                                                    <div className="flex-1 text-white">
+                                                                        <Button
+                                                                            btnText="Đang giao hàng"
+                                                                            color="bg-green-500"
+                                                                            handler={() =>
+                                                                                updateOrderStatus(
+                                                                                    order._id,
+                                                                                    "delivered"
+                                                                                )
+                                                                            }
+                                                                        />
+                                                                    </div>
+                                                                )}
                                                         </div>
                                                     </Transition>
                                                 </Disclosure.Panel>

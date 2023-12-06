@@ -9,3 +9,6 @@ export { default as ConfirmationOrder } from "./ConfirmationOrder/ConfirmationOr
 export { default as PaymentOrder } from "./ConfirmationOrder/PaymentOrder";
 export { default as OrderItem } from "./OrderItem";
 export { default as ProgressChecking } from "./ProgressChecking";
+export { default as Footer } from "./Footer";
+export { default as FooterCol } from "./FooterCol";
+export { default as ProgressBar } from "./ProgressBar";

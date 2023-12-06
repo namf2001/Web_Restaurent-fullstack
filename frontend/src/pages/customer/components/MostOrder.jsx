@@ -30,9 +30,9 @@ const MostOrder = () => {
     }, [orderOption]);
 
     return (
-        <div className="bg-base/dark-bg-2-14 flex flex-col justify-center  gap-5 w-[400px] p-6 rounded-lg">
-            <div className=" bg-base/dark-bg-2-14 flex justify-between items-center">
-                <div className="text-xl  font-semibold leading-[28px] text-white">
+        <div className="bg-base/dark-bg-2-14 dark:bg-light-bg-1 dark:text-dark flex flex-col justify-center  gap-5 w-[400px] p-6 rounded-lg">
+            <div className="flex justify-between items-center">
+                <div className="text-xl  font-semibold leading-[28px]">
                     Most Ordered
                 </div>
                 <MenuDropDown
@@ -73,10 +73,10 @@ const MostOrder = () => {
                             className="w-12 shrink-0 rounded-full"
                         />
                         <div className="flex flex-col gap-1 items-start">
-                            <div className="text-sm font-medium text-[#e0e6e9]">
+                            <div className="text-sm font-medium text-[#e0e6e9] dark:text-slate-600">
                                 {item.foodItem[0].name}
                             </div>
-                            <div className="text-xs leading-[16.8px] text-[#abbbc2]">
+                            <div className="text-xs leading-[16.8px] text-[#abbbc2] dark:text-slate-500">
                                 {item.totalOrdered} lượt đặt
                             </div>
                         </div>

@@ -16,7 +16,11 @@ const PaymentOrder = () => {
     const { toggleCart, toggleLocation, openLocation } =
         useContext(CartContext);
     const [option, setOption] = useState([]);
-    let options = option.map((item) => `Bàn ${item.tableNumber}`);
+    let options = option.map((item) =>
+        item.status === "Available"
+            ? `Bàn ${item.tableNumber} : 🔔`
+            : `Bàn ${item.tableNumber} : ❌`
+    );
     const [orderForTable, setOrderForTable] = useState(false);
     const [note, setNote] = useState("");
     const [tableId, setTableId] = useState(null);
@@ -33,17 +37,16 @@ const PaymentOrder = () => {
         fetchTable();
     }, []);
 
-    
     const [tableOption, setTableOption] = useState("Bàn 1");
-    
-        useEffect(() => {
-            const index = options.indexOf(tableOption);
-            setTableId(option[index]?._id);
-            console.log(tableId)
-        }, [option, options, tableId, tableOption]);
-    
+
+    useEffect(() => {
+        const index = options.indexOf(tableOption);
+        setTableId(option[index]?._id);
+        console.log(tableId);
+    }, [option, options, tableId, tableOption]);
+
     return (
-        <div className="flex h-full flex-col bg-base/dark-bg-2-14 shadow-xl text-white w-[400px] border-l border-dark">
+        <div className="flex h-full flex-col bg-base/dark-bg-2-14 dark:bg-light-bg-1 shadow-xl text-white w-[400px] border-l border-dark">
             {!orderForTable && (
                 <motion.div
                     initial={{ opacity: 0, x: -20 }} // Trạng thái ban đầu
@@ -101,7 +104,7 @@ const PaymentOrder = () => {
                         <Button
                             btnText=" Thanh Toán"
                             handler={() => {
-                                handleCheckout(cart, note, null, tableId);
+                                handleCheckout(cart, note, tableId, null);
                             }}
                         />
                     </motion.div>

@@ -1,11 +1,15 @@
 /** @format */
-
+@import url("https://fonts.googleapis.com/css2?family=Plaster&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,300;1,100&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300;400;500;600;700&display=swap");
+@import url("https://cdn.syncfusion.com/ej2/material.css");
 
 body {
     margin: 0;
     padding: 0;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Signika Negative", serif;
     background: #252836;
 }
 
@@ -19,30 +23,30 @@ body {
     }
 
     .sidebar.active ~ span {
-        @apply absolute h-full bg-base/dark-bg-1-18 rounded-s-xl top-0 -z-10;
+        @apply absolute h-full bg-base/dark-bg-1-18 dark:bg-light-bg rounded-s-xl top-0 -z-10 transition-none;
         width: calc(100% + 18px);
     }
 
     .sidebar.active ~ span > :first-child {
-        @apply absolute -top-4 -right-2.5 border-16 border-solid transform rotate-[-45deg];
+        @apply absolute -top-4 -right-2.5 border-16 border-solid transform rotate-[-45deg] dark:border-light-bg;
         border-color: #252836 transparent transparent transparent;
     }
 
     .sidebar.active ~ span > :first-child::after {
         content: "";
-        @apply absolute w-11 h-11 rounded-full bg-base/dark-bg-2-14;
+        @apply absolute w-11 h-11 rounded-full bg-base/dark-bg-2-14 dark:bg-light-bg-1;
         top: -54px;
         left: -22px;
     }
 
     .sidebar.active ~ span > :last-child {
-        @apply absolute -bottom-4 -right-2.5 border-16 border-solid transform rotate-[-45deg];
+        @apply absolute -bottom-4 -right-2.5 border-16 border-solid transform rotate-[-45deg] dark:border-light-bg;
         border-color: transparent transparent transparent #252836;
     }
 
     .sidebar.active ~ span > :last-child::after {
         content: "";
-        @apply absolute w-11 h-11 rounded-full bg-base/dark-bg-2-14;
+        @apply absolute w-11 h-11 rounded-full bg-base/dark-bg-2-14 dark:bg-light-bg-1;
         top: -22px;
         left: -54px;
     }
@@ -172,6 +176,31 @@ body {
     .mySwiper .swiper-wrapper {
         @apply flex items-center;
     }
+
+    /* .imgSwiper .swiper-slide.swiper-slide-visible.swiper-slide-next, .imgSwiper .swiper-slide.swiper-slide-visible.swiper-slide-prev {
+        @apply transform scale-90;
+    } */
+    .imgSwiper .swiper-slide-next img,
+    .imgSwiper .swiper-slide-prev img {
+        @apply transform scale-90;
+        /* filter drop inner  shawdown  */
+        filter: drop-shadow(-50px 1px 30px #000000) blur(5px);
+    }
+
+    .imgSwiper .swiper-slide-prev img {
+        @apply transform scale-90;
+        /* filter drop inner  shawdown  */
+        filter: drop-shadow(50px 1px 30px #000000) blur(5px);
+    }
+    .imgSwiper .swiper-slide-shadow-right.swiper-slide-shadow-coverflow,
+    .imgSwiper .swiper-slide-shadow-left.swiper-slide-shadow-coverflow {
+        @apply bg-none h-fit;
+        /* filter: drop-shadow(1px 1px 10px #000000); */
+    }
+
+    .imgSwiper .swiper-slide-active {
+        filter: drop-shadow(1px 1px 10px #000000);
+    }
     .icon__cloud-item {
         @apply px-4 py-6 rounded-lg transition-all duration-150 ease-in-out;
     }
@@ -189,7 +218,7 @@ body {
     }
 
     .container {
-        @apply rounded-lg shadow-lg relative overflow-hidden w-[820px] max-w-full min-h-[600px] bg-base/dark-bg-2-14
+        @apply rounded-lg shadow-lg relative overflow-hidden w-[820px] max-w-full min-h-[600px] bg-base/dark-bg-2-14;
     }
 
     .form-container {
@@ -315,6 +344,14 @@ body {
         margin: 0 5px;
         height: 40px;
         width: 40px;
+    }
+
+    .drop-shadow {
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    }
+
+    .shrink {
+        @apply h-[100px];
     }
 }
 

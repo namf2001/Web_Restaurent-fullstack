@@ -27,7 +27,7 @@ const Product = (props) => {
     return (
         <>
             <motion.li
-                className="flex flex-col justify-between items-center bg-base/dark-bg-2-14 rounded-2xl w-[192px] h-[273px] mt-[34px] lg:mt-[55px] p-4 lg:w-[230px] lg:h-[327px] z-10 relative product-hover hover:scale-95 hover:bg-base/dark-line duration-500"
+                className="flex flex-col justify-between items-center bg-base/dark-bg-2-14 dark:bg-light-bg-1 dark:text-dark rounded-2xl w-[192px] h-[273px] mt-[34px] lg:mt-[55px] p-4 lg:w-[230px] lg:h-[327px] z-10 relative product-hover hover:scale-95 hover:bg-base/dark-line duration-500 shadow-xl"
                 variants={item}>
                 <div className="mt-[-34px] lg:mt-[-50px] relative overflow-visible">
                     {/* Sản phẩm */}
@@ -48,7 +48,7 @@ const Product = (props) => {
                         {props.name}
                     </h3>
                     <p className="text-sm font-light">$ {props.price}</p>
-                    <p className="text-sm font-extralight text-light">
+                    <p className="text-sm font-extralight text-light dark:text-slate-600">
                         {props.quantity} Bát có sẵn
                     </p>
                 </div>

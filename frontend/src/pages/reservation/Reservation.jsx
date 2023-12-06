@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import reservationApi from "../../api/reservationApi.js";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import CustomerReviews from "./components/CustomerReviews.jsx";
 
 const Reservation = () => {
     const user = useSelector((state) => state.user.value);
@@ -38,7 +39,7 @@ const Reservation = () => {
             try {
                 const res = await reservationApi.createReservation({
                     user: user._id,
-                    date: selectedDate.format("YYYY-MM-DD"),
+                    date: selectedDate.format("dddd, MMMM D, YYYY h:mm A"), 
                     time: selectedDate.format("HH:mm"),
                     user_name: selectedInfo.selectedName,
                     phone: selectedInfo.selectedPhone,
@@ -64,26 +65,23 @@ const Reservation = () => {
 
     return (
         <div className="w-full px-4">
-            <div className="flex flex-wrap bg-base/dark-bg-2-14 rounded-md p-6">
-                <div className="flex-1 rounded-xl bg-base/dark-bg-1-18 overflow-hidden shadow-md flex flex-col min-h-[490px]">
-                    <nav className="bg-base/dark-line p-1 pb-0 rounded-xl rounded-bl-none rounded-br-none border-b-1 h-11">
+            <div className="flex flex-wrap h-[60vh]">
+                <div className="flex-1 rounded-xl bg-base/dark-bg-2-14 dark:bg-light-bg-1 overflow-hidden shadow-md flex flex-col">
+                    <nav className="bg-base/dark-bg-2-14 dark:bg-light-bg-1 pb-0 rounded-xl rounded-bl-none rounded-br-none border-b-1 border-gray-800 h-12">
                         <ul className="flex w-full">
                             {tabs.map((item) => (
                                 <li
                                     key={item.label}
-                                    className={`
-                                       ${
-                                           item.label === selectedTab.label
-                                               ? "bg-base/dark-bg-2-14"
-                                               : ""
-                                       } relative rounded-md rounded-bl-none rounded-br-none flex justify-center items-center flex-1 min-w-0 select-none h-9 cursor-pointer bg-base/dark-bg-1-18
-                                    `}
-                                    onClick={() => handleSelectedTab(item)}>
+                                    className={`relative flex justify-center items-center flex-1 min-w-0 select-none h-12 cursor-pointer  transition-colors
+                                       ${item.label === selectedTab.label
+                                        ? "bg-base/dark-bg-2-14 dark:bg-light-bg-1 dark:text-dark rounded-md rounded-bl-none rounded-br-none"
+                                            : "bg-half-transparent dark:bg-light-bg-2"
+                                        } 
+                                    `}>
                                     {`${item.icon} ${item.label}`}
-                                    {item === selectedTab ? (
+                                    {item.label === selectedTab.label ? (
                                         <motion.div
-                                            className="absolute -bottom-1 left-0 right-0 h-[1px] bg-primary-color"
-                                            layoutId="underline"
+                                            className="absolute bottom-0 left-0 right-0 h-[1px] bg-primary-color"
                                         />
                                     ) : null}
                                 </li>
@@ -127,6 +125,9 @@ const Reservation = () => {
                                                     date: selectedDate,
                                                 }}
                                                 onConfirm={handleConfirm}
+                                                onSelectedTab={
+                                                    handleSelectedTab
+                                                }
                                             />
                                         )}
                                     </>
@@ -139,6 +140,7 @@ const Reservation = () => {
                     <Advertisement />
                 </div>
             </div>
+            <CustomerReviews />
         </div>
     );
 };

@@ -1,10 +1,9 @@
 /** @format */
 
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import MenuDropDown from "../components/MenuDropDown";
 import { motion } from "framer-motion";
 import { Product } from "../components";
-import AOS from "aos";
 import "aos/dist/aos.css";
 import { useSelector } from "react-redux";
 
@@ -29,14 +28,12 @@ const Home = () => {
         },
     };
 
-    useEffect(() => {
-        AOS.init();
-    }, []);
+    console.log(selectedType)
 
     return (
         <div className="px-6 flex flex-col h-full w-full">
             <div className="relative">
-                <motion.ul className="flex gap-2 items-center text-sm mb-3 flex-wrap">
+                <motion.ul className="flex gap-2 items-center text-sm mb-3 flex-wrap dark:text-dark">
                     {categories.map((item, index) => (
                         <motion.li
                             key={item.id}
@@ -47,18 +44,18 @@ const Home = () => {
                             whileTap={{ scale: 0.9 }} // Hiệu ứng khi nhấp vào
                             onClick={() => {
                                 setSelectedType(item);
-                                setSpanX(index * 88); // Điều chỉnh khoảng cách ngang giữa các mục
+                                setSpanX(index * 105); // Điều chỉnh khoảng cách ngang giữa các mục
                             }}
                             className={
                                 selectedType.id === item.id
-                                    ? "text-primary-color font-semibold w-20 text-center"
-                                    : "w-20 text-center"
+                                    ? "text-primary-color font-semibold w-24 text-center"
+                                    : "w-24 text-center"
                             }>
                             {item.name}
                         </motion.li>
                     ))}
                 </motion.ul>
-                <hr className="w-full h-[1px] bg-base/dark-line-1 border-0 absolute" />
+                <hr className="w-full h-[2px] bg-base/dark-line-1 dark:bg-light-bg-1 border-0 absolute" />
                 {selectedType && (
                     <motion.span
                         className="absolute w-20 h-1 bg-primary-color rounded-md -bottom-0.5"
@@ -68,8 +65,8 @@ const Home = () => {
                 )}
             </div>
             <div className="py-6 flex justify-between items-center">
-                <h1 className="text-xl font-bold">
-                    Choose {selectedType.name}
+                <h1 className="text-xl font-bold dark:text-dark uppercase">
+                    Chọn {selectedType.name}
                 </h1>
                 <div>
                     <MenuDropDown
@@ -87,7 +84,7 @@ const Home = () => {
                     animate="visible">
                     {foodItems.map((foodItem) => {
                         if (
-                            foodItem.category === selectedType.id ||
+                            foodItem.category.id === selectedType.id ||
                             selectedType.id === categories[0].id
                         ) {
                             return (

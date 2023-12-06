@@ -61,17 +61,18 @@ const FormAuth = () => {
             navigate("/user/");
         } catch (err) {
             const errors = err.data.errors;
+            console.log(errors)
             errors.forEach((e) => {
-                if (e.param === "username") {
+                if (e.path === "username") {
                     setUsernameErrText(e.msg);
                 }
-                if (e.param === "email") {
+                if (e.path === "email") {
                     setEmailErrText(e.msg);
                 }
-                if (e.param === "password") {
+                if (e.path === "password") {
                     setPasswordErrText(e.msg);
                 }
-                if (e.param === "confirmPassword") {
+                if (e.path === "confirmPassword") {
                     setConfirmPasswordErrText(e.msg);
                 }
             });
@@ -105,10 +106,10 @@ const FormAuth = () => {
         } catch (err) {
             const errors = err.data.errors;
             errors.forEach((e) => {
-                if (e.param === "email") {
+                if (e.path === "email") {
                     setEmailErrTextLogin(e.msg);
                 }
-                if (e.param === "password") {
+                if (e.path === "password") {
                     setPasswordErrTextLogin(e.msg);
                 }
             });
@@ -255,7 +256,6 @@ const FormAuth = () => {
                         </em>
                         <Button
                             btnText="Đăng nhập"
-                            outline
                             handler={() => setIsSignUpActive(false)}
                         />
                     </div>
@@ -267,7 +267,6 @@ const FormAuth = () => {
                         </em>
                         <Button
                             btnText="Đăng ký"
-                            outline
                             handler={() => setIsSignUpActive(true)}
                         />
                     </div>

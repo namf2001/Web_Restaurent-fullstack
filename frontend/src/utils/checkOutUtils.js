@@ -7,9 +7,9 @@ const handleCheckout = async (cart, note, tableId, locationData) => {
     }, 0);
     let order = {};
 
-    if (tableId) {
+    if (tableId !== null) {
         order = {
-            table: tableId,
+            table_id: tableId,
             items: cart.map((item) => item._id), // Sử dụng _id của mỗi mục Cart
             total: total,
             note: note,

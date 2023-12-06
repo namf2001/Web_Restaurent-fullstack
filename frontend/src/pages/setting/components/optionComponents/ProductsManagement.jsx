@@ -54,9 +54,9 @@ const ProductsManagement = () => {
 
     return (
         <>
-            <div className="bg-base/dark-bg-2-14 grow shrink flex flex-col  mb-6 pt-6 gap-3 rounded-lg h-[calc(100vh-134px)] relative">
+            <div className="bg-base/dark-bg-2-14 dark:bg-light-bg-1 dark:text-dark grow shrink flex flex-col  mb-6 pt-6 gap-3 rounded-lg h-[calc(100vh-134px)] relative">
                 <div className="flex flex-row justify-between items-center mb-3 mx-6">
-                    <div className="whitespace-nowrap text-xl font-semibold text-white w-48 shrink-0">
+                    <div className="whitespace-nowrap text-xl font-semibold w-48 shrink-0">
                         Products Management
                     </div>
                     <button className="border-solid border-[#393c49] shadow-[0px_8px_24px_0px_rgba(146,_136,_224,_0.3)] flex flex-row justify-center gap-2 h-12 items-center px-4 py-3 border rounded-lg">
@@ -81,20 +81,20 @@ const ProductsManagement = () => {
                                 transition={{ duration: 0.5 }}
                                 whileHover={{ scale: 1.1 }} // Hiệu ứng khi di chuột qua
                                 whileTap={{ scale: 0.9 }} // Hiệu ứng khi nhấp vào
-                                className={`flex items-center justify-center w-20 h-12 rounded-lg cursor-pointer ${
+                                className={`flex items-center justify-center w-24 h-12 rounded-lg cursor-pointer line-clamp-1 ${
                                     selectedCategory.id === item.id
                                         ? "text-primary-color"
-                                        : "text-white"
+                                        : ""
                                 }`}
                                 onClick={() => {
                                     setSelectedCategory(item);
-                                    setSpanX(index * 88); // Điều chỉnh khoảng cách ngang giữa các mục
+                                    setSpanX(index * 105); // Điều chỉnh khoảng cách ngang giữa các mục
                                 }}>
                                 {item.name}
                             </motion.li>
                         ))}
                     </motion.ul>
-                    <hr className="w-full h-[1px] bg-base/dark-line-1 border-0 absolute" />
+                    <hr className="w-full h-[1px] bg-base/dark-line-1 dark:bg-primary-color/30 border-0 absolute" />
                     {selectedCategory && (
                         <motion.span
                             className="absolute w-20 h-1 bg-primary-color rounded-md -bottom-0.5 ml-5"
@@ -108,7 +108,7 @@ const ProductsManagement = () => {
                     variants={container}
                     initial="hidden"
                     animate="visible">
-                    <motion.div className="border-dashed border-color bg-base/dark-bg-2-14 flex flex-col justify-center gap-2 h-[300px] max-w-[220px] items-center border rounded-lg">
+                    <motion.div className="border-dashed border-color bg-base/dark-bg-2-14 dark:bg-light-bg-1 flex flex-col justify-center gap-2 h-[300px] max-w-[220px] items-center border rounded-lg">
                         <button
                             className="flex flex-col justify-center w-12 h-12 shrink-0 items-center rounded-lg"
                             onClick={() => {

@@ -36,9 +36,9 @@ const LayoutBasic = () => {
     }
     return (
         <div>
-            <div className="relative dark:bg-main-dark-bg bg-base/dark-bg-1-18">
+            <div className="relative dark:bg-light-bg bg-base/dark-bg-1-18">
                 <Sidebar links={MENU_ITEMS} />
-                <div className="ml-[100px] fixed dark:bg-main-dark-bg w-[calc(100vw-100px)] text-white flex min-h-[100vh] justify-between">
+                <div className="ml-[100px] fixed dark:bg-light-bg w-[calc(100vw-100px)] text-white flex min-h-[100vh] justify-between">
                     <div className="flex-1">
                         <Navbar />
                         <Outlet />

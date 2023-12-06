@@ -20,7 +20,6 @@ let base64String = "";
 const CategoriesManagement = () => {
     const dispatch = useDispatch();
     const category = useSelector((state) => state.category.value);
-    console.log(category);
     const [selectedCategory, setSelectedCategory] = useState(category[0]);
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -113,10 +112,10 @@ const CategoriesManagement = () => {
         },
     };
     return (
-        <div className="bg-base/dark-bg-2-14 grow shrink flex gap-3 rounded-lg h-[calc(100vh-134px)] relative">
+        <div className="bg-base/dark-bg-2-14 dark:bg-light-bg-1 dark:text-dark grow shrink flex gap-3 rounded-lg h-[calc(100vh-134px)] relative">
             <div className="w-60 h-full rounded-s-md border-0 border-r-4 border-dark">
                 <div className="flex flex-col justify-between py-2">
-                    <h3 className="text-xl font-semibold text-white px-4 py-6 text-center">
+                    <h3 className="text-xl font-semibold px-4 py-6 text-center">
                         Categories
                     </h3>
                     <button
@@ -139,9 +138,9 @@ const CategoriesManagement = () => {
                                 variants={child}
                                 key={item._id}
                                 onClick={() => setSelectedCategory(item)}
-                                className={`h-10 px-4 bg-base/dark-bg-2-14 hover:bg-base/dark-bg-1-18 flex items-center justify-between text-white cursor-pointer ${
+                                className={`h-10 px-4 bg-base/dark-bg-2-14 dark:bg-light-bg-1 hover:bg-base/dark-bg-1-18 flex items-center justify-between  cursor-pointer ${
                                     selectedCategory._id === item._id &&
-                                    "-mr-1 border-0 border-r-4 border-primary-color bg-base/dark-line"
+                                    "-mr-1 border-0 border-r-4 border-primary-color bg-base/dark-line dark:bg-light-bg-2 text-white"
                                 }`}>
                                 <span className="text-sm font-semibold">
                                     {item.name}
@@ -159,7 +158,7 @@ const CategoriesManagement = () => {
             </div>
             <div className="flex flex-col w-full">
                 <div className="w-full flex items-center justify-between py-6 px-10">
-                    <h3 className="text-xl font-semibold text-white">
+                    <h3 className="text-xl font-semibold">
                         Tên danh mục:{" "}
                         <input
                             type="text"
@@ -184,7 +183,7 @@ const CategoriesManagement = () => {
                 <div className="flex flex-col">
                     {/* des and image */}
                     <div className="flex flex-col gap-2 px-10">
-                        <h3 className="text-lg font-semibold text-white">
+                        <h3 className="text-lg font-semibold">
                             Mô tả:
                         </h3>
                         <textarea
@@ -199,10 +198,10 @@ const CategoriesManagement = () => {
                     </div>
                     {/* image */}
                     <div className="flex flex-col gap-2 px-10">
-                        <h3 className="text-lg font-semibold text-white">
+                        <h3 className="text-lg font-semibold">
                             Ảnh:
                         </h3>
-                        <div className="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                        <div className="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-amber-950 border-dashed rounded-md">
                             <div className="text-center">
                                 {image ? (
                                     <img
@@ -219,7 +218,7 @@ const CategoriesManagement = () => {
                                 <div className="mt-4 flex text-sm leading-6 text-gray-600">
                                     <label
                                         htmlFor="file-upload"
-                                        className="relative cursor-pointer rounded-md bg-base/dark-bg-1-18 font-semibold text-primary-color focus-within:outline-none hover:text-primary-color/50">
+                                        className="relative cursor-pointer rounded-md bg-base/dark-bg-1-18 dark:bg-light-bg-1 px-2 font-semibold text-primary-color focus-within:outline-none hover:text-primary-color/50">
                                         <span>Upload a file</span>
                                         <input
                                             id="file-upload"

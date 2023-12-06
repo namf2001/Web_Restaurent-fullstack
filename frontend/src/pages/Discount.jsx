@@ -36,7 +36,7 @@ const Discount = () => {
     return (
         <div className="px-6 flex flex-col h-full w-full">
             <div className="relative">
-                <motion.ul className="flex gap-2 items-center text-sm mb-3 flex-wrap">
+                <motion.ul className="flex gap-2 items-center text-sm mb-3 flex-wrap dark:text-dark">
                     {categories.map((item, index) => (
                         <motion.li
                             key={item.id}
@@ -58,7 +58,7 @@ const Discount = () => {
                         </motion.li>
                     ))}
                 </motion.ul>
-                <hr className="w-full h-[1px] bg-base/dark-line-1 border-0 absolute" />
+                <hr className="w-full h-[2px] bg-base/dark-line-1 dark:bg-light-bg-1 border-0 absolute" />
                 {selectedType && (
                     <motion.span
                         className="absolute w-20 h-1 bg-primary-color rounded-md -bottom-0.5"
@@ -68,7 +68,7 @@ const Discount = () => {
                 )}
             </div>
             <div className="py-6 flex justify-between items-center">
-                <h1 className="text-xl font-bold">
+                <h1 className="text-xl font-bold dark:text-dark uppercase">
                     Choose {selectedType.name}
                 </h1>
                 <div>

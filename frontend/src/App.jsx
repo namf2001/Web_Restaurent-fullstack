@@ -16,7 +16,11 @@ import {
     Setting,
     Product,
     Success,
-    Reservation
+    Reservation,
+    Contact,
+    Main,
+    Calender,
+    DeskManager,
 } from "./pages";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -24,6 +28,8 @@ import foodItemApi from "./api/foodItemApi";
 import { setFoodItem } from "./redux/features/foodItemSlice";
 import { setCategory } from "./redux/features/categorySlice";
 import CategoryApi from "./api/categoryApi";
+ // You can also use <link> for styles
+
 
 function App() {
     const dispatch = useDispatch();
@@ -50,18 +56,23 @@ function App() {
     }, [dispatch]);
 
     return (
-        <>
+        // dark mode 
+        <main>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<LayoutBasic />}>
                         <Route path="/" element={<Home />} />
+                        <Route path="/main" element={<Main />} index/>
+                        <Route path="/contact" element={<Contact />} />
                         <Route path="/discount" element={<Discount />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/product/:id" element={<Product />} />
                         <Route path="/reservation" element={<Reservation />} />
                     </Route>
-                    <Route path="/user" element={<LayoutUser />}>
+                    <Route path="/" element={<LayoutUser />}>
                         <Route path="/user/" element={<Home />} />
+                        <Route path="/user/main" element={<Main />} index />
+                        <Route path="/user/contact" element={<Contact />} />
                         <Route path="/user/discount" element={<Discount />} />
                         <Route path="/user/dashboard" element={<Dashboard />} />
                         <Route path="/user/order" element={<Order />} />
@@ -72,7 +83,7 @@ function App() {
                             element={<Reservation />}
                         />
                     </Route>
-                    <Route path="/admin" element={<LayoutAdmin />}>
+                    <Route path="/" element={<LayoutAdmin />}>
                         <Route path="/admin/" element={<Home />} />
                         <Route
                             path="/admin/dashboard"
@@ -87,6 +98,14 @@ function App() {
                         <Route
                             path="/admin/product/:id"
                             element={<Product />}
+                        />
+                        <Route
+                            path="/admin/calender"
+                            element={<Calender />}
+                        />
+                        <Route
+                            path="/admin/deskmanager"
+                            element={<DeskManager />}
                         />
                     </Route>
                     <Route path="/success" element={<Success />} />
@@ -104,7 +123,7 @@ function App() {
                 pauseOnHover
                 theme="dark"
             />
-        </>
+        </main>
     );
 }
 

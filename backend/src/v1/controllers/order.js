@@ -11,17 +11,26 @@ const { ObjectId } = mongoose.Types;
 const createOrder = async (req, res, next) => {
     try {
         const userId = req.user;
-        const { items, total, note, address } = req.body;
+        const { items, total, note, address, id_table } = req.body;
         const { phone } = await User.findById(userId._id);
 
-        const order = await Order.create({
+        const order = id_table ? new Order({
             user_id: userId._id,
             items,
             total,
             note,
-            address,
             phone,
+            id_table,
+        }) : new Order({
+            user_id: userId._id,
+            items,
+            total,
+            note,
+            phone,
+            address,
         });
+
+        await order.save();
         // update status of cart items to confirmed
         await Cart.updateMany(
             { _id: { $in: items } },

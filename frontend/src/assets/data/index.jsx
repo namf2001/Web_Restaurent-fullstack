@@ -1,7 +1,12 @@
 /** @format */
 
 import { TbDiscount2 } from "react-icons/tb";
-import { FiSettings as Setting } from "react-icons/fi";
+import { FiCalendar, FiShoppingBag, FiSettings as Setting } from "react-icons/fi";
+import award01 from "../images/award01.png";
+import award02 from "../images/award02.png";
+import award03 from "../images/award03.png";
+import award05 from "../images/award05.png";
+
 import {
     BiUser as Customer,
     BiFoodMenu,
@@ -14,12 +19,18 @@ import { RiNotification4Line as Notification } from "react-icons/ri";
 import {
     MdOutlineSpaceDashboard as Dashboard,
     MdOutlineSecurity,
+    MdOutlineTableRestaurant,
 } from "react-icons/md";
 import Cheesecake from "../images/Cheesecake.png";
+import BBQRibs from "../images/BBQRibs.png";
+import Icream from "../images/icream.png";
+import Pizza from "../images/Pizza.png";
+import Salad from "../images/Salad.png";
 import CaesarSalad from "../images/Product2.png";
 import { CgCreditCard } from "react-icons/cg";
 import { TbBrandPaypal } from "react-icons/tb";
 import { BiWalletAlt } from "react-icons/bi";
+import { AiFillContacts } from "react-icons/ai";
 export const links = [
     {
         id: 1,
@@ -87,12 +98,22 @@ export const MENU_ITEMS = [
         path: "/reservation",
         icon: <BiAt />,
     },
+    {
+        name: "Contact",
+        path: "/contact",
+        icon: <AiFillContacts />,
+    },
+    {
+        name: "Main",
+        path: "/main",
+        icon: <FiShoppingBag />,
+    },
 ];
 
 export const USER_MENU = [
     {
         name: "Home",
-        path: "/user/",
+        path: "/",
         icon: <BiHomeAlt2 />,
     },
     {
@@ -114,6 +135,16 @@ export const USER_MENU = [
         name: "Reservation",
         path: "/user/reservation",
         icon: <BiAt />,
+    },
+    {
+        name: "Contact",
+        path: "/user/contact",
+        icon: <AiFillContacts />,
+    },
+    {
+        name: "Main",
+        path: "/user/main",
+        icon: <FiShoppingBag />,
     },
 ];
 
@@ -159,7 +190,7 @@ export const SettingOption = [
 export const ADMIN_MENU = [
     {
         name: "Home",
-        path: "/admin/",
+        path: "/",
         icon: <BiHomeAlt2 />,
     },
     {
@@ -171,6 +202,16 @@ export const ADMIN_MENU = [
         name: "Notification",
         path: "/admin/notification",
         icon: <Notification />,
+    },
+    {
+        name: "Calender",
+        path: "/admin/calender",
+        icon: <FiCalendar />,
+    },
+    {
+        name: "Desk Manager",
+        path: "/admin/deskmanager",
+        icon: <MdOutlineTableRestaurant />,
     },
     {
         name: "Setting",
@@ -253,5 +294,52 @@ export const paymentMethods = [
         id: 3,
         name: "Wallet",
         icon: <BiWalletAlt />,
+    },
+];
+
+export const heroImg = [
+    {
+        id: 1,
+        img: Cheesecake,
+    },
+    {
+        id: 2,
+        img: BBQRibs,
+    },
+    {
+        id: 3,
+        img: Icream,
+    },
+    {
+        id: 4,
+        img: Pizza,
+    },
+    {
+        id: 5,
+        img: Salad,
+    },
+]
+
+
+export const awards = [
+    {
+        imgUrl: award02,
+        title: "Bib Gourmond",
+        subtitle: "Lorem ipsum dolor sit amet, consectetur.",
+    },
+    {
+        imgUrl: award01,
+        title: "Rising Star",
+        subtitle: "Lorem ipsum dolor sit amet, consectetur.",
+    },
+    {
+        imgUrl: award05,
+        title: "AA Hospitality",
+        subtitle: "Lorem ipsum dolor sit amet, consectetur.",
+    },
+    {
+        imgUrl: award03,
+        title: "Outstanding Chef",
+        subtitle: "Lorem ipsum dolor sit amet, consectetur.",
     },
 ];

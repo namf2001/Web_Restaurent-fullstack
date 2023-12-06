@@ -39,8 +39,8 @@ const ProductDetail = ({
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
     return (
-        <div className="flex bg-gradient-to-r from-slate-950 via-slate-950 to-slate-900 rounded-xl shadow-xl">
-            <div className="bg-base/dark-bg-2-14 flex-1 flex flex-col gap-10 relative p-12 rounded-xl rounded-br-3xl rounded-tr-3xl shadow-inner">
+        <div className="flex bg-gradient-to-r from-slate-950 dark:from-[#F2EAD3] via-slate-950 dark:to-[#F2EAD3] to-slate-900 rounded-xl shadow-xl">
+            <div className="bg-base/dark-bg-2-14 dark:bg-light-bg-1 flex-1 flex flex-col gap-10 relative p-12 rounded-xl rounded-br-3xl rounded-tr-3xl shadow-inner dark:text-dark">
                 <div>
                     <h2 className="text-xl font-bold">NONE@</h2>
                     <span className="text-gray-400 text-xs">
@@ -72,7 +72,7 @@ const ProductDetail = ({
                         <FaCartPlus className="text-5xl text-primary-color" />
                     </div>
                     <SwiperSlide className="self-stretch flex flex-col mr-12 gap-4 items-start">
-                        <div className="text-5xl font-semibold text-white">
+                        <div className="text-5xl font-semibold text-white dark:text-dark">
                             {product.name}
                         </div>
                         <h4 className="sr-only">Reviews</h4>
@@ -83,21 +83,21 @@ const ProductDetail = ({
                                     className={classNames(
                                         rating > star
                                             ? "text-primary-color"
-                                            : "text-gray-200",
+                                            : "text-gray-200 dark:text-slate-600",
                                         "h-5 w-5 flex-shrink-0"
                                     )}
                                     aria-hidden="true"
                                 />
                             ))}{" "}
                             | {product.reviews?.length}{" "}
-                            <span className="text-xs text-gray-400 ml-1">
+                            <span className="text-xs text-gray-400 dark:text-slate-600 ml-1">
                                 lượt đánh giá
                             </span>
                         </div>
                         <div className="self-stretch flex flex-col gap-6 items-start">
                             <div className="flex items-end gap-4">
                                 {product.discount > 0 && (
-                                    <span className="text-3xl font-medium text-gray-400 line-through">
+                                    <span className="text-3xl font-medium text-gray-400 dark:text-slate-600 line-through">
                                         {product.price}$
                                     </span>
                                 )}
@@ -114,7 +114,7 @@ const ProductDetail = ({
                                     </span>
                                 )}
                             </div>
-                            <div className="text-gray-400 line-clamp-2">
+                            <div className="text-gray-400 dark:text-slate-600 line-clamp-2">
                                 {product.description}
                             </div>
                             <ul className="text-sm text-white">
@@ -146,7 +146,6 @@ const ProductDetail = ({
                                 <div>
                                     <span className="text-xl font-medium text-gray-400 line-through mr-2">
                                         {product.price * quantity}${" "}
-                                        {/* discount */}
                                     </span>
                                     {product.discount > 0 && (
                                         <span className="text-sm font-medium px-3 py-1 bg-red-400 rounded-sm text-white">
@@ -162,9 +161,9 @@ const ProductDetail = ({
                                         : product.price * quantity}
                                     $
                                 </div>
-                                <div className="flex items-center justify-between w-1/2 bg-base/dark-line rounded-md">
+                                <div className="flex items-center justify-between w-1/2 bg-base/dark-line dark:bg-orange-400 rounded-md">
                                     <button
-                                        className="w-10 h-10 rounded-s-md bg-base/dark-line-1"
+                                        className="w-10 h-10 rounded-s-md bg-base/dark-line-1 dark:bg-orange-300"
                                         onClick={() => {
                                             if (quantity > 1) {
                                                 setQuantity(quantity - 1);
@@ -172,9 +171,16 @@ const ProductDetail = ({
                                         }}>
                                         -
                                     </button>
-                                    <span>{quantity}</span>
+                                    <input
+                                        type="number"
+                                        value={quantity}
+                                        onChange={(e) =>
+                                            setQuantity(e.target.value)
+                                        }
+                                        className="w-10 h-10 text-center bg-transparent block rounded-md border-0 py-1.5 text-light dark:text-slate-600 ring-0 ring-inset ring-gray-700 dark:ring-orange-200 placeholder:text-light dark:placeholder:text-slate-600 focus:ring-0 focus:ring-inset focus:ring-offset-gray-950 dark:focus:ring-offset-orange-200 focus:outline-none text-sm leading-6"
+                                    />
                                     <button
-                                        className="w-10 h-10 rounded-e-md bg-base/dark-line-1"
+                                        className="w-10 h-10 rounded-e-md bg-base/dark-line-1 dark:bg-orange-300"
                                         onClick={() => {
                                             if (quantity < product.quantity) {
                                                 setQuantity(quantity + 1);
@@ -229,21 +235,22 @@ const ProductDetail = ({
             </div>
             <div className="flex-1 rounded-2xl overflow-hidden">
                 <div className="flex flex-col justify-between gap-40 bg-[url('https://learnenglish.britishcouncil.org/sites/podcasts/files/2021-10/RS4905_81989918-hig_0.jpg')] h-full rounded-sm">
-                    <div className="flex flex-col items-center justify-center gap-4 bg-gradient-to-r from-slate-950 via-slate-300/20 to-slate-900 h-full rounded-sm">
+                    <div className="flex flex-col items-center justify-center gap-4 bg-gradient-to-r from-slate-950 dark:from-[#F2EAD3]/80 via-slate-300/20 dark:via-slate-300/10 dark:to-[#F2EAD3]/80 to-slate-900 h-full rounded-sm">
                         <Swiper
                             autoplay={{
                                 delay: 2500,
                                 disableOnInteraction: false,
                             }}
+                            slidesPerView={1}
                             spaceBetween={10}
                             thumbs={{ swiper: thumbsSwiper }}
                             modules={[FreeMode, Navigation, Thumbs, Autoplay]}
                             loop={true}
-                            className="w-full h-[350px]">
+                            className="w-[600px] h-[350px]">
                             <SwiperSlide className="flex items-center">
                                 <img
                                     src={product.image}
-                                    className="object-contain max-h-[350px] max-w-[80%] m-auto rounded-full"
+                                    className="object-contain w-[350px] m-auto rounded-full"
                                 />
                             </SwiperSlide>
                             <SwiperSlide className="flex items-center">

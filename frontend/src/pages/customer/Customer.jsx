@@ -63,9 +63,9 @@ const Customer = () => {
                 <FormUser />
                 <MostOrder />
             </motion.div>
-            <motion.div variants={item} className="bg-base/dark-bg-2-14 flex flex-col gap-2 w-full px-6 pt-6 pb-2 mt-6 rounded-lg h-[300px]">
+            <motion.div variants={item} className="bg-base/dark-bg-2-14 dark:bg-light-bg-1 dark:text-dark flex flex-col gap-2 w-full px-6 pt-6 pb-2 mt-6 rounded-lg h-[300px]">
                 <div className="flex flex-row justify-between items-start mb-1">
-                    <div className="text-xl font-semibold leading-[28px] text-white mt-2">
+                    <div className="text-xl font-semibold leading-[28px] mt-2">
                         {name}
                     </div>
                     <div className="border-solid border-[#393c49] flex flex-row gap-3 h-12 items-center pl-4 pr-8 py-3 border rounded-lg">
@@ -73,20 +73,20 @@ const Customer = () => {
                             src="https://file.rendit.io/n/dxfs6sbHZxPmbGuAiDCk.svg"
                             className="w-4 shrink-0"
                         />
-                        <div className="text-sm font-medium text-white">
+                        <div className="text-sm font-medium">
                             Filter Order
                         </div>
                     </div>
                 </div>
                 <div className="grid grid-cols-4">
-                    <div className="text-sm font-semibold text-white">
+                    <div className="text-sm font-semibold">
                         Customer
                     </div>
-                    <div className="text-sm font-semibold text-white">Menu</div>
-                    <div className="text-sm font-semibold text-white">
+                    <div className="text-sm font-semibold">Menu</div>
+                    <div className="text-sm font-semibold">
                         Total Payment
                     </div>
-                    <div className="text-sm font-semibold text-white text-center">
+                    <div className="text-sm font-semibold text-center">
                         Status
                     </div>
                 </div>
@@ -96,13 +96,13 @@ const Customer = () => {
                         <div
                             key={order._id}
                             className="flex shrink-0 items-center py-2 w-full">
-                            <div className="text-xl font-semibold text-white self-center flex-1">
+                            <div className="text-xl font-semibold self-center flex-1">
                                 #Orders {order._id.slice(0, 5)}
                             </div>
-                            <div className="flex-1 text-gray-400">
+                            <div className="flex-1 text-gray-400 dark:text-slate-600">
                                 {order.phone}
                             </div>
-                            <div className="text-xl flex-1 font-bold text-gray-400">
+                            <div className="text-xl flex-1 font-bold text-gray-400 dark:text-slate-600">
                                 ${order.total}
                             </div>
                             <div className="flex flex-col items-center py-2 flex-1">

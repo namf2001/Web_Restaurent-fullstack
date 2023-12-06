@@ -29,6 +29,10 @@ export default {
                 "secondary-dark-bg": "#33373E",
                 "light-gray": "#F7F7F7",
                 "half-transparent": "rgba(0, 0, 0, 0.5)",
+                // light mode
+                "light-bg": "#F9F5F0",
+                "light-bg-1": "#F2EAD3",
+                "light-bg-2": "#321313",
             },
             borderWidth: {
                 1: "1px",
@@ -37,6 +41,10 @@ export default {
             borderColor: {
                 color: "#EA736D",
                 dark: "#2D303E",
+                "dark-1": "#1F1D2B",
+                // light mode
+                "light-bg": "#F9F5F0",
+                "light-bg-1": "#F2EAD3",
             },
             width: {
                 100: "100px",
@@ -61,16 +69,18 @@ export default {
             colors: {
                 "primary-color": "#EA736D",
                 light: "#ABBBC2",
+                dark: "#321313",
+                "dark-1": "#1F1D2B",
+                // light mode
+                "light-bg": "#F9F5F0",
+                "light-bg-1": "#F2EAD3",
             },
             boxShadow: {
                 "3xl": "0 0 10px #EA736D",
             },
             dropShadow: {
                 "3xl": "0 0 10px #EA736D",
-                "4xl": [
-                    "0 35px 35px rgba(0, 0, 0, 0.25)",
-                    "0 45px 65px rgba(0, 0, 0, 0.15)",
-                ],
+                "4xl": "0 10px 10px #000",
             },
         },
     },

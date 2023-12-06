@@ -82,7 +82,7 @@ const FormUser = () => {
         }
     };
     return (
-        <div className="bg-base/dark-bg-2-14 flex flex-col gap-4 flex-1 h-[347px] p-6 rounded-lg">
+        <div className="bg-base/dark-bg-2-14 dark:bg-light-bg-1 dark:text-dark flex flex-col gap-4 flex-1 h-[347px] p-6 rounded-lg">
             <div className="self-start flex flex-row gap-4  items-center">
                 <label htmlFor="avatar">
                     <img
@@ -105,10 +105,8 @@ const FormUser = () => {
                     }}
                 />
                 <div className="flex flex-col gap-2 items-start">
-                    <div className="font-semibold leading-[22.4px] text-white">
-                        {name}
-                    </div>
-                    <div className=" font-semibold leading-[19.6px] text-[#abbbc2] min-w-max">
+                    <div className="font-semibold leading-[22.4px]">{name}</div>
+                    <div className=" font-semibold leading-[19.6px] text-[#abbbc2] dark:text-slate-600 min-w-max">
                         Member since {format(new Date(date), "d MMM yyyy")}
                     </div>
                 </div>
@@ -116,9 +114,7 @@ const FormUser = () => {
             <div className="flex w-full gap-4">
                 <div className="flex flex-col gap-2 items-start flex-1">
                     <div className="flex justify-between w-full">
-                        <span className=" font-medium text-white">
-                            Tên người dùng
-                        </span>
+                        <span className=" font-medium">Tên người dùng</span>
                         {error && (
                             <span className="text-red-500 text-sm">
                                 {error}
@@ -133,15 +129,13 @@ const FormUser = () => {
                         onChange={handleUpdate}
                         className={`border-solid ${
                             error ? "border-red-500" : "border-[#393c49]"
-                        } bg-[#2d303e]
+                        } bg-[#2d303e]  dark:bg-light-bg
                             self-stretch flex flex-col justify-center pl-3 h-12 shrink-0 items-start border rounded-lg focus:outline-none`}
                     />
                 </div>
                 <div className="flex flex-col gap-2 items-start flex-1">
                     <div className="flex justify-between w-full">
-                        <span className=" font-medium text-white">
-                            Số điện thoại
-                        </span>
+                        <span className=" font-medium">Số điện thoại</span>
                     </div>
                     <input
                         type="text"
@@ -149,31 +143,31 @@ const FormUser = () => {
                         id="phone"
                         value={phone}
                         onChange={handleUpdate}
-                        className={`border-solid bg-[#2d303e] border-[#393c49] self-stretch flex flex-col justify-center pl-3 h-12 shrink-0 items-start border rounded-lg focus:outline-none`}
+                        className={`border-solid bg-[#2d303e] border-[#393c49]  dark:bg-light-bg self-stretch flex flex-col justify-center pl-3 h-12 shrink-0 items-start border rounded-lg focus:outline-none`}
                     />
                 </div>
             </div>
             <div className="flex w-full gap-4">
                 <div className="flex flex-col gap-2 items-start flex-1">
-                    <div className=" font-medium text-white">Email</div>
+                    <div className=" font-medium">Email</div>
                     <input
                         type="email"
                         name="email"
                         id="email"
                         value={email}
                         disabled
-                        className="border-solid border-[#393c49] bg-[#2d303e] self-stretch flex flex-col justify-center pl-3 h-12 shrink-0 items-start border rounded-lg focus:outline-none"
+                        className="border-solid border-[#393c49] bg-[#2d303e] dark:bg-light-bg self-stretch flex flex-col justify-center pl-3 h-12 shrink-0 items-start border rounded-lg focus:outline-none"
                     />
                 </div>
                 <div className="flex flex-col gap-2 items-start flex-1">
-                    <div className=" font-medium text-white">Địa chỉ</div>
+                    <div className=" font-medium">Địa chỉ</div>
                     <input
                         type="text"
                         name="address"
                         id="address"
                         value={address}
                         onChange={handleUpdate}
-                        className="border-solid border-[#393c49] bg-[#2d303e] self-stretch flex flex-col justify-center pl-3 h-12 shrink-0 items-start border rounded-lg focus:outline-none"
+                        className="border-solid border-[#393c49] bg-[#2d303e] dark:bg-light-bg self-stretch flex flex-col justify-center pl-3 h-12 shrink-0 items-start border rounded-lg focus:outline-none"
                     />
                 </div>
             </div>

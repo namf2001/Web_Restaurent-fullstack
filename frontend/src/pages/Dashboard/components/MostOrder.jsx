@@ -34,9 +34,9 @@ const MostOrder = () => {
 
 
     return (
-        <div className="bg-base/dark-bg-2-14 flex flex-col gap-5 w-[400px] min-h-[400px] p-6 rounded-lg">
-            <div className=" bg-base/dark-bg-2-14 flex justify-between items-center">
-                <div className="text-xl font-semibold text-white">
+        <div className="bg-base/dark-bg-2-14 dark:bg-light-bg-1 flex flex-col gap-5 w-[400px] min-h-[400px] p-6 rounded-lg">
+            <div className="flex justify-between items-center">
+                <div className="text-xl font-semibold text-white dark:text-dark">
                     Most Ordered
                 </div>
                 <MenuDropDown
@@ -45,7 +45,7 @@ const MostOrder = () => {
                     setOptions={setOrderOption}
                 />
             </div>
-            <hr className="h-[1px] bg-base/dark-line border-0" />
+            <hr className="h-[2px] bg-base/dark-line dark:bg-primary-color border-0" />
             <div
                 className={`overflow-hidden flex flex-col justify-start items-start gap-6 w-full flex-1 ${
                     viewAll ? "h-auto" : "max-h-[200px]"
@@ -60,7 +60,7 @@ const MostOrder = () => {
                                 width: "100px",
                                 height: "100px",
                             }}></lord-icon>
-                        <div className="text-sm font-medium text-center text-gray-400 w-full">
+                        <div className="text-sm font-medium text-center text-gray-400 dark:text-slate-600 w-full">
                             chưa có đơn hàng nào
                         </div>
                         <Link
@@ -80,10 +80,10 @@ const MostOrder = () => {
                             className="w-12 shrink-0 rounded-full"
                         />
                         <div className="flex flex-col gap-1 items-start">
-                            <div className="text-sm font-medium text-[#e0e6e9]">
+                            <div className="text-sm font-medium text-[#e0e6e9] dark:text-dark">
                                 {item.foodItem[0].name}
                             </div>
-                            <div className="text-xs leading-[16.8px] text-[#abbbc2]">
+                            <div className="text-xs leading-[16.8px] text-[#abbbc2] dark:text-slate-600">
                                 {item.totalOrdered} lượt đặt
                             </div>
                         </div>

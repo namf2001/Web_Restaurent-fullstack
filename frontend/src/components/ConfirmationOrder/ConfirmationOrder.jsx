@@ -67,7 +67,7 @@ const ConfirmationOrder = () => {
                                     leaveTo="translate-x-full">
                                     <Dialog.Panel className="pointer-events-auto w-screen">
                                         <div className="flex h-full float-right ">
-                                            <div className="flex h-full flex-col bg-base/dark-bg-2-14 shadow-xl text-white w-[400px]">
+                                            <div className="flex h-full flex-col bg-base/dark-bg-2-14 dark:bg-light-bg-1 shadow-xl text-white dark:text-dark w-[400px]">
                                                 <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                                                     <div className="flex items-start flex-col gap-4">
                                                         <div className="flex h-7 items-center">
@@ -90,7 +90,7 @@ const ConfirmationOrder = () => {
                                                             <div>
                                                                 Xác Nhận Đơn
                                                                 Hàng
-                                                                <p className="text-sm font-normal pt-2 text-gray-400">
+                                                                <p className="text-sm font-normal pt-2 text-gray-400 dark:text-slate-600">
                                                                     Order #34562
                                                                 </p>
                                                             </div>
@@ -109,33 +109,24 @@ const ConfirmationOrder = () => {
                                                         <div className="flow-root">
                                                             <div className="flow-root">
                                                                 <motion.ul
-                                                                    variants={
-                                                                        container
-                                                                    }
+                                                                    variants={container}
                                                                     initial="hidden"
                                                                     animate="show"
-                                                                    role="list"
-                                                                    className="flex flex-col gap-6">
-                                                                    {cart.map(
-                                                                        (
-                                                                            product
-                                                                        ) => {
-                                                                            return (
-                                                                                <motion.li
-                                                                                    variants={
-                                                                                        item
-                                                                                    }
-                                                                                    role="listitem"
-                                                                                    key={
-                                                                                        product._id
-                                                                                    }>
-                                                                                    <ProductItem
-                                                                                        {...product}
-                                                                                    />
-                                                                                </motion.li>
-                                                                            );
-                                                                        }
-                                                                    )}
+                                                                    className="flex flex-col gap-6"
+                                                                    role="menu"
+                                                                >
+                                                                    {cart.map((product) => {
+                                                                        return (
+                                                                            <motion.li
+                                                                                variants={item}
+                                                                                key={product._id}
+                                                                                role="menuitem"
+                                                                                aria-label={product.name}
+                                                                            >
+                                                                                <ProductItem {...product} />
+                                                                            </motion.li>
+                                                                        );
+                                                                    })}
                                                                 </motion.ul>
                                                             </div>
                                                         </div>
@@ -143,15 +134,15 @@ const ConfirmationOrder = () => {
                                                 </div>
                                                 <hr className="h-[1px] bg-base/dark-line-1 border-0 my-4 mx-6"/>
                                                 <div className="px-6 pb-14">
-                                                    <div className="flex justify-between text-base font-medium text-gray-400">
+                                                    <div className="flex justify-between text-base font-medium text-gray-400 dark:text-slate-600">
                                                         <p>Giảm giá</p>
-                                                        <p className="text-white font-semibold">
+                                                        <p className="text-white dark:text-dark font-semibold">
                                                             0%
                                                         </p>
                                                     </div>
-                                                    <div className="flex justify-between text-base font-medium text-gray-400 pt-4">
+                                                    <div className="flex justify-between text-base font-medium text-gray-400 dark:text-slate-600 pt-4">
                                                         <p>Thanh toán</p>
-                                                        <p className="text-white font-semibold">
+                                                        <p className="text-white dark:text-dark font-semibold">
                                                             {calculateTotalCost.toLocaleString(
                                                                 "vi-VN",
                                                                 {

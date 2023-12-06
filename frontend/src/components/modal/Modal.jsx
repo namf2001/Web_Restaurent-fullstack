@@ -18,8 +18,8 @@ const Modal = ({ modalOpen, children }) => {
                         animate={{ opacity: 1, translateY: "0%" }}
                         exit={{ opacity: 0, translateY: "4%" }}
                         transition={{ ease: "easeOut", duration: 0.3 }}
-                        className="fixed inset-0 z-10 overflow-y-auto">
-                        <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                        className="fixed inset-0 z-20 overflow-y-auto">
+                        <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0 z-20">
                             <motion.div
                                 initial={{
                                     opacity: 0,
@@ -37,7 +37,7 @@ const Modal = ({ modalOpen, children }) => {
                                     scale: 0.95,
                                 }}
                                 transition={{ ease: "easeOut", duration: 0.3 }}
-                                className="relative transform overflow-hidden rounded-lg text-left transition-all h-auto sm:my-8 sm:w-full sm:max-w-6xl">
+                                className="relative transform overflow-hidden rounded-lg text-left transition-all h-auto sm:my-8 sm:w-full sm:max-w-6xl z-20">
                                 {children}
                             </motion.div>
                         </div>

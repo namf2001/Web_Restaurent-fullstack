@@ -93,10 +93,10 @@ const ProductItem = (props) => {
                             <p>$ {props.foodId.price}</p>
                         </span>
                     </div>
-                    <span className="bg-base/dark-bg-1-18 rounded-md w-20 justify-between items-center h-12 text-center flex overflow-hidden">
+                    <span className="bg-base/dark-bg-1-18 dark:bg-orange-200 rounded-md w-20 justify-between items-center h-12 text-center flex overflow-hidden">
                         {/* add button + and - */}
                         <button
-                            className="text-2xl font-bold bg-base/dark-line w-[30px] h-full"
+                            className="text-2xl font-bold bg-base/dark-line dark:bg-orange-400 w-[30px] h-full"
                             onClick={async () => {
                                 if (quantity > 1) {
                                     await handleUpdateQuantity(
@@ -110,7 +110,7 @@ const ProductItem = (props) => {
                         </button>
                         <p className="px-2">{quantity}</p>
                         <button
-                            className="text-2xl font-bold bg-base/dark-line w-[30px] h-full"
+                            className="text-2xl font-bold bg-base/dark-line dark:bg-orange-400 w-[30px] h-full"
                             onClick={async () => {
                                 await handleUpdateQuantity(
                                     props._id,
@@ -127,7 +127,7 @@ const ProductItem = (props) => {
                     value={message}
                     onChange={(e) => handleUpdateMessage(e, props._id)}
                     placeholder="Enter your content"
-                    className="bg-base/dark-line block rounded-md border-0 p-3.5 h-full text-light ring-1 ring-inset ring-gray-700 placeholder:text-light focus:ring-2 focus:ring-inset focus:ring-offset-gray-950 focus:outline-none text-sm leading-6 "
+                    className="bg-base/dark-line dark:bg-light-bg block rounded-md border-0 p-3.5 h-full text-gray-400 dark:text-slate-600 ring-1 ring-inset ring-gray-700 dark:ring-orange-200 placeholder:text-gray-400 dark:placeholder:text-slate-600 focus:ring-2 focus:ring-inset focus:ring-offset-gray-950 focus:outline-none text-sm leading-6 "
                 />
             </div>
             <div className="flex flex-col gap-4 justify-between items-center">
