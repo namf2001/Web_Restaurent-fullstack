@@ -1,4 +1,10 @@
-!["Full Stack Web Restaurant | React Node MongoDB Tailwind"](https://www.facebook.com/7395f0b3-8046-40d4-9617-26c9ef649087 "Full Stack Web Restaurant App | React Node MongoDB Tailwind")
+!["Full Stack Web Restaurant | React Node MongoDB Tailwind"](<Diagram - Food joint delivery app -  (Community) (Community).png>)"Full Stack Web Restaurant App | React Node MongoDB Tailwind")
+
+---
+
+# [Figma design](https://www.figma.com/file/eVwrofCVPh9SjtmD1BDLRw/Food-joint-delivery-app----(Community)-(Community)?type=design&t=f1WIrpltf8EWL2wh-6)
+
+---
 
 # Create App
 In the project directory, you can run:
@@ -20,4 +26,8 @@ In the project directory, you can run:
     - ...
 # Preview
 
-!["Full Stack Kanban App | React Node MongoDB Material-UI"](https://user-images.githubusercontent.com/67447840/177310521-764f8ff7-5e3d-4644-ac0a-273cf83e48aa.gif "Full Stack Kanban App | React Node MongoDB Material-UI")
+!["Full Stack Web Restaurant | React Node MongoDB Tailwind"](<Untitled video - Made with Clipchamp.gif> "Full Stack Kanban App | React Node MongoDB Tailwind")
+
+!["Full Stack Web Restaurant | React Node MongoDB Tailwind"](<Untitled video - Made with Clipchamp (1).gif> "Full Stack Kanban App | React Node MongoDB Tailwind")
+
+!["Full Stack Web Restaurant | React Node MongoDB Tailwind"](<Untitled video - Made with Clipchamp (2).gif> "Full Stack Kanban App | React Node MongoDB Tailwind")
