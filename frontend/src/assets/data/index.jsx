@@ -24,7 +24,7 @@ import {
 import Cheesecake from "../images/Cheesecake.png";
 import BBQRibs from "../images/BBQRibs.png";
 import Icream from "../images/icream.png";
-import Pizza from "../images/Pizza.png";
+import Pizza from "../images/pizza.png";
 import Salad from "../images/Salad.png";
 import CaesarSalad from "../images/Product2.png";
 import { CgCreditCard } from "react-icons/cg";
